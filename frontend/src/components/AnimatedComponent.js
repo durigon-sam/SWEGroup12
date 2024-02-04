@@ -25,11 +25,11 @@ class AnimatedComponent extends Component {
                 </p>
                 <a
                     className="App-link"
-                    href="https://reactjs.org"
+                    href="/home"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Learn React
+                    Check out the other component!
                 </a>
                 </header>
             </div>
