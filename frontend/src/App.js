@@ -8,7 +8,7 @@ function App() {
   return (
     <Router>
 
-      {/* Add the route for StarterComponent */}
+      {/* Place future route endpoints in here as a new Route */}
 
       <Routes>
         <Route path="/home" element={<StarterComponent/>} />
