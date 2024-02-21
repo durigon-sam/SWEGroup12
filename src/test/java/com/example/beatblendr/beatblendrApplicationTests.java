@@ -1,10 +1,10 @@
-package com.example.records;
+package com.example.beatblendr;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RecordsApplicationTests {
+class beatblendrApplicationTests {
 
 	@Test
 	void contextLoads() {

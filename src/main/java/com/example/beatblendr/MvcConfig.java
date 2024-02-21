@@ -1,4 +1,4 @@
-package com.example.records;
+package com.example.beatblendr;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
