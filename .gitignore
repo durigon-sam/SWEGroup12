@@ -61,4 +61,6 @@ sketch
 .history
 .ionide
 
+# ignore properties files
+*.properties
 # End of https://www.toptal.com/developers/gitignore/api/java,react,visualstudiocode
