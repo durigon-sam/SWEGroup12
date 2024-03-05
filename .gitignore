@@ -62,5 +62,5 @@ sketch
 .ionide
 
 # ignore properties files
-/src/main/resources/application.properties
+.properties
 # End of https://www.toptal.com/developers/gitignore/api/java,react,visualstudiocode
