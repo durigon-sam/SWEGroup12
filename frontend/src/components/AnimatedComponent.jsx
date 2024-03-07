@@ -1,46 +1,40 @@
-import React, { Component } from "react";
-import '../styles/App.css';
-//import logo from '/BeatBlendr_Logos/Full_Color_Dark.png';
-import { Button } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import '../styles/App.css'
+import { Button } from '@mui/material'
 
 // another way to make a component/element
-class AnimatedComponent extends Component {
-    constructor(props) {
-        super(props)
-        this.handleButtonClick = this.handleButtonClick.bind(this);
+export default function AnimatedComponent(props){
 
-        this.state = {
+	//semicolons are not needed in ReactJS, only use them if it yells at you
 
-        }
-    }
+	//use this to add something to the state
+	const [someState, setSomeState] = useState([])
 
-    // navigate = useNavigate();
+	const logo = '/BeatBlendr_Logos/Full_Color_Dark.png'
 
-    handleButtonClick() {
-        alert("Hello");
-    }
+	//this is an event handler, it'll trigger whenever the button is pressed
+	// bc it is specified in its "onClick" trigger
+	const handleButtonClick = () => {
+		alert('Hello')
+	}
 
-    render() {
-        return (
-            <div className="App">
-                <header className="App-header">
-                <img src='/BeatBlendr_Logos/Full_Color_Dark.png' className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <p>
-                    Try the endpoint "/home"!
-                </p>
-                <Button
-                    onClick={this.handleButtonClick}
-                >
+	useEffect(() =>{
+		//something in here will happen as soon as this component is rendered
+		setSomeState('deeznuts')
+	}, [])
+
+
+	//rendered parts of the component go in this return statement.
+	return (
+		<div className="App">
+			<header className="App-header">
+				<img src={logo} className="App-logo" alt="logo" />
+				<p>Edit <code>src/App.js</code> and save to reload.</p>
+				<p>Try the endpoint "/home"!</p>
+				<Button onClick={handleButtonClick}>
                     Click Me!
-                </Button>
-                    
-                </header>
-            </div>
-        )
-    }
+				</Button>
+			</header>
+		</div>
+	)
 }
-
-export default AnimatedComponent;
