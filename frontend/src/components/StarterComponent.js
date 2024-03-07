@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../styles/App.css';
 //one way to make a component/element
 
 const StarterComponent = () => {
