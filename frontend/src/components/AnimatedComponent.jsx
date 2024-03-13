@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/App.css'
 import { Button } from '@mui/material'
+import SideBar from './sidebar'
 
 // another way to make a component/element
 export default function AnimatedComponent(props){
@@ -27,6 +28,7 @@ export default function AnimatedComponent(props){
 	//rendered parts of the component go in this return statement.
 	return (
 		<div className="App">
+			{/* <SideBar></SideBar> */}
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>Edit <code>src/App.js</code> and save to reload.</p>
