@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 
+@Getter
 @Setter
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
 
     private Long id;
