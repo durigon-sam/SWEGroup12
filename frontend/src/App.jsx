@@ -5,6 +5,7 @@ import StarterComponent from './components/StarterComponent'
 import AnimatedComponent from './components/AnimatedComponent'
 import Login from './components/login'
 import SideBar from './components/sidebar'
+import HomePage from './components/home'
 
 export default function App() {
 	return (
@@ -13,7 +14,7 @@ export default function App() {
 			<Router>
 				<Routes>
 					{/* Place future route endpoints in here as a new Route */}
-					<Route path="/home" element={<StarterComponent/>} />
+					<Route path="/home" element={<HomePage/>} />
 					<Route path="/" element={<AnimatedComponent/>}/>
 					<Route path='/login' element={<Login/>}/>
 				</Routes>

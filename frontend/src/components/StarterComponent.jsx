@@ -6,17 +6,21 @@ import SideBar from './sidebar'
 //this is an arrow function, it is one way of creating a function in JS
 const StarterComponent = () => {
 	return (
-		<div className='App'>
+		<div>
 			<SideBar/>
-			<header className='App-header'>
-				<h1>This is a starter component!</h1>
-				<a 
-					className='App-link'
-					href='/'
-				>
+		
+			<div className='App'>
+			
+				<header className='App-header'>
+					<h1>This is a starter component!</h1>
+					<a 
+						className='App-link'
+						href='/'
+					>
         Return to animation!
-				</a>
-			</header>
+					</a>
+				</header>
+			</div>
 		</div>
 	)
 }
