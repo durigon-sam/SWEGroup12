@@ -11,6 +11,8 @@
 .logo {
     margin-top: 10px;
     margin-bottom: 7vh;
+    width: 100%;
+    height: 160px;
 }
 
 .logoutButton:hover {

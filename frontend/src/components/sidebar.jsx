@@ -43,7 +43,7 @@ export default function SideBar(){
 						className='sidebarButton'
 						key={text} 
 						sx={{
-							height: '150px',
+							height: '130px',
 							width: '90%',
 							backgroundColor: '#3d2159',
 							borderRadius: '45px',
@@ -57,7 +57,7 @@ export default function SideBar(){
 					//end ListItemButton
 					>
 						<ListItemText>
-							<Typography className='ButtonText' variant='h3'>
+							<Typography className='ButtonText' variant='h4'>
 								{text}
 							</Typography>
 						</ListItemText>
