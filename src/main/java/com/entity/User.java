@@ -34,9 +34,9 @@ public class User {
 	@Column(name = "username")
 	private String username;
 	
-	@Column(name = "spotify_account", nullable = false, unique = true)
+	@Column(name = "spotifyAccountId", nullable = false, unique = true)
 	private String spotifyAccount;
 
-	@Column(name = "email_id", nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 }

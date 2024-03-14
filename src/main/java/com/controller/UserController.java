@@ -11,8 +11,10 @@ import com.dto.UserDTO;
 import com.service.UserService;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @RestController
 @RequestMapping("api/user")
 public class UserController {
@@ -26,5 +28,16 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         
     }
+
+    //add more controller methods for the user.
+    //Some of these can just go in the UserRepository because of how awesome JPA is
+
+    //Get user by ID
+
+    //Get all users
+
+    //Edit user by ID
+
+    //Delete user by ID
     
 }
