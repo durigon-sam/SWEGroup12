@@ -1,8 +1,15 @@
 package com.entity;
 
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 // import javax.persistence.*; // for Spring Boot 2
-import jakarta.persistence.*; // for Spring Boot 3
+import jakarta.persistence.Table; // for Spring Boot 3
 import lombok.Lombok;
 import lombok.Setter;
 import lombok.Getter;
@@ -13,8 +20,9 @@ import lombok.AllArgsConstructor;
 @Getter 
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 
-
+@EnableAutoConfiguration
 @Entity
 @Table(name = "user")
 public class User {

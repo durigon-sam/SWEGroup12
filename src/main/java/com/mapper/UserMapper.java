@@ -14,13 +14,15 @@ public class UserMapper {
         );
     }
 
-    public static UserDTO mapToUserDTO(UserDTO userDTO){
-        return new UserDTO(
+    public static User mapToUser(UserDTO userDTO){
+        return new User(
             userDTO.getId(),
             userDTO.getUsername(),
             userDTO.getSpotifyAccount(),
             userDTO.getEmail()
         );
     }
+
+    
     
 }
