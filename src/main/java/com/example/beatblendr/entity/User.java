@@ -1,4 +1,4 @@
-package com.entity;
+package com.example.beatblendr.entity;
 
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -16,20 +16,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-
 @Getter 
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-@EnableAutoConfiguration
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column(name = "username")
 	private String username;
