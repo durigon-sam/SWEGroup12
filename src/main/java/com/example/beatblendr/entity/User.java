@@ -1,8 +1,5 @@
 package com.example.beatblendr.entity;
 
-
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 // import javax.persistence.*; // for Spring Boot 2
 import jakarta.persistence.Table; // for Spring Boot 3
-import lombok.Lombok;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -8,14 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.beatblendr.dto.UserDTO;
-import com.example.beatblendr.entity.User;
-import com.example.beatblendr.mapper.UserMapper;
-import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.UserService;
-import com.example.beatblendr.service.impl.UserServiceImpl;
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
