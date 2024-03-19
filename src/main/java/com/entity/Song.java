@@ -24,12 +24,13 @@ import lombok.AllArgsConstructor;
 
 @EnableAutoConfiguration
 @Entity
-@Table(name = "song")
+@Table(name = "songs")
+
 public class Song {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column(name = "spotify_id", nullable = false)
 	private String spotifyId;
@@ -44,7 +45,6 @@ public class Song {
     private String artistName;
 
     @Column(name = "rating")
-    private long rating;
-
+    private Long rating;
 	
 }

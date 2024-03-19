@@ -17,6 +17,6 @@ public class SongDTO {
     private String songName;
     private String albumName;
     private String artistName;
-    private long rating;
+    private Long rating;
     
 }

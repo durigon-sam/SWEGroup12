@@ -1,5 +1,7 @@
 package com.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +23,11 @@ import lombok.NoArgsConstructor;
 @RequestMapping("api/song")
 public class SongController {
 
+    @Autowired
     private SongService songService;
 
     @PostMapping
-    public ResponseEntity<SongDTO> createUser(@RequestBody SongDTO songDTO){
+    public ResponseEntity<SongDTO> createSong(@RequestBody SongDTO songDTO){
         SongDTO savedSong = songService.createSong(songDTO);
 
         return new ResponseEntity<>(savedSong, HttpStatus.CREATED);

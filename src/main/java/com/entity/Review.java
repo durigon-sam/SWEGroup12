@@ -24,12 +24,12 @@ import lombok.AllArgsConstructor;
 
 @EnableAutoConfiguration
 @Entity
-@Table(name = "review")
+@Table(name = "reviews")
 public class Review {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "user_id", nullable = false)
 	private String userId;
@@ -38,10 +38,9 @@ public class Review {
 	private String albumId;
 
     @Column(name = "rating")
-    private long rating;
+    private Long rating;
 
     @Column(name = "description")
     private String description;
-
 	
 }

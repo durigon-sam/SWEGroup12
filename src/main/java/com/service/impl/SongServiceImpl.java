@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dto.SongDTO;
@@ -18,7 +19,8 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class SongServiceImpl implements SongService{
-
+    
+    @Autowired
     private SongRepository songRepository;
 
     @Override

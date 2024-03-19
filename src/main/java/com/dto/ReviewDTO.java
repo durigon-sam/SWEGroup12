@@ -15,7 +15,7 @@ public class ReviewDTO {
     private Long id;
     private String userId;
     private String albumId;
-    private long rating;
+    private Long rating;
     private String description;
 
     
