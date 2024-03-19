@@ -1,4 +1,4 @@
-package com.controller;
+package com.example.beatblendr.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,17 +6,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.dto.UserDTO;
-import com.service.UserService;
-
+import com.example.beatblendr.dto.UserDTO;
+import com.example.beatblendr.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     private UserService userService;
