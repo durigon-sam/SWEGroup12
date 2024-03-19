@@ -23,12 +23,12 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column(name = "username")
 	private String username;
 	
-	@Column(name = "spotifyAccountId", nullable = false, unique = true)
+	@Column(name = "spotify_account_id", nullable = false, unique = true)
 	private String spotifyAccount;
 
 	@Column(name = "email", nullable = false, unique = true)
