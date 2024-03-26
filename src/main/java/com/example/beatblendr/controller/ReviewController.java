@@ -1,31 +1,29 @@
-package com.controller;
+package com.example.beatblendr.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.dto.UserDTO;
-import com.service.UserService;
-
-import lombok.AllArgsConstructor;
+import com.example.beatblendr.dto.ReviewDTO;
+import com.example.beatblendr.service.ReviewService;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @RestController
-@RequestMapping("api/user")
-public class UserController {
+@RequestMapping("/api/reviews")
+public class ReviewController {
 
-    private UserService userService;
+    @Autowired
+    private ReviewService ReviewService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
-        UserDTO savedUser = userService.createUser(userDTO);
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO){
+        ReviewDTO savedReview = ReviewService.createReview(reviewDTO);
 
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedReview, HttpStatus.CREATED);
         
     }
 

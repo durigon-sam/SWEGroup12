@@ -1,10 +1,9 @@
-package com.dto;
+package com.example.beatblendr.dto;
 
 import lombok.Setter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
 
 @Getter
 @Setter

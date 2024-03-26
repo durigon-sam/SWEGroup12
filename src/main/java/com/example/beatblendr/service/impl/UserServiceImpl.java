@@ -1,12 +1,12 @@
-package com.service.impl;
+package com.example.beatblendr.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.dto.UserDTO;
-import com.entity.User;
-import com.mapper.UserMapper;
-import com.repository.UserRepository;
-import com.service.UserService;
+import com.example.beatblendr.dto.UserDTO;
+import com.example.beatblendr.entity.User;
+import com.example.beatblendr.mapper.UserMapper;
+import com.example.beatblendr.repository.UserRepository;
+import com.example.beatblendr.service.UserService;
 
 import lombok.AllArgsConstructor;
 
@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService{
 
+    @Autowired
     private UserRepository userRepository;
 
     @Override

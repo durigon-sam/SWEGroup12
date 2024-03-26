@@ -1,7 +1,7 @@
-package com.mapper;
+package com.example.beatblendr.mapper;
 
-import com.dto.UserDTO;
-import com.entity.User;
+import com.example.beatblendr.dto.UserDTO;
+import com.example.beatblendr.entity.User;
 
 public class UserMapper {
 
