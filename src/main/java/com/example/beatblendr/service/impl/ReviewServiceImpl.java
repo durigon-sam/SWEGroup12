@@ -23,5 +23,11 @@ public class ReviewServiceImpl implements ReviewService{
         return ReviewMapper.mapToReviewDTO(savedReview);
     }
 
+    @Override
+    public ReviewDTO findById(Long id) {
+    
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
+
 
 }
