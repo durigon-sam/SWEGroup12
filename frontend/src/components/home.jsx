@@ -5,8 +5,12 @@ import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
+import recentData from '../dummydata/recents.json'
+import friends from '../dummydata/friends.json'
 
 export default function HomePage(){
+
+	const font = './LibreFranklin-VariableFont_wght.ttf'
 
 	const RecentItem = styled(Paper)(({ theme }) => ({
 		background: 'linear-gradient(to right, #2D46B9, #1ED760)',
@@ -35,7 +39,7 @@ export default function HomePage(){
 				<Grid container spacing={2} columns={16} sx={{margin: '20px 30px 20px 30px'}}>
 					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
 						<RecentItem>
-							<Typography variant='h3' fontFamily={'Libre Franklin'} fontWeight={700}>My Recent Listening</Typography>
+							<Typography variant='h3' fontFamily={font} fontWeight={600}>My Recent Listening</Typography>
 						</RecentItem>
 						<List
 							sx={{
@@ -46,18 +50,8 @@ export default function HomePage(){
 							}}
 						>
 							{/* This gets replaced with the actual user data */}
-							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25].map((index) => (
-								// <ListItem key={index}
-								// 	sx={{
-								// 		background: 'linear-gradient(to left, #2D46B9, #1ED760)',
-								// 		marginBottom: 5,
-								// 		height: '175px',
-								// 		borderRadius: '10px',
-								// 	}}
-								// >
-								// 	<ListItemText>{index}</ListItemText>
-								// </ListItem>
-								<SongListItem key={index} id={index}></SongListItem>
+							{recentData.recents.map((item) => (
+								<SongListItem key={item.id} item={item}></SongListItem>
 							))}
 						</List>
 
@@ -65,7 +59,7 @@ export default function HomePage(){
 					<Grid item xs={1} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}/>
 					<Grid item xs={5} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
 						<FriendItem>
-							<Typography variant='h3' fontFamily={'Libre Franklin'} fontWeight={700}>My Friends</Typography>
+							<Typography variant='h3' fontFamily={font} fontWeight={700}>My Friends</Typography>
 						</FriendItem>
 						<List
 							sx={{
