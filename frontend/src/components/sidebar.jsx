@@ -7,11 +7,9 @@ export default function SideBar(){
 
 	const src = '/BeatBlendr_Logos/VertAlt_Color_White.png'
 	const buttonLabels = ['Find Music', 'Create Playlist', 'My Profile']
-
 	const navigate = useNavigate()
 
 	const handleListButtonClick = (arg) => {
-		//alert(arg)
 		if (arg === buttonLabels[0]){
 			navigate('/search')
 		}else if (arg === buttonLabels[1]){

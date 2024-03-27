@@ -7,7 +7,7 @@ export default function FriendListItem(props) {
 	return(
 		<ListItem
 			sx={{
-				background: 'linear-gradient(to left, #2D46B9, #1ED760)',
+				background: 'linear-gradient(to right, #2D46B9, #3D2159)',
 				marginBottom: 5,
 				height: '175px',
 				borderRadius: '10px',

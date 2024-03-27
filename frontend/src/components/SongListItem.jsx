@@ -1,12 +1,20 @@
 import React from 'react'
-import { Box, Grid, ListItem, ListItemText, Typography } from '@mui/material'
+import { Box, Grid, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function SongListItem(props) {
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const {id, album_art, song_name, artist_name, album_name, time_listened} = props.item
+	const navigate = useNavigate()
+
+	//TODO: maybe make this a modal instead of a page?
+	const handleReviewButton = () => {
+		navigate('/review')
+	}
+	
 	return(
 		<ListItem key={props.item.id}
 			sx={{
@@ -34,20 +42,94 @@ export default function SongListItem(props) {
 				</Grid>
 
 				{/* song info */}
-				{/* TODO: create scrolling effect for horizontal overflow like in tiktok tutorial */}
+				{/* TODO WHEN YOU HAVE MORE TIME BC THIS SUCKS: create scrolling effect for horizontal overflow like in tiktok tutorial */}
 				<Grid item xs={8} sx={{paddingLeft: '10px'}}>
-					<Typography fontFamily={font} color={'white'} fontWeight={300}>{song_name}</Typography>
-					<Typography fontFamily={font} color={'white'} fontWeight={300}>{Array.isArray(artist_name) ? artist_name.join(', ') : artist_name}</Typography>
-					<Typography fontFamily={font} color={'white'} fontWeight={300}>{album_name}</Typography>
+					{/* <div 
+						style={{
+							height: 'fit-content',
+							width: '60%',
+							display: 'flex',
+							alignItems: 'center',
+						}}
+					>
+						<marquee direction='left'>
+							<Typography fontFamily={font} color={'white'} fontWeight={300}>{song_name}</Typography>
+						</marquee>
+					</div> */}
+					<Typography 
+						fontFamily={font} 
+						color={'white'} 
+						fontWeight={300} 
+						fontSize={'120%'}
+						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+					>
+						{song_name}
+					</Typography>
+					<Typography 
+						fontFamily={font} 
+						color={'white'} 
+						fontWeight={300} 
+						fontSize={'120%'}
+						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+					>
+						{Array.isArray(artist_name) ? artist_name.join(', ') : artist_name}
+					</Typography>
+					{/* TODO align this to the bottom of the card */}
+					<Typography 
+						fontFamily={font} 
+						color={'white'} 
+						fontWeight={300}
+						fontSize={'120%'}
+						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+					>
+						{album_name}
+					</Typography>
 				</Grid>
 
 				{/* user info */}
 				<Grid item xs={2} sx={{textAlign: 'right'}}>
-					<Typography fontFamily={font} color={'white'} fontWeight={300}>
-						{new Date(time_listened).toLocaleString()}
+					<Typography 
+						fontFamily={font} 
+						color={'white'} 
+						fontWeight={300} 
+						fontSize={'120%'}
+						style={{height: '33%'}}
+					>
+						{new Date(time_listened).toLocaleDateString()}
+					</Typography>
+					<Typography 
+						fontFamily={font} 
+						color={'white'} 
+						fontWeight={300} 
+						fontSize={'120%'}
+						style={{height: '33%'}}
+					>
+						{new Date(time_listened).toLocaleTimeString()}
 					</Typography>
 
 					{/* TODO: Put Review Button Here */}
+					<ListItemButton
+						className='reviewButton'
+						sx={{
+							width: '80%',
+							backgroundColor: '#3D2159',
+							borderRadius: '45px',
+							marginLeft: 'auto', // Align the button to the right
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							'&:hover': {
+								backgroundColor: '#1ED760',
+							}
+						}}
+						onClick={handleReviewButton}
+					>
+						<Typography className='reviewText' >
+							Review
+						</Typography>
+					</ListItemButton>
+
+
 				</Grid>
 
 
