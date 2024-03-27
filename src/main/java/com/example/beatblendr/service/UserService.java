@@ -7,7 +7,10 @@ import com.example.beatblendr.entity.User;
 
 public interface UserService {
     UserDTO createUser(UserDTO userDTO);
-    List<UserDTO> findByEmail(String email);
-    List<User> findAll();
+    UserDTO findByEmail(String email);
+    List<UserDTO> findAll();
+    UserDTO updateUser(long id, UserDTO userDTO);
+    UserDTO findById(long id);
+    void deleteUser(Long id);
     
 }

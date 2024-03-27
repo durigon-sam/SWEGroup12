@@ -1,8 +1,10 @@
 package com.example.beatblendr.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.User;
@@ -30,17 +32,52 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDTO> findByEmail(String email) {
+    public UserDTO findByEmail(String email) {
         
-        
-
-        return null;
+        List<User> users = userRepository.findByEmail(email);
+        List<UserDTO> foundUsers = users.stream().map(
+            (user) -> UserMapper.mapToUserDTO(user))
+            .collect(Collectors.toList()
+        );
+        return foundUsers.get(0);
     }
     @Override
-    public List<User> findAll() {
+    public List<UserDTO> findAll() {
         
         List<User> users = userRepository.findAll();
-        return users;
+        List<UserDTO> savedUsers = users.stream().map(
+            (user) -> UserMapper.mapToUserDTO(user))
+            .collect(Collectors.toList()
+        );
+        return savedUsers;
     }
+    @Override
+    public UserDTO updateUser(long id, UserDTO updatedUserDTO){
+        
+        User user = userRepository.findById(id);
+        user.setEmail(updatedUserDTO.getEmail());
+        user.setId(updatedUserDTO.getId());
+        user.setSpotifyAccount(updatedUserDTO.getSpotifyAccount());
+        user.setUsername(updatedUserDTO.getUsername());
+     
+        User updatedUser = userRepository.save(user);
+        return UserMapper.mapToUserDTO(updatedUser);
+    }
+
+    @Override
+    public UserDTO findById(long id) {
+        User user = userRepository.findById(id);
+       UserDTO foundUser = UserMapper.mapToUserDTO(user);
+        
+        return foundUser;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        
+        userRepository.deleteById(id);
+        
+    }
+
 
 }

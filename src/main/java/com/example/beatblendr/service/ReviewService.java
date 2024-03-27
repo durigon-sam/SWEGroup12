@@ -8,7 +8,9 @@ import com.example.beatblendr.entity.User;
 
 public interface ReviewService {
     ReviewDTO createReview(ReviewDTO reviewDTO);
-    ReviewDTO findById(Long id);
-    List<Review> findAll();
+    ReviewDTO findById(long id);
+    List<ReviewDTO> findAll();
+    ReviewDTO updateReview(long id, ReviewDTO updatedReviewDTO);
+    void deleteReview(Long id);
     
 }

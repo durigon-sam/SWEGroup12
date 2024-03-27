@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,20 +39,30 @@ public class ReviewController {
         
     }
 
-    @GetMapping
-    public ResponseEntity<ReviewDTO> getReview(@RequestBody ReviewDTO reviewDTO){
-        ReviewDTO savedReview = (ReviewDTO) reviewService.findById(reviewDTO.getId());
+    @GetMapping("{id}")
+    public ResponseEntity<ReviewDTO> getReviewById(@PathVariable("id") long id){
+        ReviewDTO savedReview = reviewService.findById(id);
         return new ResponseEntity<>(savedReview, HttpStatus.CREATED);
     }
     //Get all users
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<ReviewDTO>> getAllReviews(){
-        List<Review> reviews = reviewService.findAll();
-        List<ReviewDTO> foundReviews = reviews.stream().map(
-            (Review) -> ReviewMapper.mapToReviewDTO(Review))
-            .collect(Collectors.toList()
-        );
-        return ResponseEntity.ok(foundReviews);
+        List<ReviewDTO> reviews = reviewService.findAll();
+        return ResponseEntity.ok(reviews);
+    }
+    //Edit user by ID
+    @PutMapping("{id}")
+    public ResponseEntity<ReviewDTO> updateReview(@PathVariable("id") long id,
+                                              @RequestBody ReviewDTO updatedReviewDTO){
+        ReviewDTO reviewDTO = reviewService.updateReview(id, updatedReviewDTO);
+        return ResponseEntity.ok(reviewDTO);
+    }
+    //Delete user by ID
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteReview(@PathVariable("id") Long id){
+        
+        reviewService.deleteReview(id);
+        return ResponseEntity.ok("Review Deleted Succesfully");
     }
 
 
