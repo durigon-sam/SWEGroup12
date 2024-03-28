@@ -34,6 +34,7 @@ export default function SideBar(){
 				}
 			}}
 		>
+			{/* TODO: convert this to grid for better styling */}
 			<img className='logo' src={src}/>
 			<List style={{ justifyContent: 'center' }}>
 				{buttonLabels.map((text) => (

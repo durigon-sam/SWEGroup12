@@ -24,13 +24,14 @@ export default function SongListItem(props) {
 				borderRadius: '10px',
 			}}
 		>
-			<Grid container columns={12}>
+			<Grid container columns={12} sx={{whiteSpace: 'nowrap'}}>
 				{/* album art */}
 				<Grid item xs={2} 
 					sx={{ 
 						display: 'flex', 
 						justifyContent: 'center', 
-						alignItems: 'center'
+						alignItems: 'center',
+						minWidth: '128px'
 					}}>
 					<Box sx={{
 						bgcolor: 'white', 
@@ -43,7 +44,7 @@ export default function SongListItem(props) {
 
 				{/* song info */}
 				{/* TODO WHEN YOU HAVE MORE TIME BC THIS SUCKS: create scrolling effect for horizontal overflow like in tiktok tutorial */}
-				<Grid item xs={8} sx={{paddingLeft: '10px'}}>
+				<Grid item xs={8} sx={{paddingLeft: '10px', overflow: 'hidden', minWidth: '100px'}}>
 					{/* <div 
 						style={{
 							height: 'fit-content',
@@ -60,7 +61,7 @@ export default function SongListItem(props) {
 						fontFamily={font} 
 						color={'white'} 
 						fontWeight={300} 
-						fontSize={'120%'}
+						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
 						{song_name}
@@ -69,7 +70,7 @@ export default function SongListItem(props) {
 						fontFamily={font} 
 						color={'white'} 
 						fontWeight={300} 
-						fontSize={'120%'}
+						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
 						{Array.isArray(artist_name) ? artist_name.join(', ') : artist_name}
@@ -79,7 +80,7 @@ export default function SongListItem(props) {
 						fontFamily={font} 
 						color={'white'} 
 						fontWeight={300}
-						fontSize={'120%'}
+						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
 						{album_name}
@@ -112,6 +113,7 @@ export default function SongListItem(props) {
 						className='reviewButton'
 						sx={{
 							width: '80%',
+							minWidth: '100px',
 							backgroundColor: '#3D2159',
 							borderRadius: '45px',
 							marginLeft: 'auto', // Align the button to the right

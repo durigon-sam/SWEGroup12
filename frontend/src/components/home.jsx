@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
 import recentData from '../dummydata/recents.json'
 import friends from '../dummydata/friends.json'
+import FriendListItem from './FriendListItem'
 
 export default function HomePage(){
 
@@ -51,7 +52,7 @@ export default function HomePage(){
 						>
 							{/* This gets replaced with the actual user data */}
 							{recentData.recents.map((item) => (
-								<SongListItem key={item.id} item={item}></SongListItem>
+								<SongListItem key={item.id} item={item}/>
 							))}
 						</List>
 
@@ -70,17 +71,8 @@ export default function HomePage(){
 								'& ul': { padding: 0 },
 							}}
 						>
-							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25].map((index) => (
-								<ListItem key={index}
-									sx={{
-										background: 'linear-gradient(to right, #2D46B9, #3D2159)',
-										marginBottom: 5,
-										height: '175px',
-										borderRadius: '10px',
-									}}
-								>
-									<ListItemText>{index}</ListItemText>
-								</ListItem>
+							{friends.friends.map((item) => (
+								<FriendListItem key={item.userid} item={item}/>
 							))}
 						</List>
 					</Grid>
