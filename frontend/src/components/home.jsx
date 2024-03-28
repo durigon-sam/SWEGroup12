@@ -33,6 +33,7 @@ export default function HomePage(){
 				<Grid container spacing={2} columns={12} sx={{margin: '20px 30px 20px 30px'}}>
 					<Grid item xs={8} >
 						<RecentItem>My Recent Listening</RecentItem>
+						<p>{localStorage.getItem('client_id')}</p>
 						<List
 							sx={{
 								width: '95%',
