@@ -41,7 +41,9 @@ export default function FriendListItem(props) {
 					sx={{
 						height: '64px',
 						width: '64px',
-						bgcolor: 'white',
+						'&: hover': {
+							bgcolor: 'white',
+						}
 					}}
 					onClick={handleAvatarClick}
 				/>

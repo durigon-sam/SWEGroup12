@@ -7,12 +7,12 @@ import { useNavigate } from 'react-router-dom'
 export default function SongListItem(props) {
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
-	const {id, album_art, song_name, artist_name, album_name, time_listened} = props.item
+	const {id, songid, album_art, song_name, artist_name, album_name, time_listened} = props.item
 	const navigate = useNavigate()
 
 	//TODO: maybe make this a modal instead of a page?
 	const handleReviewButton = () => {
-		navigate('/review')
+		navigate(`/review/${songid}`)
 	}
 	
 	return(
