@@ -42,15 +42,16 @@ export default function FriendListItem(props) {
 						height: '64px',
 						width: '64px',
 						'&: hover': {
-							bgcolor: 'white',
+							border: '2px solid',
+							borderColor: 'white'
 						}
 					}}
 					onClick={handleAvatarClick}
 				/>
 			</ListItemAvatar>
 			{/* maybe put the grid here? */}
-			<Grid container columns={6}>
-				<Grid item xs={4}
+			<Grid container columns={3}>
+				<Grid item xs={2}
 					sx={{
 						paddingLeft: '10px'
 					}}
@@ -69,11 +70,11 @@ export default function FriendListItem(props) {
 						{username}
 					</Typography>
 				</Grid>
-				<Grid item xs={2} 
+				<Grid item xs={1} 
 					sx={{
-						paddingRight: '10px', 
-						display:'flex', 
-						alignItems: 'right'}}
+						
+						alignItems: 'right',
+					}}
 				>
 					<Typography
 						fontFamily={font}
@@ -81,11 +82,12 @@ export default function FriendListItem(props) {
 						fontWeight={300}
 						fontSize={'20px'}
 						style={{
-							overflow: 'hidden',
-							textOverflow: 'ellipsis',
-							whiteSpace: 'nowrap',
+							// overflow: 'hidden',
+							// textOverflow: 'ellipsis',
+							// whiteSpace: 'nowrap',
 							minWidth: '130px',
 							textAlign: 'right',
+							wordWrap: 'break-word'
 						}}
 					>
 						Ratings: {ratings}

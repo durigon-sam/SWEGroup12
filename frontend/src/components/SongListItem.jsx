@@ -22,9 +22,10 @@ export default function SongListItem(props) {
 				marginBottom: 5,
 				height: '175px',
 				borderRadius: '10px',
+				minWidth: '630px'
 			}}
 		>
-			<Grid container columns={12} sx={{whiteSpace: 'nowrap'}}>
+			<Grid container columns={12} sx={{display: 'flex', flexWrap: 'nowrap'}}>
 				{/* album art */}
 				<Grid item xs={2} 
 					sx={{ 
@@ -130,8 +131,6 @@ export default function SongListItem(props) {
 							Review
 						</Typography>
 					</ListItemButton>
-
-
 				</Grid>
 
 
