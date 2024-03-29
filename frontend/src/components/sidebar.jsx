@@ -28,9 +28,7 @@ export default function SideBar(){
 		}
 		// if they do match, stay on the same page
 		else {
-			return (
-				alert('You are already logged in!')
-			)
+			return (alert('You are already logged in!'))
 		}
 	}
 
