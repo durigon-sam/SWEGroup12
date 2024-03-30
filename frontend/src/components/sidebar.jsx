@@ -20,13 +20,25 @@ export default function SideBar(){
 	}
 
 	const handleLogoutClick = () => {
-		// if the userId does not match mine go to login page 
-		if (localStorage.getItem('client_id') != '31c97b67a40b4057a56c59c6390b92d4') {
+		// if no userId yet, go to login page 
+		if (localStorage.getItem('client_id') == '') {
 			navigate('/login')
 		}
-		// if they do match, stay on the same page
+		// if user is logged in, wipe credentials and go back to login page
 		else {
-			return (alert('You are already logged in!'))
+			localStorage.setItem('client_id', '')
+			localStorage.setItem('client_secret', '')
+			navigate('/login')
+		}
+	}
+
+	// this function changes the value of the 'Login' button on the button left of sidebar to be correct value
+	function correctValue() {
+		// if user is not logged in, display 'Login'
+		if (localStorage.getItem('client_id') == '') {
+			return 'Login'
+		} else { // if user is already logged in, display 'Logout'
+			return 'Logout'
 		}
 	}
 
@@ -88,9 +100,7 @@ export default function SideBar(){
 				onClick={handleLogoutClick}
 			//end ListItemButton
 			>
-				<Typography className='logoutText' variant='h4'>
-				Login
-				</Typography>
+				<Typography className='logoutText' variant='h4'>{correctValue()}</Typography>
 			</ListItemButton>
 		</Drawer>
 	)
