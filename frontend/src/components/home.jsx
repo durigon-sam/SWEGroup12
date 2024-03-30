@@ -41,6 +41,7 @@ export default function HomePage(){
 					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
 						<RecentItem>
 							<Typography variant='h3' fontFamily={font} fontWeight={600}>My Recent Listening</Typography>
+              // <Typography color='white'>Current clientId is: {localStorage.getItem('client_id')}</Typography>
 						</RecentItem>
 						<List
 							sx={{
