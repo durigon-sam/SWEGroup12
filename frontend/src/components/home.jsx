@@ -42,6 +42,7 @@ export default function HomePage(){
 						<RecentItem>
 							<Typography variant='h3' fontFamily={font} fontWeight={600}>My Recent Listening</Typography>
 							<Typography color='white'>Current clientId: {localStorage.getItem('client_id')}</Typography>
+							<Typography color='white'>Access Token: {localStorage.getItem('access_token')}</Typography>
 						</RecentItem>
 						<List
 							sx={{
