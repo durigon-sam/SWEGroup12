@@ -33,4 +33,13 @@ public class User {
 
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
+
+	@Column(name = "ACCESS_TOKEN")
+	private String accessToken;
+
+	@Column(name = "REFRESH_TOKEN")
+	private String refreshToken;
+
+	@Column(name = "REF_ID")
+	private String refId;
 }
