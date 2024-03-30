@@ -12,37 +12,21 @@ export default function SideBar(){
 	const handleListButtonClick = (arg) => {
 		if (arg === buttonLabels[0]){
 			navigate('/search')
-		}else if (arg === buttonLabels[1]){
+		} else if (arg === buttonLabels[1]) {
 			navigate('/playlist')
-		}else if (arg === buttonLabels[2]){
+		} else if (arg === buttonLabels[2]) {
 			navigate('/profile')
 		}
 	}
 
 	const handleLogoutClick = () => {
-		// if no userId yet, go to login page 
-		if (localStorage.getItem('client_id') == '') {
-			navigate('/login')
-		}
-		// if user is logged in, wipe credentials and go back to login page
-		else {
-			localStorage.setItem('client_id', '')
-			localStorage.setItem('client_secret', '')
-			navigate('/login')
-		}
+		// user needs to logout so wipe credentials and go back to login page
+		localStorage.setItem('client_id', '')
+		localStorage.setItem('client_secret', '')
+		navigate('/')
 	}
 
-	// this function changes the value of the 'Login' button on the button left of sidebar to be correct value
-	function correctValue() {
-		// if user is not logged in, display 'Login'
-		if (localStorage.getItem('client_id') == '') {
-			return 'Login'
-		} else { // if user is already logged in, display 'Logout'
-			return 'Logout'
-		}
-	}
-
-	return(
+	return (
 		<Drawer 
 			variant='permanent' 
 			anchor='left' 
@@ -100,7 +84,7 @@ export default function SideBar(){
 				onClick={handleLogoutClick}
 			//end ListItemButton
 			>
-				<Typography className='logoutText' variant='h4'>{correctValue()}</Typography>
+				<Typography className='logoutText' variant='h4'>Logout</Typography>
 			</ListItemButton>
 		</Drawer>
 	)

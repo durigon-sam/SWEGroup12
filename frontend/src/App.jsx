@@ -10,8 +10,8 @@ export default function App() {
 			<Router>
 				<Routes>
 					{/* Place future route endpoints in here as a new Route */}
-					<Route path='/' element={<HomePage/>} />
-					<Route path='/login' element={<Login/>}/>
+					<Route path='/' element={<Login/>} />
+					<Route path='/home' element={<HomePage/>}/>
 				</Routes>
 			</Router>
 		</div>
