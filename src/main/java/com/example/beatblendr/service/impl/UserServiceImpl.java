@@ -78,6 +78,27 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
         
     }
+    @Override
+    public void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
+            String refreshToken){
+            
+            User savedUser = userRepository.findByEmail(user.getEmail()).get(0);
+            if(savedUser!=null){
+
+                savedUser.setAccessToken(accessToken);
+                savedUser.setRefreshToken(accessToken);
+                
+
+            }
+            else{
+                savedUser = new User((long) 1,user.getDisplayName(),user.getId(),user.getEmail(), refreshToken, accessToken, user.getDisplayName());
+                userRepository.save(savedUser);
+
+            }
+
+
+
+            }
 
 
 }

@@ -10,7 +10,10 @@ public class UserMapper {
             user.getId(),
             user.getUsername(),
             user.getSpotifyAccount(),
-            user.getEmail()
+            user.getEmail(),
+            user.getAccessToken(),
+            user.getRefreshToken(),
+            user.getRefId()
         );
     }
 
@@ -19,7 +22,10 @@ public static User mapToUser(UserDTO userDTO){
             userDTO.getId(),
             userDTO.getUsername(),
             userDTO.getSpotifyAccount(),
-            userDTO.getEmail()
+            userDTO.getEmail(),
+            userDTO.getAccessToken(),
+            userDTO.getRefreshToken(),
+            userDTO.getRefId()
         );
     }
     
