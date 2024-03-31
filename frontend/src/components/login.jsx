@@ -21,9 +21,9 @@ export default function Login () {
 		<div className='' style={{backgroundColor: '#001321', width: '100vw', height: '100vw'}}>
 			<Box className=''>
 				<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-					<img src={src} width={550} height={300} />
+					<img src={src} width={600} height={260} />
 				</div>
-				<div style={{width: '50vw', margin: '0 auto'}}>
+				<div style={{width: '60vw', margin: '0 auto'}}>
 					<Typography
 						sx={{
 							color: 'white',
@@ -33,12 +33,12 @@ export default function Login () {
 						already have a Spotify account, make one and come back.
 					</Typography><br />
 				</div>
-				<div style={{width: '50vw', margin: '0 auto', backgroundColor: '#1c1c84'}}>
+				<div style={{width: '60vw', margin: '0 auto', backgroundColor: '#1c1c84'}}>
 					<List style={{color: 'white'}}>
 						<ListItem>1. Navigate to the Spotify for Developers site using this link: https://developer.spotify.com/dashboard</ListItem>
 						<ListItem>2. Once logged in, click on your name and then 'Dashboard' in the top right corner.</ListItem>
 						<ListItem>3. Click 'Create App' and enter any name and description you want.</ListItem>
-						<ListItem>4. Under 'Redirect URI' copy and paste this: http://localhost:3000</ListItem>
+						<ListItem>4. Under 'Redirect URI' copy and paste this: http://localhost:3000/home</ListItem>
 						<ListItem>5. Save and go back to your dashboard.</ListItem>
 						<ListItem>6. Click on the app you just created and go into 'Settings'.</ListItem>
 						<ListItem>7. At the top you should see 'Client ID' and 'Client secret'. Copy and paste these below to login to BeatBlendr!</ListItem>
@@ -47,10 +47,10 @@ export default function Login () {
 					</List>
 				</div>
 				{/* user needs to input their clientId and client secret */}
-				<div style={{width: '50vw', margin: '0 auto', display: 'flex', justifyContent: 'center', backgroundColor: 'white'}}>
+				<div style={{width: '60vw', margin: '0 auto', display: 'flex', justifyContent: 'center', backgroundColor: 'white'}}>
 					<div style={{margin: '0 auto'}}>
-						<TextField fullWidth id="clientId" label="ClientId" variant="standard"/><br /><br />
-						<TextField fullWidth id="clientSecret" label="Client Secret" variant="standard"/><br /><br />
+						<TextField id="clientId" label="ClientId" variant="standard" style={{width: '30vw'}}/><br /><br />
+						<TextField id="clientSecret" label="Client Secret" variant="standard" style={{width: '30vw'}}/><br /><br />
 						<Button variant="contained" style={{display: 'flex', margin: '0 auto'}} onClick={requestAuthorization}>Log In</Button><br />
 					</div>
 				</div>
