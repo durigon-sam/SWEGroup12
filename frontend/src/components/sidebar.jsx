@@ -23,6 +23,8 @@ export default function SideBar(){
 		// user needs to logout so wipe credentials and go back to login page
 		localStorage.setItem('client_id', '')
 		localStorage.setItem('client_secret', '')
+		localStorage.setItem('access_token', null)
+		localStorage.setItem('refresh_token', null)
 		navigate('/')
 	}
 

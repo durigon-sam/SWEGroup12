@@ -1,14 +1,17 @@
 import React from 'react'
 import '../styles/App.css'
 import { Box, Button, List, ListItem, TextField, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 // global variables
-var redirect_uri = 'http://localhost:3000/home' // once user enters valid info, redirects to homepage
+var redirect_uri = 'http://localhost:3000/' // once user enters valid info, redirects to homepage
 
 var client_id = ''
 var client_secret = ''
 var access_token = null
 var refresh_token = null
+
+var success = false
 
 const src = '/BeatBlendr_Logos/Full_Color_White.png'
 
@@ -17,6 +20,30 @@ const AUTHORIZE = 'https://accounts.spotify.com/authorize'
 const TOKEN = 'https://accounts.spotify.com/api/token'
 
 export default function Login () {
+
+	if (window.location.search.length > 0) {
+		success = true
+	}
+
+	console.log('Success value is: ' + success)
+	const navigate = useNavigate()
+
+	// after the user logs in, this function is triggered by "Home" button and grabs an access token and routes to home page
+	function getTokenAndHome() {
+		// if they click this button too early
+		if (localStorage.getItem('client_id') == '') {
+			alert('Please enter clientId and client secret first!')
+		} else if(success == true) {
+			// grab access token
+			let code = getCode()
+			fetchAccessToken(code)
+			// bring user to the home page
+			navigate('/home')
+		} else {
+			alert('Something went wrong.')
+		}
+	}
+
 	return (
 		<div className='' style={{backgroundColor: '#001321', width: '100vw', height: '100vw'}}>
 			<Box className=''>
@@ -51,7 +78,10 @@ export default function Login () {
 					<div style={{margin: '0 auto'}}>
 						<TextField id="clientId" label="ClientId" variant="standard" style={{width: '30vw'}}/><br /><br />
 						<TextField id="clientSecret" label="Client Secret" variant="standard" style={{width: '30vw'}}/><br /><br />
-						<Button variant="contained" style={{display: 'flex', margin: '0 auto'}} onClick={requestAuthorization}>Log In</Button><br />
+						<div style={{display: 'flex', margin: '0 auto', justifyContent: 'center'}}>
+							<Button variant="contained" style={{marginRight:'3vw', marginBottom:'1vw'}} onClick={requestAuthorization}>Log In</Button><br />
+							<Button variant="contained" style={{marginBottom:'1vw'}}onClick={getTokenAndHome}>Home</Button><br />
+						</div>
 					</div>
 				</div>
 			</Box>
@@ -85,9 +115,10 @@ function callAuthorizationApi(body){
 function handleAuthorizationResponse(){
 	if ( this.status == 200 ) { // success
 		var data = JSON.parse(this.responseText)
-		console.log('Success! ' + data)
+		console.log('Success!')
 		// check if we got an access token. if we did, save it
 		if ( data.access_token != undefined ) {
+			console.log('Grabbing token! ' + data.access_token)
 			access_token = data.access_token
 			localStorage.setItem('access_token', access_token)
 		}
@@ -115,24 +146,19 @@ function getCode() {
   
 // this function uses the User's id and secret to seek authorization calling Spotify API
 function requestAuthorization() {
-	// if the url is altered (not first time on the login page)
-	if (window.location.search.length > 0) {
-		let code = getCode()
-		fetchAccessToken(code)
-	} else {
-		client_id = document.getElementById('clientId').value
-		client_secret = document.getElementById('clientSecret').value
-		// keeps track of client ID and Secret on page reloads
-		localStorage.setItem('client_id', client_id)
-		localStorage.setItem('client_secret', client_secret)
+	// use user id and secret to authorize 
+	client_id = document.getElementById('clientId').value
+	client_secret = document.getElementById('clientSecret').value
+	// keeps track of client ID and Secret on page reloads
+	localStorage.setItem('client_id', client_id)
+	localStorage.setItem('client_secret', client_secret)
 
-		// construct the link shown below in comment
-		let url = AUTHORIZE
-		url += '?client_id=' + localStorage.getItem('client_id')
-		url += '&response_type=code'
-		url += '&redirect_uri=' + encodeURI(redirect_uri)
-		url += '&show_dialog=true'
-		url += '&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private'
-		window.location.href = url // Show Spotify's authorization screen
-	}
+	// construct the link shown below in comment
+	let url = AUTHORIZE
+	url += '?client_id=' + localStorage.getItem('client_id')
+	url += '&response_type=code'
+	url += '&redirect_uri=' + encodeURI(redirect_uri)
+	url += '&show_dialog=true'
+	url += '&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private'
+	window.location.href = url // Show Spotify's authorization screen
 }
