@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/App.css'
-import { Box, Button, List, ListItem, TextField, Typography } from '@mui/material'
+import { Box, Button, FormControl, InputLabel, List, ListItem, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 const RECENTS = 'https://api.spotify.com/v1/me/player/recently-played'
@@ -22,6 +22,9 @@ export default function Profile () {
 
 			<Button variant="contained" onClick={getRecentSongs}>Get Recently Played Songs</Button>
 			<Typography>(check console in inspect element)</Typography><br />
+
+			
+
 			<Button variant="contained" onClick={goHome}>Home</Button><br />
 		</div>
 	)
@@ -47,17 +50,19 @@ function handleResponse() {
 	if ( this.status == 200 ){
 		var data = JSON.parse(this.responseText)
 		console.log(data)
-		// get song names from the returned array
-		for (let i = 0; i < data.items.length; i++) { 
-			// store just the song names in an array
-			recentSongs.push(data.items[i].track.name)
-			console.log(data.items[i].track.name)
-		}
-		localStorage.setItem('recent_song_names', recentSongs)
-		//console.log(recentSongs)
-		console.log(localStorage.getItem('recent_song_names')[0])
+		addSongsToList(data)
 	} else { // other error occured
 		console.log(this.responseText)
 		alert(this.responseText)
 	}
+}
+
+function addSongsToList(data) {
+	// get song names from the returned array
+	for (let i = 0; i < data.items.length; i++) { 
+		// store just the song names in an array	
+		console.log(data.items[i].track.name)
+		recentSongs.push(data.items[i].track.name)
+	}
+	return recentSongs
 }
