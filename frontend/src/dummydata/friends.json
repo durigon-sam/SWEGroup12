@@ -1,0 +1,29 @@
+{
+    "friends": [
+      {
+        "userid": 2,
+        "username": "JohnDoe",
+        "ratings": 150
+      },
+      {
+        "userid": 3,
+        "username": "JaneSmith",
+        "ratings": 90
+      },
+      {
+        "userid": 4,
+        "username": "SamuelJohnson",
+        "ratings": 120
+      },
+      {
+        "userid": 5,
+        "username": "EmilyWhite",
+        "ratings": 100
+      },
+      {
+        "userid": 6,
+        "username": "DavidBrown",
+        "ratings": 180
+      }
+    ]
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Drawer, List, ListItemText, ListItemButton, Typography } from '@mui/material'
+import { Drawer, List, ListItemText, ListItemButton, Typography, Alert } from '@mui/material'
 import '../styles/sidebar.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,11 +7,9 @@ export default function SideBar(){
 
 	const src = '/BeatBlendr_Logos/VertAlt_Color_White.png'
 	const buttonLabels = ['Find Music', 'Create Playlist', 'My Profile']
-
 	const navigate = useNavigate()
 
 	const handleListButtonClick = (arg) => {
-		//alert(arg)
 		if (arg === buttonLabels[0]){
 			navigate('/search')
 		}else if (arg === buttonLabels[1]){
@@ -22,7 +20,14 @@ export default function SideBar(){
 	}
 
 	const handleLogoutClick = () => {
-		navigate('/login')
+		// if the userId does not match mine go to login page 
+		if (localStorage.getItem('client_id') != '31c97b67a40b4057a56c59c6390b92d4') {
+			navigate('/login')
+		}
+		// if they do match, stay on the same page
+		else {
+			return (alert('You are already logged in!'))
+		}
 	}
 
 	return(
@@ -36,6 +41,7 @@ export default function SideBar(){
 				}
 			}}
 		>
+			{/* TODO: convert this to grid for better styling */}
 			<img className='logo' src={src}/>
 			<List style={{ justifyContent: 'center' }}>
 				{buttonLabels.map((text) => (
@@ -83,7 +89,7 @@ export default function SideBar(){
 			//end ListItemButton
 			>
 				<Typography className='logoutText' variant='h4'>
-				Logout
+				Login
 				</Typography>
 			</ListItemButton>
 		</Drawer>

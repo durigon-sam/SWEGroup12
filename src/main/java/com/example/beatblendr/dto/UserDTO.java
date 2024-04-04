@@ -15,5 +15,8 @@ public class UserDTO {
     private String username;
     private String spotifyAccount;
     private String email;
+    private String accessToken;
+    private String refreshToken;
+    private String refId;
     
 }
