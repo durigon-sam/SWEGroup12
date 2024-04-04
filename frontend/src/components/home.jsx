@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
@@ -8,6 +8,7 @@ import SongListItem from './SongListItem'
 import recentData from '../dummydata/recents.json'
 import friends from '../dummydata/friends.json'
 import FriendListItem from './FriendListItem'
+import userDataService from '../services/userService'
 
 const RECENTS = 'https://api.spotify.com/v1/me/player/recently-played'
 const ME = 'https://api.spotify.com/v1/me'
@@ -15,6 +16,31 @@ var recentSongs = []
 var name = ''
 
 export default function HomePage(){
+
+	//This is run whenever the component is first loaded
+	useEffect(() => {
+		//TODO: uncomment this when service and REST API call are implemented
+		// use this form for all state variables and REST API calls
+		
+		// const userDataService = new userDataService();
+		// userDataService.getFriendsOfUser()
+		// 	.then(response => {
+		// 		setFriendsState(response.data)
+		// 	})
+		setFriendsState(friends)
+	}, [])
+
+	//this establishes friendsState as a state variable and hooks it up with localStorage
+	//TODO: Max make sure this doesn't mess with your local storage stuff
+	const [friendsState, setFriendsState] = useState(() => {
+		const storedState = localStorage.getItem('friendsState')
+		return storedState ? JSON.parse(storedState) : { friends: [] }
+	})
+
+	//this runs whenever the friendsState is modified
+	useEffect(() => {
+		localStorage.setItem('friendsState', JSON.stringify(friendsState))
+	}, [friendsState])
 
 	window.onload = onPageLoad()
 
@@ -90,7 +116,7 @@ export default function HomePage(){
 								'& ul': { padding: 0 },
 							}}
 						>
-							{friends.friends.map((item) => (
+							{friendsState.friends.map((item) => (
 								<FriendListItem key={item.userid} item={item}/>
 							))}
 						</List>
