@@ -1,19 +1,12 @@
 import React from 'react'
-import { Avatar, Box, Grid, ListItem, ListItemAvatar, Typography } from '@mui/material'
+import { Avatar, Grid, ListItem, ListItemAvatar, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
 import { useNavigate } from 'react-router-dom'
 
 export default function FriendListItem(props) {
 
-	/*
-	TODO:
-		make item cards vertically smaller
-		add avatar
-		add profile name
-		add current listening ?
-		add review numbers on account
-	*/
+	// TODO: fix styling on these cards
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const navigate = useNavigate()

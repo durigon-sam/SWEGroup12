@@ -1,23 +1,127 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import SideBar from './sidebar'
+import '../styles/home.css'
 import '../styles/App.css'
-import { Box, Button, List, ListItem, TextField, Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
+import { styled } from '@mui/material/styles'
 
-export default function Search () {
+export default function Search(){
 
-	const navigate = useNavigate()
-     
-	function goHome() {
-		navigate('/home')
+	// use the spotify search API call found at https://developer.spotify.com/documentation/web-api/reference/search
+    
+	const [searchTerm, setSearchTerm] = useState('')
+	const [selectedFilter, setSelectedFilter] = useState('songs')
+  
+	const handleSearch = () => {
+		// Perform search based on searchTerm and selectedFilter
+		console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
 	}
 
-	return (
-		<div>
-			<Typography>Your clientId is: {localStorage.getItem('client_id')}</Typography>
-			<Typography>Your client secret is: {localStorage.getItem('client_secret')}</Typography>
-			<Typography>Your access token is: {localStorage.getItem('access_token')}</Typography><br />
+	//triggers every time searchTerm is modified
+	useEffect(() => {
+		console.log(searchTerm)
+	}, [searchTerm])
 
-			<Button variant="contained" onClick={goHome}>Home</Button><br />
+	return(
+		<div className='App'>
+			<SideBar className='sidebar'/>
+			<div className='App-header'>
+				<Grid container columns={10} 
+					sx={{
+						background: '#3D2159',
+						textAlign: 'left',
+						color: 'white',
+						height: '100px',
+						minWidth: '595px',
+						borderRadius: '50px',
+						margin: '20px',
+						width: '90vw',
+						flexWrap: 'nowrap',
+					}}
+				>
+					{/* search bar */}
+					<Grid item xs={8} sx={{minWidth: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '20px', marginRight: '10px'}}>
+						<TextField
+							fullWidth
+							variant='outlined'
+							placeholder="Search"
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position="start">
+										<SearchIcon/>
+									</InputAdornment>
+								),
+								sx: {
+									color: 'white', // Set the text color to white
+								},
+							}}
+							sx={{
+								color: 'white',
+								bgcolor: '#444444',
+								borderRadius: '50px',
+								'& .MuiOutlinedInput-notchedOutline': {
+									borderColor: 'transparent',
+								},
+								'&:hover .MuiOutlinedInput-notchedOutline': {
+									borderColor: 'transparent',
+								},
+								// TODO: FIGURE OUT WHY THE BLUE OUTLINE WON'T GO AWAY
+								'&:focus .MuiOutlinedInput-notchedOutline': {
+									borderColor: 'white',
+								},
+							}}
+						/>
+					</Grid>
+
+					{/* filter dropdown */}
+					<Grid item xs={1} sx={{minWidth: '92px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '10px', marginRight: '10px'}}>
+						<TextField
+							fullWidth
+							select
+							className="filter-dropdown"
+							variant="outlined"
+							value={selectedFilter}
+							onChange={(e) => setSelectedFilter(e.target.value)}
+							
+							// TODO: figure out how to style this bc i can't find something i like
+							sx={{
+								color: 'white',
+								bgcolor: 'white',
+								borderRadius: '5px',
+								'& .MuiOutlinedInput-notchedOutline': {
+									borderColor: 'transparent',
+								},
+								'&:hover .MuiOutlinedInput-notchedOutline': {
+									borderColor: 'transparent',
+								},
+								// TODO: FIGURE OUT WHY THE BLUE OUTLINE WON'T GO AWAY
+								'&:focus .MuiOutlinedInput-notchedOutline': {
+									borderColor: 'white',
+								},
+							}}
+						>
+							<MenuItem value="songs">Songs</MenuItem>
+							<MenuItem value="albums">Albums</MenuItem>
+							<MenuItem value="users">Users</MenuItem>
+						</TextField>
+					</Grid>
+					
+					{/* search button */}
+					<Grid item xs={1} sx={{minWidth: '88px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '20px'}}>
+						<Button
+							fullWidth
+							variant="contained"
+							style={{ backgroundColor: '#2D46B9'}} // Set the custom background and text colors
+							onClick={handleSearch}
+						>
+                            Search
+						</Button>
+					</Grid>
+				</Grid>
+			</div>
 		</div>
 	)
-} // end Search()
+}
