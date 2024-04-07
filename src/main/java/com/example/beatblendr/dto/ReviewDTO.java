@@ -3,6 +3,9 @@ package com.example.beatblendr.dto;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import com.example.beatblendr.entity.User;
+
 import lombok.AllArgsConstructor;
 
 @Getter
@@ -12,10 +15,9 @@ import lombok.AllArgsConstructor;
 public class ReviewDTO {
 
     private Long id;
-    private String userId;
-    private String albumId;
+    private String spotifyId;
+    private Long type;
     private Long rating;
-    private String description;
-
-    
+    private String description;   
+    private User user;
 }

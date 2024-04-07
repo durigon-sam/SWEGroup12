@@ -40,8 +40,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public ReviewDTO findById(long id) {
-        Review review = reviewRepository.findById(id);
+    public ReviewDTO findByReviewId(long id) {
+        Review review = reviewRepository.findByReviewId(id);
         ReviewDTO foundReview = ReviewMapper.mapToReviewDTO(review);
          
         return foundReview;
@@ -57,12 +57,12 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public ReviewDTO updateReview(long id, ReviewDTO updatedReviewDTO){
-        Review review = reviewRepository.findById(id);
+        Review review = reviewRepository.findByReviewId(id);
 
-        review.setAlbumId(updatedReviewDTO.getAlbumId());
-        review.setId(updatedReviewDTO.getId());
+        review.setSpotifyId(updatedReviewDTO.getSpotifyId());
+        review.setReviewId(updatedReviewDTO.getId());
         review.setRating(updatedReviewDTO.getId());
-        review.setUserId(updatedReviewDTO.getUserId());
+        review.setType(updatedReviewDTO.getType());
         review.setDescription(updatedReviewDTO.getDescription());
       
 

@@ -7,7 +7,7 @@ import com.example.beatblendr.dto.SongDTO;
 
 public interface SongService {
     SongDTO createSong(SongDTO songDTO);
-    SongDTO findById(long id);
+    SongDTO findBySongId(long id);
     List<SongDTO> findAll();
     SongDTO updateSong(long id, SongDTO updatedSongDTO);
     void deleteSong(Long id);

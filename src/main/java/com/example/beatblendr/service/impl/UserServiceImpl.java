@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(id);
         user.setEmail(updatedUserDTO.getEmail());
         user.setId(updatedUserDTO.getId());
-        user.setSpotifyAccount(updatedUserDTO.getSpotifyAccount());
+        user.setSpotifyId(updatedUserDTO.getSpotifyId());
         user.setUsername(updatedUserDTO.getUsername());
      
         User updatedUser = userRepository.save(user);
@@ -66,11 +66,19 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO findById(long id) {
-        User user = userRepository.findById(id);
+       User user = userRepository.findById(id);
        UserDTO foundUser = UserMapper.mapToUserDTO(user);
         
         return foundUser;
     }
+    @Override
+    public UserDTO findBySpotifyId(String spotifyId) {
+       User user = userRepository.findBySpotifyId(spotifyId);
+       UserDTO foundUser = UserMapper.mapToUserDTO(user);
+        
+        return foundUser;
+    }
+
 
     @Override
     public void deleteUser(Long id) {
@@ -78,27 +86,29 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
         
     }
-    @Override
-    public void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
-            String refreshToken){
-            
-            User savedUser = userRepository.findByEmail(user.getEmail()).get(0);
-            if(savedUser!=null){
 
-                savedUser.setAccessToken(accessToken);
-                savedUser.setRefreshToken(accessToken);
+    
+    // @Override
+    // public void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
+    //         String refreshToken){
+            
+    //         User savedUser = userRepository.findByEmail(user.getEmail()).get(0);
+    //         if(savedUser!=null){
+
+    //             savedUser.setAccessToken(accessToken);
+    //             savedUser.setRefreshToken(accessToken);
                 
 
-            }
-            else{
-                savedUser = new User((long) 1,user.getDisplayName(),user.getId(),user.getEmail(), refreshToken, accessToken, user.getDisplayName());
-                userRepository.save(savedUser);
+    //         }
+    //         else{
+    //             savedUser = new User((long) 1,user.getDisplayName(),user.getId(),user.getEmail(), refreshToken, accessToken, user.getDisplayName());
+    //             userRepository.save(savedUser);
 
-            }
+    //         }
 
 
 
-            }
+    //         }
 
 
 }

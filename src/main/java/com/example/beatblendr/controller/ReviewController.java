@@ -41,7 +41,7 @@ public class ReviewController {
 
     @GetMapping("{id}")
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable("id") long id){
-        ReviewDTO savedReview = reviewService.findById(id);
+        ReviewDTO savedReview = reviewService.findByReviewId(id);
         return new ResponseEntity<>(savedReview, HttpStatus.CREATED);
     }
     //Get all users

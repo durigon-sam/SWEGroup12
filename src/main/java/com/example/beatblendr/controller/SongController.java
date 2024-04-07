@@ -39,7 +39,7 @@ public class SongController {
 
     @GetMapping("{id}")
     public ResponseEntity<SongDTO> getSongById(@PathVariable("id") long id){
-        SongDTO savedSong = songService.findById(id);
+        SongDTO savedSong = songService.findBySongId(id);
         return new ResponseEntity<>(savedSong, HttpStatus.CREATED);
     }
     //Get all users
