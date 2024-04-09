@@ -12,25 +12,20 @@ export default function SideBar(){
 	const handleListButtonClick = (arg) => {
 		if (arg === buttonLabels[0]){
 			navigate('/search')
-		}else if (arg === buttonLabels[1]){
+		} else if (arg === buttonLabels[1]) {
 			navigate('/playlist')
-		}else if (arg === buttonLabels[2]){
+		} else if (arg === buttonLabels[2]) {
 			navigate('/profile')
 		}
 	}
 
 	const handleLogoutClick = () => {
-		// if the userId does not match mine go to login page 
-		if (localStorage.getItem('client_id') != '31c97b67a40b4057a56c59c6390b92d4') {
-			navigate('/login')
-		}
-		// if they do match, stay on the same page
-		else {
-			return (alert('You are already logged in!'))
-		}
+		// user needs to logout so wipe credentials and go back to login page
+		localStorage.clear()
+		navigate('/')
 	}
 
-	return(
+	return (
 		<Drawer 
 			variant='permanent' 
 			anchor='left' 
@@ -88,9 +83,7 @@ export default function SideBar(){
 				onClick={handleLogoutClick}
 			//end ListItemButton
 			>
-				<Typography className='logoutText' variant='h4'>
-				Login
-				</Typography>
+				<Typography className='logoutText' variant='h4'>Logout</Typography>
 			</ListItemButton>
 		</Drawer>
 	)
