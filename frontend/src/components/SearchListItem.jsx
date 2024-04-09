@@ -12,10 +12,11 @@ export default function SearchListItem(props){
 				background: 'linear-gradient(to right, #2D46B9, #3D2159)',
 				height: '175px',
 				borderRadius: '10px',
-				minWidth: '630px'
+				minWidth: '630px',
+				marginBottom: 5
 			}}
 		>
-
+			{props.item}
 		</ListItem>
 	)
 }

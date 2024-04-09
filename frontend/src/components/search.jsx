@@ -5,6 +5,7 @@ import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { styled } from '@mui/material/styles'
+import SearchListItem from './SearchListItem'
 
 export default function Search(){
 
@@ -26,17 +27,23 @@ export default function Search(){
 	return(
 		<div className='App'>
 			<SideBar className='sidebar'/>
-			<div className='App-header'>
+			<div className='App-header' 
+				style={{
+					flexDirection: 'column',
+					alignItems: 'center'
+				}}
+			>
 				<Grid container columns={10} 
 					sx={{
+						
 						background: '#3D2159',
 						textAlign: 'left',
 						color: 'white',
 						height: '100px',
-						minWidth: '595px',
+						minWidth: '395px',
 						borderRadius: '50px',
 						margin: '20px',
-						width: '90vw',
+						width: '90%',
 						flexWrap: 'nowrap',
 					}}
 				>
@@ -61,7 +68,7 @@ export default function Search(){
 							sx={{
 								color: 'white',
 								bgcolor: '#444444',
-								borderRadius: '50px',
+								borderRadius: '10px',
 								'& .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'transparent',
 								},
@@ -75,7 +82,6 @@ export default function Search(){
 							}}
 						/>
 					</Grid>
-
 					{/* filter dropdown */}
 					<Grid item xs={1} sx={{minWidth: '92px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '10px', marginRight: '10px'}}>
 						<TextField
@@ -121,6 +127,22 @@ export default function Search(){
 						</Button>
 					</Grid>
 				</Grid>
+
+				{/* SearchResults */}
+				<List
+					sx={{
+						posiiton: 'relative',
+						overflow: 'auto',
+						maxHeight: '80vh',
+						width: '85%',
+						'& ul': {padding: 0},
+					}}
+				>
+					{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+						<SearchListItem key={item} item={item}/>
+					))}
+				</List>
+				
 			</div>
 		</div>
 	)

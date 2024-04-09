@@ -1,9 +1,9 @@
 import React from 'react'
-import { Drawer, List, ListItemText, ListItemButton, Typography, Alert } from '@mui/material'
+import { Drawer, List, ListItemText, ListItemButton, Typography, Alert, Box } from '@mui/material'
 import '../styles/sidebar.css'
 import { useNavigate } from 'react-router-dom'
 
-export default function SideBar(){
+export default function SideBar(props){
 
 	const src = '/BeatBlendr_Logos/VertAlt_Color_White.png'
 	const buttonLabels = ['Find Music', 'Create Playlist', 'My Profile']
@@ -25,7 +25,11 @@ export default function SideBar(){
 		navigate('/')
 	}
 
-	return (
+	const handleHomeClick = () => {
+		navigate('/home')
+	}
+
+	return(
 		<Drawer 
 			variant='permanent' 
 			anchor='left' 
@@ -65,26 +69,49 @@ export default function SideBar(){
 					</ListItemButton>
 				))}
 			</List>
-			<ListItemButton className='logoutButton'
+
+			<Box
 				sx={{
 					position: 'absolute',
-					bottom: '0',
-					height: '50px',
+					bottom: 0,
 					width: '90%',
-					backgroundColor: '#2d46b9',
-					borderRadius: '45px',
-					marginLeft: '5%',
-					marginBottom: '30px',
-					justifyContent: 'center',
-					'&:hover':{
-						backgroundColor: '#2d46b9',
-					}
+					marginLeft: '5%'
 				}}
-				onClick={handleLogoutClick}
-			//end ListItemButton
 			>
-				<Typography className='logoutText' variant='h4'>Logout</Typography>
-			</ListItemButton>
+				{(window.location.href.endsWith('/home')) ? true : 
+					<ListItemButton className='logoutButton'
+						sx={{
+							height: '50px',
+							backgroundColor: '#2d46b9',
+							borderRadius: '45px',
+							marginBottom: '20px',
+							justifyContent: 'center',
+							'&:hover':{
+								backgroundColor: '#2d46b9',
+							}
+						}}
+						onClick={handleHomeClick}
+					>
+						<Typography className='logoutText' variant='h4'>Home</Typography>
+					</ListItemButton>
+				}
+				<ListItemButton className='logoutButton'
+					sx={{
+						height: '50px',
+						backgroundColor: '#2d46b9',
+						borderRadius: '45px',
+						marginBottom: '20px',
+						justifyContent: 'center',
+						'&:hover':{
+							backgroundColor: '#2d46b9',
+						}
+					}}
+					onClick={handleLogoutClick}
+					//end ListItemButton
+				>
+					<Typography className='logoutText' variant='h4'>Login</Typography>
+				</ListItemButton>
+			</Box>
 		</Drawer>
 	)
 }

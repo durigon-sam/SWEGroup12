@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import './styles/App.css'
 import Login from './components/login'
 import HomePage from './components/home'
@@ -13,8 +13,9 @@ export default function App() {
 			<Router>
 				<Routes>
 					{/* Place future route endpoints in here as a new Route */}
-					<Route path='/' element={<Login/>} />
-					<Route path='/home' element={<HomePage/>}/>
+					<Route path="/" element={<Navigate to="/login" replace />} />
+					<Route path='/home' element={<HomePage/>} />
+					<Route path='/login' element={<Login/>}/>
 					<Route path='/search' element={<Search/>}/>
 					<Route path='/playlist' element={<Playlist/>}/>
 					<Route path='/profile' element={<Profile/>}/>
