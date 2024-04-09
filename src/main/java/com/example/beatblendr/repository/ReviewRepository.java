@@ -7,7 +7,8 @@ import com.example.beatblendr.entity.User;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    Review findById(long id);
+    Review findByReviewId(long id);
+    
 
         
 }

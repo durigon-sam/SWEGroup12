@@ -42,9 +42,6 @@ public class UserController {
         
     }
 
-    //add more controller methods for the user.
-    //Some of these can just go in the UserRepository because of how awesome JPA is
-
     //Get user by Email
     @GetMapping("email/{email}")
     public ResponseEntity<UserDTO> getUserByEmail(@PathVariable("email") String email){

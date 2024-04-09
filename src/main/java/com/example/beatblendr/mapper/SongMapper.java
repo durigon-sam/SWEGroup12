@@ -7,12 +7,15 @@ public class SongMapper {
 
     public static SongDTO mapToSongDTO(Song song){
         return new SongDTO(
-            song.getId(),
+            song.getSongId(),
             song.getSpotifyId(),
             song.getSongName(),
             song.getAlbumName(),
             song.getArtistName(),
-            song.getRating()
+            song.getImage(),
+            song.getRating(),
+            song.getTime(),
+            song.getUser()
         );
     }
 
@@ -23,7 +26,10 @@ public class SongMapper {
             songDTO.getSongName(),
             songDTO.getAlbumName(),
             songDTO.getArtistName(),
-            songDTO.getRating()
+            songDTO.getImage(),
+            songDTO.getRating(),
+            songDTO.getTime(),
+            songDTO.getUser()
         );
     }
 

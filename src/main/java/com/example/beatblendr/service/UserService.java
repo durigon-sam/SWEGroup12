@@ -8,11 +8,12 @@ import com.example.beatblendr.entity.User;
 public interface UserService {
     UserDTO createUser(UserDTO userDTO);
     UserDTO findByEmail(String email);
+    UserDTO findBySpotifyId(String spotifyId);
     List<UserDTO> findAll();
     UserDTO updateUser(long id, UserDTO userDTO);
     UserDTO findById(long id);
     void deleteUser(Long id);
-    void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
-            String refreshToken);
+    // void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
+    //         String refreshToken);
     
 }
