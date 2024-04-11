@@ -14,7 +14,6 @@ public class SongMapper {
             song.getArtistName(),
             song.getImage(),
             song.getRating(),
-            song.getTime(),
             song.getUser()
         );
     }
@@ -28,7 +27,6 @@ public class SongMapper {
             songDTO.getArtistName(),
             songDTO.getImage(),
             songDTO.getRating(),
-            songDTO.getTime(),
             songDTO.getUser()
         );
     }

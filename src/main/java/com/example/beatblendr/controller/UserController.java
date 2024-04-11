@@ -71,8 +71,8 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.ok("User Deleted Succesfully");
     }
-
-    @PostMapping("addfriend/{id}/{username}")
+    //Add friend id represents original and username represents friend added to his list of friends
+    @PostMapping("friends/add/{id}/{username}")
     public ResponseEntity<String> addFriend(@PathVariable("id") Long id, @PathVariable("username") String username){
 
         UserDTO user = userService.findById(id);
@@ -81,8 +81,17 @@ public class UserController {
         userService.addFriend(user, friend);
         
         return ResponseEntity.ok("response");
-
-
     }
 
+    
+    @GetMapping("friends/{id}")
+    public ResponseEntity<List<User>> getFriends(@PathVariable("id") Long id){
+
+        UserDTO user = userService.findById(id);
+
+        List<User> friends = userService.getFriends(user);
+        
+        return ResponseEntity.ok(friends);
+
+}
 }

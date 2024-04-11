@@ -107,28 +107,13 @@ public class UserServiceImpl implements UserService{
         return foundUsers.get(0);
     }
 
-    
-    // @Override
-    // public void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
-    //         String refreshToken){
-            
-    //         User savedUser = userRepository.findByEmail(user.getEmail()).get(0);
-    //         if(savedUser!=null){
+    @Override
+    public List<User> getFriends(UserDTO userDTO) {
+        User user = UserMapper.mapToUser(userDTO);
+        
+        return user.getFriends();
+    }
 
-    //             savedUser.setAccessToken(accessToken);
-    //             savedUser.setRefreshToken(accessToken);
-                
-
-    //         }
-    //         else{
-    //             savedUser = new User((long) 1,user.getDisplayName(),user.getId(),user.getEmail(), refreshToken, accessToken, user.getDisplayName());
-    //             userRepository.save(savedUser);
-
-    //         }
-
-
-
-    //         }
 
 
 }

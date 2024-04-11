@@ -59,10 +59,6 @@ public class Song {
     @Column(name = "rating")
     private Long rating;
 
-	@Column(name = "LastTouched", insertable = false, updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-    private Timestamp time;
-
 	@ManyToOne
     @JoinColumn(name = "id")
     private User user;

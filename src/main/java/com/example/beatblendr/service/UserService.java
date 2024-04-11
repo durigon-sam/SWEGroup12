@@ -17,5 +17,6 @@ public interface UserService {
     //         String refreshToken);
     void addFriend(UserDTO user, UserDTO friend);
     UserDTO findByUsername(String username);
+    List<User> getFriends(UserDTO user);
     
 }
