@@ -16,7 +16,8 @@ public class UserMapper {
             user.getRefreshToken(),
             user.getRefId(),
             user.getReviews(),
-            user.getSongs()
+            user.getSongs(),
+            user.getFriends()
         );
     }
 
@@ -31,7 +32,8 @@ public static User mapToUser(UserDTO userDTO){
             userDTO.getRefreshToken(),
             userDTO.getRefId(), 
             userDTO.getReviews(),
-            userDTO.getSongs()
+            userDTO.getSongs(),
+            userDTO.getFriends()
         );
     }
     

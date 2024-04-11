@@ -67,7 +67,4 @@ public class Song {
     @JoinColumn(name = "id")
     private User user;
 
-	// @ManyToMany
-	// private Set<User> users; 
-	
 }

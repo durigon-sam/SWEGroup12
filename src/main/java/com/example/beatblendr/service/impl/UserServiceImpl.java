@@ -87,6 +87,26 @@ public class UserServiceImpl implements UserService{
         
     }
 
+    @Override
+    public void addFriend(UserDTO user, UserDTO friend) {
+        
+       User foundUser = UserMapper.mapToUser(user);
+       User addedFriend = UserMapper.mapToUser(friend);
+       foundUser.getFriends().add(addedFriend);
+       userRepository.save(foundUser);
+
+    }
+
+    @Override
+    public UserDTO findByUsername(String username) {
+        List<User> users = userRepository.findByUsername(username);
+        List<UserDTO> foundUsers = users.stream().map(
+            (user) -> UserMapper.mapToUserDTO(user))
+            .collect(Collectors.toList()
+        );
+        return foundUsers.get(0);
+    }
+
     
     // @Override
     // public void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,

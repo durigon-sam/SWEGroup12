@@ -12,6 +12,7 @@ import com.example.beatblendr.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     
     List<User> findByEmail(String email);
+    List<User> findByUsername(String username);
     User findById(long id);
     User findBySpotifyId(String spotifyId);
     User findByRefId(String refId);

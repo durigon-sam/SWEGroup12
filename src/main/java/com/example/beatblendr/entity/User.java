@@ -1,5 +1,6 @@
 package com.example.beatblendr.entity;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table; // for Spring Boot 3
@@ -63,4 +66,12 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy ="user")
 	private List<Song> songs; 
+
+
+	@JsonIgnore
+	@OneToMany
+	@JoinTable(name="friends")
+	@JoinColumn(name="person_A_id", referencedColumnName="id")
+	@JoinColumn(name="person_B_id", referencedColumnName="id")
+	private List<User> friends;
 }

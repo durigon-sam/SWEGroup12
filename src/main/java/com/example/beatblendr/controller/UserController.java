@@ -71,4 +71,18 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.ok("User Deleted Succesfully");
     }
+
+    @PostMapping("addfriend/{id}/{username}")
+    public ResponseEntity<String> addFriend(@PathVariable("id") Long id, @PathVariable("username") String username){
+
+        UserDTO user = userService.findById(id);
+        UserDTO friend = userService.findByUsername(username);
+
+        userService.addFriend(user, friend);
+        
+        return ResponseEntity.ok("response");
+
+
+    }
+
 }

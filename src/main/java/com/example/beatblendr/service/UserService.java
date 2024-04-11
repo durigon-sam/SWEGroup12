@@ -15,5 +15,7 @@ public interface UserService {
     void deleteUser(Long id);
     // void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
     //         String refreshToken);
+    void addFriend(UserDTO user, UserDTO friend);
+    UserDTO findByUsername(String username);
     
 }

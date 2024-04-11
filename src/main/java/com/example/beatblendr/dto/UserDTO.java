@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.Song;
+import com.example.beatblendr.entity.User;
 
 import lombok.AllArgsConstructor;
 
@@ -28,5 +29,6 @@ public class UserDTO {
     private String refId;
     private List<Review> reviews;
     private List<Song> songs;
+    private List<User> friends;
     
 }
