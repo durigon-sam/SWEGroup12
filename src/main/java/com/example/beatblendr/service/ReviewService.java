@@ -12,5 +12,6 @@ public interface ReviewService {
     List<ReviewDTO> findAll();
     ReviewDTO updateReview(long id, ReviewDTO updatedReviewDTO);
     void deleteReview(Long id);
+    List<ReviewDTO> findBySpotifyId(String spotifyId);
     
 }

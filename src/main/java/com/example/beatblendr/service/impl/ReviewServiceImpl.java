@@ -11,6 +11,7 @@ import com.example.beatblendr.entity.User;
 import com.example.beatblendr.mapper.ReviewMapper;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.ReviewRepository;
+import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.ReviewService;
 import lombok.AllArgsConstructor;
 
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 public class ReviewServiceImpl implements ReviewService{
 
     private ReviewRepository reviewRepository;
+    private UserRepository userRepository;
 
     @Override
     public ReviewDTO createReview(ReviewDTO reviewDTO) {
@@ -26,7 +28,14 @@ public class ReviewServiceImpl implements ReviewService{
 
         Review review = ReviewMapper.mapToReview(reviewDTO);
         Review savedReview = reviewRepository.save(review);
+        User user = userRepository.findByUsername(reviewDTO.getUser().getUsername()).get(0);
+        List<Review> updatedReviews = user.getReviews();
+        updatedReviews.add(savedReview);
+        user.setReviews(updatedReviews);
+        userRepository.save(user);
+        
         return ReviewMapper.mapToReviewDTO(savedReview);
+
     }
 
     @Override
@@ -68,6 +77,22 @@ public class ReviewServiceImpl implements ReviewService{
 
         Review updatedReview = reviewRepository.save(review);
         return ReviewMapper.mapToReviewDTO(updatedReview);
+    }
+
+
+    @Override
+    public List<ReviewDTO> findBySpotifyId(String spotifyId) {
+
+        List<Review> foundReviews = reviewRepository.findBySpotifyId(spotifyId);
+        List<ReviewDTO> foundReviewDTOs = foundReviews.stream().map(
+            (review) -> ReviewMapper.mapToReviewDTO(review))
+            .collect(Collectors.toList()
+        );
+       
+        return foundReviewDTOs;
+
+
+        
     }
 
 

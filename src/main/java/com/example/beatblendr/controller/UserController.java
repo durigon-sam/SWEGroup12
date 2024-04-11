@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.beatblendr.dto.UserDTO;
+import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
@@ -92,6 +93,15 @@ public class UserController {
         List<User> friends = userService.getFriends(user);
         
         return ResponseEntity.ok(friends);
+
+}
+@GetMapping("reviews/{id}")
+public ResponseEntity<List<Review>> getReviews(@PathVariable("id") Long id){
+
+    UserDTO user = userService.findById(id);
+
+    List<Review> reviews = userService.getReviews(user);
+    return ResponseEntity.ok(reviews);
 
 }
 }
