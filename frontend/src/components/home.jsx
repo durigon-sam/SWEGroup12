@@ -79,9 +79,6 @@ export default function HomePage(){
 						<RecentItem>
 							<Typography variant='h3' fontFamily={font} fontWeight={600}>My Recent Listening</Typography>
 							<Button variant="contained" onClick={getRecentSongs}>Refresh</Button><br />
-							{/* <Typography color='white'>{localStorage.getItem('recents')}</Typography> */}
-							{/* <Typography color='white'>Current clientId: {localStorage.getItem('client_id')}</Typography> */}
-							{/* <Typography color='white'>Access Token: {localStorage.getItem('access_token')}</Typography> */}
 						</RecentItem>
 
 						{/* RECENT LISTENING LIST */}
