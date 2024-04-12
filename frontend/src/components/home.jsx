@@ -5,20 +5,18 @@ import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
-import recentData from '../dummydata/recents.json'
 import friends from '../dummydata/friends.json'
 import FriendListItem from './FriendListItem'
 import userDataService from '../services/userService'
 
 const RECENTS = 'https://api.spotify.com/v1/me/player/recently-played'
 const ME = 'https://api.spotify.com/v1/me'
-var recentSongs = []
 var name = ''
 
 export default function HomePage(){
 
 	//this establishes friendsState as a state variable and hooks it up with localStorage
-	//TODO: Max make sure this doesn't mess with your local storage stuff
+	//TODO: get rid of this local storage thing here, just use state and useEffect
 	const [friendsState, setFriendsState] = useState(() => {
 		const storedState = localStorage.getItem('friendsState')
 		return storedState ? JSON.parse(storedState) : { friends: [] }
@@ -48,10 +46,6 @@ export default function HomePage(){
 	useEffect(() => {
 		localStorage.setItem('friendsState', JSON.stringify(friendsState))
 	}, [friendsState])
-
-	useEffect(() => {
-		console.log(recentSongsState)
-	}, [recentSongsState])
 
 	// calling API skeleton method
 	function callApi(method, url, body, callback){
@@ -118,11 +112,18 @@ export default function HomePage(){
 				<Grid container spacing={2} columns={16} sx={{margin: '20px 30px 20px 30px'}}>
 					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
 						<RecentItem>
-							<Typography variant='h3' fontFamily={font} fontWeight={600}>My Recent Listening</Typography>
-							{/* <Button variant="contained" onClick={getRecentSongs}>Refresh</Button><br /> */}
-							{/* <Typography color='white'>{localStorage.getItem('recents')}</Typography> */}
-							{/* <Typography color='white'>Current clientId: {localStorage.getItem('client_id')}</Typography> */}
-							{/* <Typography color='white'>Access Token: {localStorage.getItem('access_token')}</Typography> */}
+							<Typography
+								variant="h2"
+								fontFamily={font}
+								fontWeight={600}
+								sx={{
+									textOverflow: 'ellipsis',
+									overflow: 'hidden',
+									whiteSpace: 'nowrap',
+								}}
+							>
+								My Recent Listening
+							</Typography>
 						</RecentItem>
 
 						{/* RECENT LISTENING LIST */}
@@ -135,8 +136,8 @@ export default function HomePage(){
 							}}
 						>
 							{/* This gets replaced with the actual user data */}
-							{recentData.recents.map((item) => (
-								<SongListItem key={item.id} item={item}/>
+							{recentSongsState.map((item) => (
+								<SongListItem key={item.track.id} item={item}/>
 							))}
 						</List>
 					</Grid>
@@ -144,7 +145,18 @@ export default function HomePage(){
 					<Grid item xs={1} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}/>
 					<Grid item xs={5} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
 						<FriendItem>
-							<Typography variant='h3' fontFamily={font} fontWeight={700}>My Friends</Typography>
+							<Typography
+								variant="h2"
+								fontFamily={font}
+								fontWeight={700}
+								sx={{
+									textOverflow: 'ellipsis',
+									overflow: 'hidden',
+									whiteSpace: 'nowrap',
+								}}
+							>
+								My Friends
+							</Typography>
 						</FriendItem>
 
 						{/* FRIENDS LIST */}

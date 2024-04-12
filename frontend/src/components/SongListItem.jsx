@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
+import { Avatar, Box, Grid, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
 import { useNavigate } from 'react-router-dom'
@@ -7,12 +7,12 @@ import { useNavigate } from 'react-router-dom'
 export default function SongListItem(props) {
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
-	const {id, songid, album_art, song_name, artist_name, album_name, time_listened} = props.item
+	const song = props.item
 	const navigate = useNavigate()
 
 	//TODO: maybe make this a modal instead of a page?
 	const handleReviewButton = () => {
-		navigate(`/review/${songid}`)
+		navigate(`/review/${song.track.id}`)
 	}
 	
 	return(
@@ -34,17 +34,20 @@ export default function SongListItem(props) {
 						alignItems: 'center',
 						minWidth: '128px'
 					}}>
-					<Box sx={{
-						bgcolor: 'white', 
-						height: '128px',
-						width: '128px',
-					}}>
-                        
-					</Box>
+					<Avatar 
+						sx={{
+							width: '128px',
+							height: '128px',
+							borderRadius: '0',
+						}}
+						src={song.track.album.images[1].url}
+					/>
+							
+					
 				</Grid>
 
 				{/* song info */}
-				{/* TODO WHEN YOU HAVE MORE TIME BC THIS SUCKS: create scrolling effect for horizontal overflow like in tiktok tutorial */}
+				{/* TODO: WHEN YOU HAVE MORE TIME BC THIS IS ANNOYING: create scrolling effect for horizontal overflow like in tiktok tutorial */}
 				<Grid item xs={8} sx={{paddingLeft: '10px', overflow: 'hidden', minWidth: '100px'}}>
 					{/* <div 
 						style={{
@@ -65,7 +68,7 @@ export default function SongListItem(props) {
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
-						{song_name}
+						{song.track.name}
 					</Typography>
 					<Typography 
 						fontFamily={font} 
@@ -74,7 +77,7 @@ export default function SongListItem(props) {
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
-						{Array.isArray(artist_name) ? artist_name.join(', ') : artist_name}
+						{song.track.artists.map(artist => artist.name).join(', ')}
 					</Typography>
 					{/* TODO align this to the bottom of the card */}
 					<Typography 
@@ -84,7 +87,7 @@ export default function SongListItem(props) {
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
-						{album_name}
+						{song.track.album.name}
 					</Typography>
 				</Grid>
 
@@ -97,7 +100,7 @@ export default function SongListItem(props) {
 						fontSize={'120%'}
 						style={{height: '33%'}}
 					>
-						{new Date(time_listened).toLocaleDateString()}
+						{new Date(song.played_at).toLocaleDateString()}
 					</Typography>
 					<Typography 
 						fontFamily={font} 
@@ -106,7 +109,7 @@ export default function SongListItem(props) {
 						fontSize={'120%'}
 						style={{height: '33%'}}
 					>
-						{new Date(time_listened).toLocaleTimeString()}
+						{new Date(song.played_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
 					</Typography>
 
 					{/* TODO: Put Review Button Here */}
