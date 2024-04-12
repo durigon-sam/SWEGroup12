@@ -11,7 +11,6 @@ import userDataService from '../services/userService'
 
 const RECENTS = 'https://api.spotify.com/v1/me/player/recently-played'
 const ME = 'https://api.spotify.com/v1/me'
-var name = ''
 
 export default function HomePage(){
 
@@ -64,20 +63,6 @@ export default function HomePage(){
 			// set the returned songs to the state variable
 			setRecentSongsState(data.items)
 		} else { // other error occured
-			console.log(this.responseText)
-			alert(this.responseText)
-		}
-	}
-
-	// TODO: don't think we need this here, should be on profile page
-	function handleMeResponse() {
-		// is the response good?
-		if ( this.status == 200 ){
-			var data = JSON.parse(this.responseText)
-			console.log(data)
-			name = data.display_name
-			localStorage.setItem('name', name)
-		} else {// other error occured
 			console.log(this.responseText)
 			alert(this.responseText)
 		}

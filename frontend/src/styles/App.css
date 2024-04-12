@@ -16,3 +16,11 @@
   /* font-size: calc(10px + 2vmin);
   color: #001321; */
 }
+
+.Profile-Picture img{
+  /* margin-left: 30vw; */
+  margin-top: 20px;
+  display: block;
+  margin-right:auto;
+  border-radius: 10%;
+}
