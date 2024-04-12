@@ -1,18 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../styles/App.css'
-import { Box, Button, List, ListItem, TextField, Typography } from '@mui/material'
+import { Box, Button,Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 // global variables
 var redirect_uri = 'http://localhost:3000/' // once user enters valid info, redirects to homepage
-
 var client_id = '31c97b67a40b4057a56c59c6390b92d4' // hard code max id and secret to use
 var client_secret = 'ece0bb69a6944c14ab6e8122ae80aebc'
 var access_token = null
 var refresh_token = null
-
 var success = false
-
 const src = '/BeatBlendr_Logos/Full_Color_White.png'
 
 // API endpoints
@@ -21,29 +18,31 @@ const TOKEN = 'https://accounts.spotify.com/api/token'
 
 export default function Login () {
 
-	if (window.location.search.length > 0) {
-		success = true
-	}
-
-	console.log('Success value is: ' + success)
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (window.location.search.length > 0) {
+			success = true
+			// grab access token
+			let code = getCode()
+			fetchAccessToken(code)
+		}
+	}, [])
+
+	// console.log('Success value is: ' + success)
 
 	// after the user logs in, this function is triggered by "Home" button and grabs an access token and routes to home page
 	function getTokenAndHome() {
 		// if worked
 		if (success == true) {
-			// grab access token
-			let code = getCode()
-			fetchAccessToken(code)
-			// bring user to the home page
 			navigate('/home')
 		} else {
-			alert('Please try logging in again.')
+			alert('Login Unsuccessful, try again')
 		}
 	}
 
 	return (
-		<div className='' style={{backgroundColor: '#001321', width: '100vw', height: '100vw'}}>
+		<div className='' style={{backgroundColor: '#001321', width: '100vw', height: '100vh'}}>
 			<Box className=''>
 				<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
 					<img src={src} width={600} height={260} />
@@ -95,7 +94,7 @@ function fetchAccessToken(code) {
 	body += '&redirect_uri=' + encodeURI(redirect_uri)
 	body += '&client_id=' + client_id
 	body += '&client_secret=' + client_secret
-	console.log('Body: ' + body)
+	// console.log('Body: ' + body)
 	callAuthorizationApi(body)
 }
   
@@ -116,7 +115,7 @@ function handleAuthorizationResponse(){
 		console.log('Success!')
 		// check if we got an access token. if we did, save it
 		if ( data.access_token != undefined ) {
-			console.log('Grabbing token! ' + data.access_token)
+			// console.log('Grabbing token! ' + data.access_token)
 			access_token = data.access_token
 			localStorage.setItem('access_token', access_token)
 		}
@@ -126,7 +125,7 @@ function handleAuthorizationResponse(){
 			localStorage.setItem('refresh_token', refresh_token)
 		}
 	} else { // failure
-		console.log('Failure! ' + this.responseText)
+		// console.log('Failure! ' + this.responseText)
 		alert('Failure! ' + this.responseText)
 	}
 }
