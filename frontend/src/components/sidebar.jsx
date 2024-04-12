@@ -109,7 +109,7 @@ export default function SideBar(props){
 					onClick={handleLogoutClick}
 					//end ListItemButton
 				>
-					<Typography className='logoutText' variant='h4'>Login</Typography>
+					<Typography className='logoutText' variant='h4'>Logout</Typography>
 				</ListItemButton>
 			</Box>
 		</Drawer>

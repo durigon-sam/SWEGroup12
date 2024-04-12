@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom'
 // global variables
 var redirect_uri = 'http://localhost:3000/' // once user enters valid info, redirects to homepage
 
-var client_id = ''
-var client_secret = ''
+var client_id = '31c97b67a40b4057a56c59c6390b92d4' // hard code max id and secret to use
+var client_secret = 'ece0bb69a6944c14ab6e8122ae80aebc'
 var access_token = null
 var refresh_token = null
 
@@ -30,17 +30,15 @@ export default function Login () {
 
 	// after the user logs in, this function is triggered by "Home" button and grabs an access token and routes to home page
 	function getTokenAndHome() {
-		// if they click this button too early
-		if (localStorage.getItem('client_id') == '') {
-			alert('Please enter clientId and client secret first!')
-		} else if(success == true) {
+		// if worked
+		if (success == true) {
 			// grab access token
 			let code = getCode()
 			fetchAccessToken(code)
 			// bring user to the home page
 			navigate('/home')
 		} else {
-			alert('Something went wrong.')
+			alert('Please try logging in again.')
 		}
 	}
 
@@ -56,31 +54,31 @@ export default function Login () {
 							color: 'white',
 							textAlign: 'center',
 							fontSize: '25px'
-						}}>Welcome to the login page! If you have a Spotify account already, please follow the directions below. If you do not
+						}}>Welcome to the login page! If you have a Spotify account already, login with the button below! If you do not
 						already have a Spotify account, make one and come back.
-					</Typography><br />
-				</div>
-				<div style={{width: '60vw', margin: '0 auto', backgroundColor: '#1c1c84'}}>
-					<List style={{color: 'white'}}>
-						<ListItem>1. Navigate to the Spotify for Developers site using this link: https://developer.spotify.com/dashboard</ListItem>
-						<ListItem>2. Once logged in, click on your name and then 'Dashboard' in the top right corner.</ListItem>
-						<ListItem>3. Click 'Create App' and enter any name and description you want.</ListItem>
-						<ListItem>4. Under 'Redirect URI' copy and paste this: http://localhost:3000/home</ListItem>
-						<ListItem>5. Save and go back to your dashboard.</ListItem>
-						<ListItem>6. Click on the app you just created and go into 'Settings'.</ListItem>
-						<ListItem>7. At the top you should see 'Client ID' and 'Client secret'. Copy and paste these below to login to BeatBlendr!</ListItem>
-						<ListItem>Max's ID: 31c97b67a40b4057a56c59c6390b92d4</ListItem>
-						<ListItem>Max's Secret: ece0bb69a6944c14ab6e8122ae80aebc</ListItem>
-					</List>
+					</Typography><br /><br /><br /><br />
 				</div>
 				{/* user needs to input their clientId and client secret */}
-				<div style={{width: '60vw', margin: '0 auto', display: 'flex', justifyContent: 'center', backgroundColor: 'white'}}>
+				<div style={{width: '60vw', margin: '0 auto', display: 'flex', justifyContent: 'center'}}>
 					<div style={{margin: '0 auto'}}>
-						<TextField id="clientId" label="ClientId" variant="standard" style={{width: '30vw'}}/><br /><br />
-						<TextField id="clientSecret" label="Client Secret" variant="standard" style={{width: '30vw'}}/><br /><br />
 						<div style={{display: 'flex', margin: '0 auto', justifyContent: 'center'}}>
-							<Button variant="contained" style={{marginRight:'3vw', marginBottom:'1vw'}} onClick={requestAuthorization}>Log In</Button><br />
-							<Button variant="contained" style={{marginBottom:'1vw'}}onClick={getTokenAndHome}>Home</Button><br />
+							{/* logic to only show one button at a time */}
+							{( window.location.search.length > 0 ) ? 
+								<>
+									<Button variant="contained" style={{height: '9vw', width: '18vw'}} onClick={getTokenAndHome}>
+										<Typography variant="h3">
+											Home
+										</Typography>
+									</Button><br />
+								</> :
+								<>
+									<Button variant="contained" style={{height: '9vw', width: '18vw'}} onClick={requestAuthorization}>
+										<Typography variant="h3">
+											Log In
+										</Typography>
+									</Button><br />
+								</>
+							}							
 						</div>
 					</div>
 				</div>
@@ -95,8 +93,8 @@ function fetchAccessToken(code) {
 	let body = 'grant_type=authorization_code' // build a formpost body (similar to JSON)
 	body += '&code=' + code 
 	body += '&redirect_uri=' + encodeURI(redirect_uri)
-	body += '&client_id=' + localStorage.getItem('client_id')
-	body += '&client_secret=' + localStorage.getItem('client_secret')
+	body += '&client_id=' + client_id
+	body += '&client_secret=' + client_secret
 	console.log('Body: ' + body)
 	callAuthorizationApi(body)
 }
@@ -106,7 +104,7 @@ function callAuthorizationApi(body){
 	let xhr = new XMLHttpRequest()
 	xhr.open('POST', TOKEN, true)
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-	xhr.setRequestHeader('Authorization', 'Basic ' + btoa(localStorage.getItem('client_id') + ':' + localStorage.getItem('client_secret')))
+	xhr.setRequestHeader('Authorization', 'Basic ' + btoa(client_id + ':' + client_secret))
 	xhr.send(body)
 	xhr.onload = handleAuthorizationResponse
 }
@@ -146,16 +144,13 @@ function getCode() {
   
 // this function uses the User's id and secret to seek authorization calling Spotify API
 function requestAuthorization() {
-	// use user id and secret to authorize 
-	client_id = document.getElementById('clientId').value
-	client_secret = document.getElementById('clientSecret').value
 	// keeps track of client ID and Secret on page reloads
 	localStorage.setItem('client_id', client_id)
 	localStorage.setItem('client_secret', client_secret)
 
 	// construct the link shown below in comment
 	let url = AUTHORIZE
-	url += '?client_id=' + localStorage.getItem('client_id')
+	url += '?client_id=' + client_id
 	url += '&response_type=code'
 	url += '&redirect_uri=' + encodeURI(redirect_uri)
 	url += '&show_dialog=true'
