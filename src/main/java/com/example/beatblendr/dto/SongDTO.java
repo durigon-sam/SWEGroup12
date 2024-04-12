@@ -26,7 +26,6 @@ public class SongDTO {
     private String artistName;
     private String image;
     private Long rating;
-    private Timestamp time;
     private User user;
 
     

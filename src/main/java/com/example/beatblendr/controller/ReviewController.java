@@ -67,6 +67,14 @@ public class ReviewController {
         return ResponseEntity.ok("Review Deleted Succesfully");
     }
 
+    //Delete user by ID
+    @GetMapping("/spotifyId/{spotifyId}")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByAlbumId(@PathVariable("spotifyId") String albumId){
+        
+        List<ReviewDTO> foundReviews = reviewService.findBySpotifyId(albumId);
+        return ResponseEntity.ok(foundReviews);
+    }
+
 
     //add more controller methods for the user.
     //Some of these can just go in the UserRepository because of how awesome JPA is
