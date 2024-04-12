@@ -104,4 +104,15 @@ public ResponseEntity<List<Review>> getReviews(@PathVariable("id") Long id){
     return ResponseEntity.ok(reviews);
 
 }
+
+@GetMapping("reviews#/{id}")
+public ResponseEntity<Integer> getNumberOfReview(@PathVariable("id") Long id){
+
+    UserDTO user = userService.findById(id);
+
+    List<Review> reviews = userService.getReviews(user);
+    return ResponseEntity.ok(reviews.size());
+
+}
+
 }
