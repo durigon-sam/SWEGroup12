@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/App.css'
 import { Box, Button,Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -19,14 +19,16 @@ const TOKEN = 'https://accounts.spotify.com/api/token'
 export default function Login () {
 
 	const navigate = useNavigate()
+	const [successState, setSuccessState] = useState(false)
 
 	useEffect(() => {
 		if (window.location.search.length > 0) {
 			success = true
+			setSuccessState(true)
 			// grab access token
 			let code = getCode()
 			fetchAccessToken(code)
-		}
+		}else setSuccessState(false)
 	}, [])
 
 	// console.log('Success value is: ' + success)
@@ -53,9 +55,28 @@ export default function Login () {
 							color: 'white',
 							textAlign: 'center',
 							fontSize: '25px'
-						}}>Welcome to the login page! If you have a Spotify account already, login with the button below! If you do not
-						already have a Spotify account, make one and come back.
-					</Typography><br /><br /><br /><br />
+						}}>
+						Welcome to the login page!
+					</Typography>
+					{successState ? 
+						<Typography
+							sx={{
+								color: 'white',
+								textAlign: 'center',
+								fontSize: '25px'
+							}}>
+							Thank you for logging in! Proceed to home by clicking the button below.
+						</Typography> 
+						: <Typography
+							sx={{
+								color: 'white',
+								textAlign: 'center',
+								fontSize: '25px'
+							}}>
+							If you have a Spotify account already, login with the button below! If you do not
+							already have a Spotify account, make one and come back.
+						</Typography>}
+					<br /><br /><br /><br />
 				</div>
 				{/* user needs to input their clientId and client secret */}
 				<div style={{width: '60vw', margin: '0 auto', display: 'flex', justifyContent: 'center'}}>
