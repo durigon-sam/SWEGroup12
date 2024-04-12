@@ -6,7 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table; // for Spring Boot 3
+import jakarta.persistence.UniqueConstraint;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,23 +21,30 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @EnableAutoConfiguration
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"spotifyId","id"})
+})
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long reviewId;
 
-    @Column(name = "user_id", nullable = false)
-	private String userId;
+    @Column(name = "spotify_id")
+	private String spotifyId;
 
-    @Column(name = "album_id", nullable = false)
-	private String albumId;
+    @Column(name = "type")
+    private Long type;
 
     @Column(name = "rating")
     private Long rating;
 
     @Column(name = "description")
     private String description;
-	
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User user;
+
+
 }

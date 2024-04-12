@@ -33,8 +33,8 @@ public class SongServiceImpl implements SongService{
 
 
     @Override
-    public SongDTO findById(long id) {
-        Song song = songRepository.findById(id);
+    public SongDTO findBySongId(long id) {
+        Song song = songRepository.findBySongId(id);
         SongDTO foundSong = SongMapper.mapToSongDTO(song);
          
         return foundSong;
@@ -52,9 +52,9 @@ public class SongServiceImpl implements SongService{
 
     @Override
     public SongDTO updateSong(long id, SongDTO updatedSongDTO) {
-        Song song = songRepository.findById(id);
+        Song song = songRepository.findBySongId(id);
 
-       song.setId(updatedSongDTO.getId());
+       song.setSongId(updatedSongDTO.getId());
        song.setSpotifyId(updatedSongDTO.getSpotifyId());
        song.setSongName(updatedSongDTO.getSongName());
        song.setAlbumName(updatedSongDTO.getAlbumName());

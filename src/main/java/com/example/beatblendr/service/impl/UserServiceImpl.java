@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
+import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
@@ -54,10 +57,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDTO updateUser(long id, UserDTO updatedUserDTO){
         
-        User user = userRepository.findById(id);
+        User user = userRepository.findById(id).get(0);
         user.setEmail(updatedUserDTO.getEmail());
         user.setId(updatedUserDTO.getId());
-        user.setSpotifyAccount(updatedUserDTO.getSpotifyAccount());
+        user.setSpotifyId(updatedUserDTO.getSpotifyId());
         user.setUsername(updatedUserDTO.getUsername());
      
         User updatedUser = userRepository.save(user);
@@ -66,11 +69,19 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO findById(long id) {
-        User user = userRepository.findById(id);
+       User user = userRepository.findById(id).get(0);
        UserDTO foundUser = UserMapper.mapToUserDTO(user);
         
         return foundUser;
     }
+    @Override
+    public UserDTO findBySpotifyId(String spotifyId) {
+       User user = userRepository.findBySpotifyId(spotifyId);
+       UserDTO foundUser = UserMapper.mapToUserDTO(user);
+        
+        return foundUser;
+    }
+
 
     @Override
     public void deleteUser(Long id) {
@@ -78,27 +89,42 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
         
     }
+
     @Override
-    public void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
-            String refreshToken){
-            
-            User savedUser = userRepository.findByEmail(user.getEmail()).get(0);
-            if(savedUser!=null){
+    public void addFriend(UserDTO user, UserDTO friend) {
+        
+       User foundUser = UserMapper.mapToUser(user);
+       User addedFriend = UserMapper.mapToUser(friend);
+       foundUser.getFriends().add(addedFriend);
+       userRepository.save(foundUser);
 
-                savedUser.setAccessToken(accessToken);
-                savedUser.setRefreshToken(accessToken);
-                
+    }
 
-            }
-            else{
-                savedUser = new User((long) 1,user.getDisplayName(),user.getId(),user.getEmail(), refreshToken, accessToken, user.getDisplayName());
-                userRepository.save(savedUser);
+    @Override
+    public UserDTO findByUsername(String username) {
+        List<User> users = userRepository.findByUsername(username);
+        List<UserDTO> foundUsers = users.stream().map(
+            (user) -> UserMapper.mapToUserDTO(user))
+            .collect(Collectors.toList()
+        );
+        return foundUsers.get(0);
+    }
 
-            }
+    @Override
+    public List<User> getFriends(UserDTO userDTO) {
+        User user = UserMapper.mapToUser(userDTO);
+        
+        return user.getFriends();
+    }
 
+    @Override
+    public List<Review> getReviews(UserDTO userDTO) {
+        User user = UserMapper.mapToUser(userDTO);
 
+        return user.getReviews();
 
-            }
+    }
+
 
 
 }

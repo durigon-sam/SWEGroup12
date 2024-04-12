@@ -8,5 +8,5 @@ import com.example.beatblendr.entity.Song;
 
 @Repository
 public interface SongRepository extends JpaRepository<Song, Long> {
-    Song findById(long id);
+    Song findBySongId(long id);
 }

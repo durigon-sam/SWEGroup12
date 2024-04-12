@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.beatblendr.dto.UserDTO;
+import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
@@ -39,9 +40,6 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         
     }
-
-    //add more controller methods for the user.
-    //Some of these can just go in the UserRepository because of how awesome JPA is
 
     //Get user by Email
     @GetMapping("email/{email}")
@@ -74,4 +72,47 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.ok("User Deleted Succesfully");
     }
+    //Add friend id represents original and username represents friend added to his list of friends
+    @PostMapping("friends/add/{id}/{username}")
+    public ResponseEntity<String> addFriend(@PathVariable("id") Long id, @PathVariable("username") String username){
+
+        UserDTO user = userService.findById(id);
+        UserDTO friend = userService.findByUsername(username);
+
+        userService.addFriend(user, friend);
+        
+        return ResponseEntity.ok("response");
+    }
+
+    
+    @GetMapping("friends/{id}")
+    public ResponseEntity<List<User>> getFriends(@PathVariable("id") Long id){
+
+        UserDTO user = userService.findById(id);
+
+        List<User> friends = userService.getFriends(user);
+        
+        return ResponseEntity.ok(friends);
+
+}
+@GetMapping("reviews/{id}")
+public ResponseEntity<List<Review>> getReviews(@PathVariable("id") Long id){
+
+    UserDTO user = userService.findById(id);
+
+    List<Review> reviews = userService.getReviews(user);
+    return ResponseEntity.ok(reviews);
+
+}
+
+@GetMapping("reviews#/{id}")
+public ResponseEntity<Integer> getNumberOfReview(@PathVariable("id") Long id){
+
+    UserDTO user = userService.findById(id);
+
+    List<Review> reviews = userService.getReviews(user);
+    return ResponseEntity.ok(reviews.size());
+
+}
+
 }

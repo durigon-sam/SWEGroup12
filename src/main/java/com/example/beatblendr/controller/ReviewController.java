@@ -41,7 +41,7 @@ public class ReviewController {
 
     @GetMapping("{id}")
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable("id") long id){
-        ReviewDTO savedReview = reviewService.findById(id);
+        ReviewDTO savedReview = reviewService.findByReviewId(id);
         return new ResponseEntity<>(savedReview, HttpStatus.CREATED);
     }
     //Get all users
@@ -63,6 +63,14 @@ public class ReviewController {
         
         reviewService.deleteReview(id);
         return ResponseEntity.ok("Review Deleted Succesfully");
+    }
+
+    //Delete user by ID
+    @GetMapping("/spotifyId/{spotifyId}")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByAlbumId(@PathVariable("spotifyId") String albumId){
+        
+        List<ReviewDTO> foundReviews = reviewService.findBySpotifyId(albumId);
+        return ResponseEntity.ok(foundReviews);
     }
 
 

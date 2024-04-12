@@ -11,6 +11,7 @@ import com.example.beatblendr.entity.User;
 import com.example.beatblendr.mapper.ReviewMapper;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.ReviewRepository;
+import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.ReviewService;
 import lombok.AllArgsConstructor;
 
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 public class ReviewServiceImpl implements ReviewService{
 
     private ReviewRepository reviewRepository;
+    private UserRepository userRepository;
 
     @Override
     public ReviewDTO createReview(ReviewDTO reviewDTO) {
@@ -26,7 +28,14 @@ public class ReviewServiceImpl implements ReviewService{
 
         Review review = ReviewMapper.mapToReview(reviewDTO);
         Review savedReview = reviewRepository.save(review);
+        User user = userRepository.findByUsername(reviewDTO.getUser().getUsername()).get(0);
+        List<Review> updatedReviews = user.getReviews();
+        updatedReviews.add(savedReview);
+        user.setReviews(updatedReviews);
+        userRepository.save(user);
+        
         return ReviewMapper.mapToReviewDTO(savedReview);
+
     }
 
     @Override
@@ -40,8 +49,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public ReviewDTO findById(long id) {
-        Review review = reviewRepository.findById(id);
+    public ReviewDTO findByReviewId(long id) {
+        Review review = reviewRepository.findByReviewId(id);
         ReviewDTO foundReview = ReviewMapper.mapToReviewDTO(review);
          
         return foundReview;
@@ -57,17 +66,33 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public ReviewDTO updateReview(long id, ReviewDTO updatedReviewDTO){
-        Review review = reviewRepository.findById(id);
+        Review review = reviewRepository.findByReviewId(id);
 
-        review.setAlbumId(updatedReviewDTO.getAlbumId());
-        review.setId(updatedReviewDTO.getId());
+        review.setSpotifyId(updatedReviewDTO.getSpotifyId());
+        review.setReviewId(updatedReviewDTO.getId());
         review.setRating(updatedReviewDTO.getId());
-        review.setUserId(updatedReviewDTO.getUserId());
+        review.setType(updatedReviewDTO.getType());
         review.setDescription(updatedReviewDTO.getDescription());
       
 
         Review updatedReview = reviewRepository.save(review);
         return ReviewMapper.mapToReviewDTO(updatedReview);
+    }
+
+
+    @Override
+    public List<ReviewDTO> findBySpotifyId(String spotifyId) {
+
+        List<Review> foundReviews = reviewRepository.findBySpotifyId(spotifyId);
+        List<ReviewDTO> foundReviewDTOs = foundReviews.stream().map(
+            (review) -> ReviewMapper.mapToReviewDTO(review))
+            .collect(Collectors.toList()
+        );
+       
+        return foundReviewDTOs;
+
+
+        
     }
 
 
