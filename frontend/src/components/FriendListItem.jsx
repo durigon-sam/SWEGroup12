@@ -13,7 +13,7 @@ export default function FriendListItem(props) {
 	const {userid, username, ratings} = props.item
 
 	const handleAvatarClick = () => {
-		navigate(`user/${userid}`)
+		navigate(`profile/${userid}`)
 	}
 
 	return(

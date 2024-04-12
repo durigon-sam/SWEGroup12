@@ -7,26 +7,64 @@ import SearchIcon from '@mui/icons-material/Search'
 import { styled } from '@mui/material/styles'
 import SearchListItem from './SearchListItem'
 
+const SEARCH = 'https://api.spotify.com/v1/search'
+
 export default function Search(){
 
 	// use the spotify search API call found at https://developer.spotify.com/documentation/web-api/reference/search
     
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedFilter, setSelectedFilter] = useState('songs')
+	const [searchResults, setSearchResults] = useState([])
   
 	const handleSearch = () => {
-		// Perform search based on searchTerm and selectedFilter
-		console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
+		if(searchTerm === ''){
+			alert('Please input a search term')
+		}else{
+			if(selectedFilter === 'users'){
+				console.log('searching for users')
+			}else{
+				// Perform search based on searchTerm and selectedFilter
+				console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
+				let url = SEARCH + '?q=' + searchTerm + '&type='
+				selectedFilter === 'songs' ? url += 'track' : url += 'album'
+				console.log(url)
+				callApi('GET', url, null, handleResponse)
+			}
+		}
 	}
 
 	//triggers every time searchTerm is modified
-	useEffect(() => {
-		console.log(searchTerm)
-	}, [searchTerm])
+	// useEffect(() => {
+	// 	console.log(searchTerm)
+	// }, [searchTerm])
 
-	useEffect(() => {
-		console.log(selectedFilter)
-	}, [selectedFilter])
+	// useEffect(() => {
+	// 	console.log(selectedFilter)
+	// }, [selectedFilter])
+
+	// calling API skeleton method
+	function callApi(method, url, body, callback){
+		let xhr = new XMLHttpRequest()
+		xhr.open(method, url, true)
+		xhr.setRequestHeader('Content-Type', 'application/json')
+		xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+		xhr.send(body)
+		xhr.onload = callback
+	}
+
+	function handleResponse() {
+		// is the response good?
+		if ( this.status == 200 ){
+			var data = JSON.parse(this.responseText)
+			// set the returned songs to the state variable
+			selectedFilter === 'songs' ? setSearchResults(data.tracks) : setSearchResults(data.albums)
+			console.log(data)
+		} else { // other error occured
+			console.log(this.responseText)
+			alert(this.responseText)
+		}
+	}
 
 	return(
 		<div className='App'>
