@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom'
 
 export default function SearchListItem(props){
 
+	const font = './LibreFranklin-VariableFont_wght.ttf'
+	const {id, songid, album_art, song_name, artist_name, album_name, time_listened} = props.item
+
+
 	return(
 		<ListItem
 			sx={{
@@ -16,7 +20,30 @@ export default function SearchListItem(props){
 				marginBottom: 5
 			}}
 		>
-			{props.item}
+			<Grid container columns={12} sx={{ marginRight: '10px'}}>
+				<Grid item xs={2}
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'left',
+						minWidth: '128px', 
+					}}>
+					<Box sx={{
+						bgcolor: 'white',
+						height: '128px',
+						width: '128px',
+					}}/>
+				</Grid>
+
+				{/* item info */}
+				<Grid item xs={8} 
+					sx={{
+						
+					}}
+				>
+
+				</Grid>
+			</Grid>
 		</ListItem>
 	)
 }

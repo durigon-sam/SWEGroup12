@@ -17,6 +17,16 @@ var name = ''
 
 export default function HomePage(){
 
+	//this establishes friendsState as a state variable and hooks it up with localStorage
+	//TODO: Max make sure this doesn't mess with your local storage stuff
+	const [friendsState, setFriendsState] = useState(() => {
+		const storedState = localStorage.getItem('friendsState')
+		return storedState ? JSON.parse(storedState) : { friends: [] }
+	})
+
+	// Initialize state for Recent Songs
+	const [recentSongsState, setRecentSongsState] = useState([])
+
 	//This is run whenever the component is first loaded
 	useEffect(() => {
 		//TODO: uncomment this when service and REST API call are implemented
@@ -28,21 +38,56 @@ export default function HomePage(){
 		// 		setFriendsState(response.data)
 		// 	})
 		setFriendsState(friends)
-	}, [])
 
-	//this establishes friendsState as a state variable and hooks it up with localStorage
-	//TODO: Max make sure this doesn't mess with your local storage stuff
-	const [friendsState, setFriendsState] = useState(() => {
-		const storedState = localStorage.getItem('friendsState')
-		return storedState ? JSON.parse(storedState) : { friends: [] }
-	})
+		// Get Recent Songs
+		callApi('GET', RECENTS, null, handleResponse)
+		// callApi('GET', ME, null, handleMeResponse)
+	}, [])
 
 	//this runs whenever the friendsState is modified
 	useEffect(() => {
 		localStorage.setItem('friendsState', JSON.stringify(friendsState))
 	}, [friendsState])
 
-	window.onload = onPageLoad()
+	useEffect(() => {
+		console.log(recentSongsState)
+	}, [recentSongsState])
+
+	// calling API skeleton method
+	function callApi(method, url, body, callback){
+		let xhr = new XMLHttpRequest()
+		xhr.open(method, url, true)
+		xhr.setRequestHeader('Content-Type', 'application/json')
+		xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+		xhr.send(body)
+		xhr.onload = callback
+	}
+
+	function handleResponse() {
+		// is the response good?
+		if ( this.status == 200 ){
+			var data = JSON.parse(this.responseText)
+			// set the returned songs to the state variable
+			setRecentSongsState(data.items)
+		} else { // other error occured
+			console.log(this.responseText)
+			alert(this.responseText)
+		}
+	}
+
+	// TODO: don't think we need this here, should be on profile page
+	function handleMeResponse() {
+		// is the response good?
+		if ( this.status == 200 ){
+			var data = JSON.parse(this.responseText)
+			console.log(data)
+			name = data.display_name
+			localStorage.setItem('name', name)
+		} else {// other error occured
+			console.log(this.responseText)
+			alert(this.responseText)
+		}
+	}
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 
@@ -66,10 +111,6 @@ export default function HomePage(){
 		marginBottom: '20px',
 	}))
 
-	function onPageLoad() {
-		console.log('Page is Loaded!')
-	}
-
 	return(
 		<div className='App'>
 			<SideBar className='sidebar'/>
@@ -78,7 +119,7 @@ export default function HomePage(){
 					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
 						<RecentItem>
 							<Typography variant='h3' fontFamily={font} fontWeight={600}>My Recent Listening</Typography>
-							<Button variant="contained" onClick={getRecentSongs}>Refresh</Button><br />
+							{/* <Button variant="contained" onClick={getRecentSongs}>Refresh</Button><br /> */}
 							{/* <Typography color='white'>{localStorage.getItem('recents')}</Typography> */}
 							{/* <Typography color='white'>Current clientId: {localStorage.getItem('client_id')}</Typography> */}
 							{/* <Typography color='white'>Access Token: {localStorage.getItem('access_token')}</Typography> */}
@@ -126,55 +167,4 @@ export default function HomePage(){
 		</div>
 		
 	)
-}
-
-// call API to get user profile info
-function getRecentSongs() {
-	callApi('GET', ME, null, handleMeResponse)
-	callApi('GET', RECENTS, null, handleResponse)
-}
-
-// calling API skeleton method
-function callApi(method, url, body, callback) {
-	let xhr = new XMLHttpRequest()
-	xhr.open(method, url, true)
-	xhr.setRequestHeader('Content-Type', 'application/json')
-	xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
-	xhr.send(body)
-	xhr.onload = callback
-}
-  
-function handleResponse() {
-	// is the response good?
-	if ( this.status == 200 ){
-		var data = JSON.parse(this.responseText)
-		console.log(data)
-		// get song names from the returned array
-		for (let i = 0; i < data.items.length; i++) { 
-			// store just the song names in an array	
-			// console.log(data.items[i].track.name)
-			recentSongs[i] = data.items[i].track.name
-			console.log(recentSongs[i])
-		}
-		// store entire array in LS
-		localStorage.setItem('recents', recentSongs)
-		// need to refresh the page for some reason to get the LS crap working
-		location.reload()
-	} else { // other error occured
-		console.log(this.responseText)
-		alert(this.responseText)
-	}
-}
-
-function handleMeResponse() {
-	// is the response good?
-	if ( this.status == 200 ){
-		var data = JSON.parse(this.responseText)
-		console.log(data)
-		name = data.display_name
-		localStorage.setItem('name', name)
-	} else {// other error occured
-		console.log(this.responseText)
-		alert(this.responseText)
-	}
 }

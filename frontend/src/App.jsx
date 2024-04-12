@@ -13,9 +13,9 @@ export default function App() {
 			<Router>
 				<Routes>
 					{/* Place future route endpoints in here as a new Route */}
-					<Route path="/" element={<Navigate to="/login" replace />} />
+					{/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
 					<Route path='/home' element={<HomePage/>} />
-					<Route path='/login' element={<Login/>}/>
+					<Route path='/' element={<Login/>}/>
 					<Route path='/search' element={<Search/>}/>
 					<Route path='/playlist' element={<Playlist/>}/>
 					<Route path='/profile' element={<Profile/>}/>

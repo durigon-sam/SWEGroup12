@@ -24,6 +24,10 @@ export default function Search(){
 		console.log(searchTerm)
 	}, [searchTerm])
 
+	useEffect(() => {
+		console.log(selectedFilter)
+	}, [selectedFilter])
+
 	return(
 		<div className='App'>
 			<SideBar className='sidebar'/>

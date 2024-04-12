@@ -50,6 +50,7 @@ function handleResponse() {
 	if ( this.status == 200 ){
 		var data = JSON.parse(this.responseText)
 		console.log(data)
+		console.log(data.items)
 		addSongsToList(data)
 	} else { // other error occured
 		console.log(this.responseText)

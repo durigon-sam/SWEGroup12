@@ -43,7 +43,7 @@ export default function FriendListItem(props) {
 				/>
 			</ListItemAvatar>
 			{/* maybe put the grid here? */}
-			<Grid container columns={3}>
+			<Grid container columns={3} sx={{marginRight: '50px'}}>
 				<Grid item xs={2}
 					sx={{
 						paddingLeft: '10px'
@@ -65,7 +65,7 @@ export default function FriendListItem(props) {
 				</Grid>
 				<Grid item xs={1} 
 					sx={{
-						
+						// marginRight: '50px',
 						alignItems: 'right',
 					}}
 				>
@@ -75,12 +75,10 @@ export default function FriendListItem(props) {
 						fontWeight={300}
 						fontSize={'20px'}
 						style={{
-							// overflow: 'hidden',
-							// textOverflow: 'ellipsis',
-							// whiteSpace: 'nowrap',
 							minWidth: '130px',
 							textAlign: 'right',
-							wordWrap: 'break-word'
+							wordWrap: 'break-word',
+							whiteSpace: 'normal'
 						}}
 					>
 						Ratings: {ratings}
