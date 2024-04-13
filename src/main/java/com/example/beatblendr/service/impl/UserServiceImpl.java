@@ -125,6 +125,14 @@ public class UserServiceImpl implements UserService{
 
     }
 
+    @Override
+    public UserDTO findByAccessToken(String accessToken) {
+
+        UserDTO userDTO = UserMapper.mapToUserDTO(userRepository.findByAccessToken(accessToken));
+
+        return userDTO;
+    }
+
 
 
 }

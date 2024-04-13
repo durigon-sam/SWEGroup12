@@ -49,6 +49,13 @@ public class UserController {
         UserDTO savedUser = (UserDTO) userService.findByEmail(email);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
+
+    @GetMapping("accessToken/{accesstoken}")
+    public ResponseEntity<UserDTO> getUserByAccessToken(@PathVariable("accesstoken") String accessToken){
+        UserDTO savedUser = (UserDTO) userService.findByAccessToken(accessToken);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") long id){
         UserDTO savedUser = userService.findById(id);

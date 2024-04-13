@@ -16,6 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findById(long id);
     User findBySpotifyId(String spotifyId);
     User findByRefId(String refId);
+    User findByAccessToken(String accessToken);
 
     // User updateUser(long id, UserDTO userDTO);
      

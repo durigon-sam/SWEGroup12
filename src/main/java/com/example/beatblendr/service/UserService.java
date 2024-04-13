@@ -21,5 +21,6 @@ public interface UserService {
     UserDTO findByUsername(String username);
     List<User> getFriends(UserDTO user);
     List<Review> getReviews(UserDTO user);
+    UserDTO findByAccessToken(String accessToken);
     
 }
