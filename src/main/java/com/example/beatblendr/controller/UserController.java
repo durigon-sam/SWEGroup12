@@ -93,6 +93,17 @@ public class UserController {
         return ResponseEntity.ok("response");
     }
 
+    @PutMapping("friends/delete/{id}/{idFriend}")
+    public ResponseEntity<String> deleteFriend(@PathVariable("id") Long id, @PathVariable("idFriend") Long idFriend){
+
+        UserDTO user = userService.findById(id);
+        UserDTO friend = userService.findById(idFriend);
+
+        userService.deleteFriend(user, friend);
+        
+        return ResponseEntity.ok("response");
+    }
+
     
     @GetMapping("friends/{id}")
     public ResponseEntity<List<User>> getFriends(@PathVariable("id") Long id){
@@ -104,24 +115,21 @@ public class UserController {
         return ResponseEntity.ok(friends);
 
 }
-@GetMapping("reviews/{id}")
-public ResponseEntity<List<Review>> getReviews(@PathVariable("id") Long id){
+    @GetMapping("reviews/{id}")
+    public ResponseEntity<List<Review>> getReviews(@PathVariable("id") Long id){
 
-    UserDTO user = userService.findById(id);
+        UserDTO user = userService.findById(id);
 
-    List<Review> reviews = userService.getReviews(user);
-    return ResponseEntity.ok(reviews);
+        List<Review> reviews = userService.getReviews(user);
+        return ResponseEntity.ok(reviews);
 
-}
+    }
+    @GetMapping("reviews#/{id}")
+    public ResponseEntity<Integer> getNumberOfReview(@PathVariable("id") Long id){
 
-@GetMapping("reviews#/{id}")
-public ResponseEntity<Integer> getNumberOfReview(@PathVariable("id") Long id){
+        UserDTO user = userService.findById(id);
 
-    UserDTO user = userService.findById(id);
-
-    List<Review> reviews = userService.getReviews(user);
-    return ResponseEntity.ok(reviews.size());
-
-}
-
+        List<Review> reviews = userService.getReviews(user);
+        return ResponseEntity.ok(reviews.size());
+    }
 }
