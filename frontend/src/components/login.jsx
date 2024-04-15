@@ -22,26 +22,43 @@ export default function Login () {
 	const [successState, setSuccessState] = useState(false)
 
 	useEffect(() => {
+		// not first time on login page
 		if (window.location.search.length > 0) {
 			success = true
 			setSuccessState(true)
 			// grab access token
 			let code = getCode()
 			fetchAccessToken(code)
-		}else setSuccessState(false)
+		} else {
+			setSuccessState(false)
+		}
 	}, [])
 
-	// console.log('Success value is: ' + success)
+	// these 2 methods get rid of the 'Home' button we used to have after calling auth endpoint
+	useEffect(() => {
+		// if worked
+		goHome()
+	}, [success])
+
+	async function goHome() {
+		setTimeout(() => {
+			console.log('Proceeding to go home...')
+			// Other logic here
+			if (success == true) {
+				navigate('/home')
+			}
+		}, 40) // may need to increase this value for more time in between
+	}
 
 	// after the user logs in, this function is triggered by "Home" button and grabs an access token and routes to home page
-	function getTokenAndHome() {
-		// if worked
-		if (success == true) {
-			navigate('/home')
-		} else {
-			alert('Login Unsuccessful, try again')
-		}
-	}
+	// function getTokenAndHome() {
+	// 	// if worked
+	// 	if (success == true) {
+	// 		navigate('/home')
+	// 	} else {
+	// 		alert('Login Unsuccessful, try again')
+	// 	}
+	// }
 
 	return (
 		<div className='' style={{backgroundColor: '#001321', width: '100vw', height: '100vh'}}>
@@ -85,11 +102,11 @@ export default function Login () {
 							{/* logic to only show one button at a time */}
 							{( window.location.search.length > 0 ) ? 
 								<>
-									<Button variant="contained" style={{height: '9vw', width: '18vw'}} onClick={getTokenAndHome}>
+									{/* <Button variant="contained" style={{height: '9vw', width: '18vw'}} onClick={getTokenAndHome}>
 										<Typography variant="h3">
 											Home
 										</Typography>
-									</Button><br />
+									</Button><br /> */}
 								</> :
 								<>
 									<Button variant="contained" style={{height: '9vw', width: '18vw'}} onClick={requestAuthorization}>
@@ -109,7 +126,7 @@ export default function Login () {
 
 /* BELOW DEALS WITH AUTHORIZING THE USER WITH SPOTIFY API CALLS*/
 
-function fetchAccessToken(code) {
+async function fetchAccessToken(code) {
 	let body = 'grant_type=authorization_code' // build a formpost body (similar to JSON)
 	body += '&code=' + code 
 	body += '&redirect_uri=' + encodeURI(redirect_uri)
