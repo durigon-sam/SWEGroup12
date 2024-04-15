@@ -21,12 +21,9 @@ public class UserDTO {
 
     private Long id;
     private String username;
-    private String spotifyId;
-    private String spotifySecretId;
     private String email;
     private String accessToken;
     private String refreshToken;
-    private String refId;
     private List<Review> reviews;
     private List<Song> songs;
     private List<User> friends;

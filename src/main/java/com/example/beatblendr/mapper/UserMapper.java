@@ -9,12 +9,9 @@ public class UserMapper {
         return new UserDTO(
             user.getId(),
             user.getUsername(),
-            user.getSpotifyId(),
-            user.getSpotifySecretId(),
             user.getEmail(),
             user.getAccessToken(),
             user.getRefreshToken(),
-            user.getRefId(),
             user.getReviews(),
             user.getSongs(),
             user.getFriends()
@@ -25,12 +22,9 @@ public static User mapToUser(UserDTO userDTO){
         return new User(
             userDTO.getId(),
             userDTO.getUsername(),
-            userDTO.getSpotifyId(),
-            userDTO.getSpotifySecretId(),
             userDTO.getEmail(),
             userDTO.getAccessToken(),
             userDTO.getRefreshToken(),
-            userDTO.getRefId(), 
             userDTO.getReviews(),
             userDTO.getSongs(),
             userDTO.getFriends()

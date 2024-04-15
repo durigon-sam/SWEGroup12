@@ -67,24 +67,18 @@ public class ReviewController {
         return ResponseEntity.ok("Review Deleted Succesfully");
     }
 
-    //Delete user by ID
+    //Delete Review by ID
     @GetMapping("/spotifyId/{spotifyId}")
-    public ResponseEntity<List<ReviewDTO>> getReviewsByAlbumId(@PathVariable("spotifyId") String albumId){
+    public ResponseEntity<List<ReviewDTO>> getReviewsBySpotifyId(@PathVariable("spotifyId") String spotifyId){
         
-        List<ReviewDTO> foundReviews = reviewService.findBySpotifyId(albumId);
+        List<ReviewDTO> foundReviews = reviewService.findBySpotifyId(spotifyId);
         return ResponseEntity.ok(foundReviews);
     }
 
+    @GetMapping("/averageRating/{spotifyId}")
+    public ResponseEntity<Double> getAverageRating(@PathVariable("spotifyId") String spotifyId){
+        
 
-    //add more controller methods for the user.
-    //Some of these can just go in the UserRepository because of how awesome JPA is
-    
-    //Get user by ID
-
-    //Get all users
-
-    //Edit user by ID
-
-    //Delete user by ID
-    
+        return ResponseEntity.ok(reviewService.getAverageRating(spotifyId));
+    }
 }

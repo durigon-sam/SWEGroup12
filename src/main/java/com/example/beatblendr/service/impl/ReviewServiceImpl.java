@@ -91,6 +91,25 @@ public class ReviewServiceImpl implements ReviewService{
        
         return foundReviewDTOs;
 
+        
+    }
+
+    @Override
+    public double getAverageRating(String spotifyId) {
+
+        List<Review> foundReviews = reviewRepository.findBySpotifyId(spotifyId);
+        List<ReviewDTO> foundReviewDTOs = foundReviews.stream().map(
+            (review) -> ReviewMapper.mapToReviewDTO(review))
+            .collect(Collectors.toList()
+        );
+        double sum = 0;
+        for(ReviewDTO r: foundReviewDTOs){
+            sum +=r.getRating();
+
+        }
+        System.out.println(sum);
+        System.out.println(foundReviewDTOs.size());
+        return sum/foundReviewDTOs.size();
 
         
     }

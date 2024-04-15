@@ -30,13 +30,13 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    @Column(name = "spotify_id")
+    @Column(name = "spotify_id",nullable = false)
 	private String spotifyId;
 
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     private Long type;
 
-    @Column(name = "rating")
+    @Column(name = "rating", nullable = false)
     private Long rating;
 
     @Column(name = "description")
