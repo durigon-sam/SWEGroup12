@@ -41,23 +41,15 @@ public class User {
 	@Column(name = "username")
 	private String username;
 	
-	@Column(name = "spotify_account_id", unique = true)
-	private String spotifyId;
-
-	@Column(name = "spotify_secret_id", unique = true)
-	private String spotifySecretId;
 
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "ACCESS_TOKEN")
+	@Column(name = "access_token", nullable = false)
 	private String accessToken;
 
-	@Column(name = "REFRESH_TOKEN")
+	@Column(name = "refresh_token", nullable = false)
 	private String refreshToken;
-
-	@Column(name = "REF_ID")
-	private String refId;
 
 	@JsonIgnore
 	@OneToMany(mappedBy ="user")
@@ -66,7 +58,6 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy ="user")
 	private List<Song> songs; 
-
 
 	@JsonIgnore
 	@OneToMany

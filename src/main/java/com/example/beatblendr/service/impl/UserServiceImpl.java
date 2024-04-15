@@ -59,10 +59,16 @@ public class UserServiceImpl implements UserService{
     public UserDTO updateUser(long id, UserDTO updatedUserDTO){
         
         User user = userRepository.findById(id).get(0);
-        user.setEmail(updatedUserDTO.getEmail());
         user.setId(updatedUserDTO.getId());
-        user.setSpotifyId(updatedUserDTO.getSpotifyId());
+        user.setEmail(updatedUserDTO.getEmail());
         user.setUsername(updatedUserDTO.getUsername());
+        user.setAccessToken(updatedUserDTO.getAccessToken());
+        user.setRefreshToken(updatedUserDTO.getRefreshToken());
+        user.setFriends(updatedUserDTO.getFriends());
+        user.setReviews(updatedUserDTO.getReviews());
+        user.setSongs(updatedUserDTO.getSongs());
+
+
      
         User updatedUser = userRepository.save(user);
         return UserMapper.mapToUserDTO(updatedUser);
@@ -76,8 +82,8 @@ public class UserServiceImpl implements UserService{
         return foundUser;
     }
     @Override
-    public UserDTO findBySpotifyId(String spotifyId) {
-       User user = userRepository.findBySpotifyId(spotifyId);
+    public UserDTO findBySpotifyId(String accessToken) {
+       User user = userRepository.findByAccessToken(accessToken);
        UserDTO foundUser = UserMapper.mapToUserDTO(user);
         
         return foundUser;
