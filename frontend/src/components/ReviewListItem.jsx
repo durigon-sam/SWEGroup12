@@ -5,8 +5,6 @@ import '../styles/App.css'
 
 export default function ReviewListItem(props) {
 
-	// TODO: fix styling on these cards
-
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const {name, artist, rating, review} = props.item
 
@@ -15,7 +13,7 @@ export default function ReviewListItem(props) {
 			sx={{
 				background: 'linear-gradient(to left, #2D46B9, #1ED760)',
 				marginBottom: 5,
-				height: '125px',
+				height: '145px',
 				borderRadius: '10px',
 			}}
 		>
@@ -33,8 +31,8 @@ export default function ReviewListItem(props) {
 				/>
 			</ListItemAvatar>
 			{/* maybe put the grid here? */}
-			<Grid container columns={3} sx={{marginRight: '50px'}}>
-				<Grid item xs={2}
+			<Grid container columns={5} sx={{marginRight: '50px'}}>
+				<Grid item xs={4}
 					sx={{
 						paddingLeft: '10px'
 					}}
