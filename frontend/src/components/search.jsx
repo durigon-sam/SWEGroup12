@@ -185,19 +185,23 @@ export default function Search(){
 						posiiton: 'relative',
 						overflow: 'auto',
 						maxHeight: '80vh',
+						minWidth: '175px',
 						width: '85%',
 						'& ul': {padding: 0},
 					}}
 				>
 					{
-						Object.keys(searchResults)[0] === undefined ? true :
+						Object.keys(searchResults)[0] === undefined ? 
+							// user Search logic
+							true
+							:
 							Object.keys(searchResults)[0] === 'tracks' ?
 								searchResults.tracks.items.map((item) => (
 									<SongListItem key={item.id} item={item} search={true}/>
 								))
 								: 
 								searchResults.albums.items.map((item) => (
-									<SearchAlbumListItem key={item.id} item={item} type={Object.keys(searchResults)[0]}/>
+									<SearchAlbumListItem key={item.id} item={item}/>
 								))
 					}
 				</List>

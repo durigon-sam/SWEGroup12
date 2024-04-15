@@ -110,7 +110,7 @@ export default function HomePage(){
 			<SideBar className='sidebar'/>
 			<Box className='App-header' sx={{}}>
 				<Grid container spacing={2} columns={16} sx={{margin: '20px 30px 20px 30px'}}>
-					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
+					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px', width: '50vw'}}}>
 						<RecentItem>
 							<Typography
 								variant="h2"

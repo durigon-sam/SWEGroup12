@@ -1,8 +1,7 @@
-import React from 'react'
-import { Avatar, Box, Grid, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Avatar, Grid, ListItem, ListItemButton, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
-import { useNavigate } from 'react-router-dom'
 
 export default function SongListItem(props) {
 
@@ -10,12 +9,22 @@ export default function SongListItem(props) {
 	const song = props.item
 	const search = props.search
 	const time = props.time
-	const navigate = useNavigate()
+	const [avgReview, setAverageReview] = useState()
+	const [isReviewed, setIsReviewed] = useState(false)
 
-	//TODO: maybe make this a modal instead of a page?
+	// TODO:  probably used for userscore logic, maybe for modal, unsure yet
+	const [userScore, setUserScore] = useState()
+	const [userReview, setUserReview] = useState()
+
+	//TODO: implement review modal, no reason to be a separate page
 	const handleReviewButton = () => {
-		navigate(`/review/${song.id}`)
+		// navigate(`/review/${song.id}`)
+
 	}
+
+	useEffect(()=>{
+		// TODO: call API for average review using song's id
+	}, [])
 	
 	return(
 		<ListItem key={props.item.id}
@@ -24,7 +33,7 @@ export default function SongListItem(props) {
 				marginBottom: 5,
 				height: '175px',
 				borderRadius: '10px',
-				minWidth: '630px'
+				minWidth: '630px',
 			}}
 		>
 			<Grid container columns={12} sx={{display: 'flex', flexWrap: 'nowrap'}}>
@@ -107,27 +116,32 @@ export default function SongListItem(props) {
 						
 						{
 							//if reviewed, display score. else, display button
-							<ListItemButton
-								className='reviewButton'
-								sx={{
-									width: '80%',
-									minWidth: '100px',
-									backgroundColor: '#3D2159',
-									borderRadius: '45px',
-									marginLeft: 'auto', // Align the button to the right
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									'&:hover': {
-										backgroundColor: '#1ED760',
-									}
-								}}
-								onClick={handleReviewButton}
-							>
-								<Typography className='reviewText' >
+							isReviewed ? 
+								true //review Score goes here
+								:
+							//button goes here 
+								<ListItemButton
+									className='reviewButton'
+									sx={{
+										width: '80%',
+										minWidth: '100px',
+										backgroundColor: '#3D2159',
+										borderRadius: '45px',
+										marginLeft: 'auto', // Align the button to the right
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										'&:hover': {
+											backgroundColor: '#1ED760',
+										}
+									}}
+									onClick={handleReviewButton}
+								>
+									<Typography className='reviewText' >
 							Review
-								</Typography>
-							</ListItemButton>
+									</Typography>
+								</ListItemButton>
+						//end isReview logic
 						}
 					</Grid>
 					:
@@ -173,11 +187,8 @@ export default function SongListItem(props) {
 							</Typography>
 						</ListItemButton>
 					</Grid>
-
+				//end searchpage logic
 				}
-				
-
-
 			</Grid>
 
 		</ListItem>
