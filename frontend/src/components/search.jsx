@@ -5,7 +5,8 @@ import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { styled } from '@mui/material/styles'
-import SearchListItem from './SearchListItem'
+import SongListItem from './SongListItem'
+import SearchAlbumListItem from './SearchAlbumListItem'
 
 const SEARCH = 'https://api.spotify.com/v1/search'
 
@@ -34,6 +35,14 @@ export default function Search(){
 		}
 	}
 
+	// useEffect(() => {
+	// 	console.log(Object.keys(searchResults)[0])
+	// }, [])
+
+	// useEffect(() => {
+	// 	console.log(Object.keys(searchResults)[0])
+	// }, [searchResults])
+
 	//triggers every time searchTerm is modified
 	// useEffect(() => {
 	// 	console.log(searchTerm)
@@ -58,7 +67,7 @@ export default function Search(){
 		if ( this.status == 200 ){
 			var data = JSON.parse(this.responseText)
 			// set the returned songs to the state variable
-			selectedFilter === 'songs' ? setSearchResults(data.tracks) : setSearchResults(data.albums)
+			setSearchResults(data)
 			console.log(data)
 		} else { // other error occured
 			console.log(this.responseText)
@@ -180,9 +189,17 @@ export default function Search(){
 						'& ul': {padding: 0},
 					}}
 				>
-					{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-						<SearchListItem key={item} item={item}/>
-					))}
+					{
+						Object.keys(searchResults)[0] === undefined ? true :
+							Object.keys(searchResults)[0] === 'tracks' ?
+								searchResults.tracks.items.map((item) => (
+									<SongListItem key={item.id} item={item} search={true}/>
+								))
+								: 
+								searchResults.albums.items.map((item) => (
+									<SearchAlbumListItem key={item.id} item={item} type={Object.keys(searchResults)[0]}/>
+								))
+					}
 				</List>
 				
 			</div>

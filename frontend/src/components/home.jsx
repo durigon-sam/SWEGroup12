@@ -137,7 +137,7 @@ export default function HomePage(){
 						>
 							{/* This gets replaced with the actual user data */}
 							{recentSongsState.map((item) => (
-								<SongListItem key={item.track.id} item={item}/>
+								<SongListItem key={item.track.id} item={item.track} search={false} time={item.played_at}/>
 							))}
 						</List>
 					</Grid>

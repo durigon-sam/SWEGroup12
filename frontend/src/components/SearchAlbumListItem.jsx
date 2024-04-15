@@ -4,10 +4,11 @@ import '../styles/home.css'
 import '../styles/App.css'
 import { useNavigate } from 'react-router-dom'
 
-export default function SearchListItem(props){
+export default function SearchAlbumListItem(props){
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
-	const {id, songid, album_art, song_name, artist_name, album_name, time_listened} = props.item
+	const song = props.item
+	const type = props.type
 
 
 	return(
@@ -36,12 +37,8 @@ export default function SearchListItem(props){
 				</Grid>
 
 				{/* item info */}
-				<Grid item xs={8} 
-					sx={{
-						
-					}}
-				>
-
+				<Grid item xs={8} sx={{paddingLeft: '10px', overflow: 'hidden', minWidth: '100px'}}>
+					{type}
 				</Grid>
 			</Grid>
 		</ListItem>
