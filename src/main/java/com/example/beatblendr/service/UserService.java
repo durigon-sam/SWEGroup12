@@ -22,5 +22,6 @@ public interface UserService {
     List<User> getFriends(UserDTO user);
     List<Review> getReviews(UserDTO user);
     UserDTO findByAccessToken(String accessToken);
+    void deleteFriend(UserDTO user, UserDTO friend);
     
 }

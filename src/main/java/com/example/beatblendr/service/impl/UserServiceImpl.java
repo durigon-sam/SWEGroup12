@@ -1,5 +1,6 @@
 package com.example.beatblendr.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -131,6 +132,23 @@ public class UserServiceImpl implements UserService{
         UserDTO userDTO = UserMapper.mapToUserDTO(userRepository.findByAccessToken(accessToken));
 
         return userDTO;
+    }
+
+    @Override
+    public void deleteFriend(UserDTO userDTO, UserDTO userFriendDto) {
+
+        User foundUser = UserMapper.mapToUser(userDTO);
+        User deleteFriend = UserMapper.mapToUser(userFriendDto);
+
+        List<User> updatedList = new ArrayList<>();
+        for(User u: foundUser.getFriends()){
+            if(u.getId()!=deleteFriend.getId()){
+                updatedList.add(u);
+            }
+        }
+        foundUser.setFriends(updatedList);
+        userRepository.save(foundUser);
+    
     }
 
 
