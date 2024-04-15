@@ -5,7 +5,10 @@ import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { styled } from '@mui/material/styles'
-import SearchListItem from './SearchListItem'
+import SongListItem from './SongListItem'
+import SearchAlbumListItem from './SearchAlbumListItem'
+
+const SEARCH = 'https://api.spotify.com/v1/search'
 
 export default function Search(){
 
@@ -13,20 +16,64 @@ export default function Search(){
     
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedFilter, setSelectedFilter] = useState('songs')
+	const [searchResults, setSearchResults] = useState([])
   
 	const handleSearch = () => {
-		// Perform search based on searchTerm and selectedFilter
-		console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
+		if(searchTerm === ''){
+			alert('Please input a search term')
+		}else{
+			if(selectedFilter === 'users'){
+				console.log('searching for users')
+			}else{
+				// Perform search based on searchTerm and selectedFilter
+				console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
+				let url = SEARCH + '?q=' + searchTerm + '&type='
+				selectedFilter === 'songs' ? url += 'track' : url += 'album'
+				console.log(url)
+				callApi('GET', url, null, handleResponse)
+			}
+		}
 	}
 
-	//triggers every time searchTerm is modified
-	useEffect(() => {
-		console.log(searchTerm)
-	}, [searchTerm])
+	// useEffect(() => {
+	// 	console.log(Object.keys(searchResults)[0])
+	// }, [])
 
-	useEffect(() => {
-		console.log(selectedFilter)
-	}, [selectedFilter])
+	// useEffect(() => {
+	// 	console.log(Object.keys(searchResults)[0])
+	// }, [searchResults])
+
+	//triggers every time searchTerm is modified
+	// useEffect(() => {
+	// 	console.log(searchTerm)
+	// }, [searchTerm])
+
+	// useEffect(() => {
+	// 	console.log(selectedFilter)
+	// }, [selectedFilter])
+
+	// calling API skeleton method
+	function callApi(method, url, body, callback){
+		let xhr = new XMLHttpRequest()
+		xhr.open(method, url, true)
+		xhr.setRequestHeader('Content-Type', 'application/json')
+		xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+		xhr.send(body)
+		xhr.onload = callback
+	}
+
+	function handleResponse() {
+		// is the response good?
+		if ( this.status == 200 ){
+			var data = JSON.parse(this.responseText)
+			// set the returned songs to the state variable
+			setSearchResults(data)
+			console.log(data)
+		} else { // other error occured
+			console.log(this.responseText)
+			alert(this.responseText)
+		}
+	}
 
 	return(
 		<div className='App'>
@@ -138,13 +185,25 @@ export default function Search(){
 						posiiton: 'relative',
 						overflow: 'auto',
 						maxHeight: '80vh',
+						minWidth: '175px',
 						width: '85%',
 						'& ul': {padding: 0},
 					}}
 				>
-					{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-						<SearchListItem key={item} item={item}/>
-					))}
+					{
+						Object.keys(searchResults)[0] === undefined ? 
+							// user Search logic
+							true
+							:
+							Object.keys(searchResults)[0] === 'tracks' ?
+								searchResults.tracks.items.map((item) => (
+									<SongListItem key={item.id} item={item} search={true}/>
+								))
+								: 
+								searchResults.albums.items.map((item) => (
+									<SearchAlbumListItem key={item.id} item={item}/>
+								))
+					}
 				</List>
 				
 			</div>

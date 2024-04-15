@@ -1,19 +1,30 @@
-import React from 'react'
-import { Avatar, Box, Grid, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Avatar, Grid, ListItem, ListItemButton, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
-import { useNavigate } from 'react-router-dom'
 
 export default function SongListItem(props) {
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const song = props.item
-	const navigate = useNavigate()
+	const search = props.search
+	const time = props.time
+	const [avgReview, setAverageReview] = useState()
+	const [isReviewed, setIsReviewed] = useState(false)
 
-	//TODO: maybe make this a modal instead of a page?
+	// TODO:  probably used for userscore logic, maybe for modal, unsure yet
+	const [userScore, setUserScore] = useState()
+	const [userReview, setUserReview] = useState()
+
+	//TODO: implement review modal, no reason to be a separate page
 	const handleReviewButton = () => {
-		navigate(`/review/${song.track.id}`)
+		// navigate(`/review/${song.id}`)
+
 	}
+
+	useEffect(()=>{
+		// TODO: call API for average review using song's id
+	}, [])
 	
 	return(
 		<ListItem key={props.item.id}
@@ -22,7 +33,7 @@ export default function SongListItem(props) {
 				marginBottom: 5,
 				height: '175px',
 				borderRadius: '10px',
-				minWidth: '630px'
+				minWidth: '630px',
 			}}
 		>
 			<Grid container columns={12} sx={{display: 'flex', flexWrap: 'nowrap'}}>
@@ -40,10 +51,8 @@ export default function SongListItem(props) {
 							height: '128px',
 							borderRadius: '0',
 						}}
-						src={song.track.album.images[1].url}
+						src={song.album.images[1].url}
 					/>
-							
-					
 				</Grid>
 
 				{/* song info */}
@@ -68,7 +77,7 @@ export default function SongListItem(props) {
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
-						{song.track.name}
+						{song.name}
 					</Typography>
 					<Typography 
 						fontFamily={font} 
@@ -77,7 +86,7 @@ export default function SongListItem(props) {
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
-						{song.track.artists.map(artist => artist.name).join(', ')}
+						{song.artists.map(artist => artist.name).join(', ')}
 					</Typography>
 					{/* TODO align this to the bottom of the card */}
 					<Typography 
@@ -87,56 +96,99 @@ export default function SongListItem(props) {
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>
-						{song.track.album.name}
+						{song.album.name}
 					</Typography>
 				</Grid>
 
 				{/* user info */}
-				<Grid item xs={2} sx={{textAlign: 'right'}}>
-					<Typography 
-						fontFamily={font} 
-						color={'white'} 
-						fontWeight={300} 
-						fontSize={'120%'}
-						style={{height: '33%'}}
-					>
-						{new Date(song.played_at).toLocaleDateString()}
-					</Typography>
-					<Typography 
-						fontFamily={font} 
-						color={'white'} 
-						fontWeight={300} 
-						fontSize={'120%'}
-						style={{height: '33%'}}
-					>
-						{new Date(song.played_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-					</Typography>
-
-					{/* TODO: Put Review Button Here */}
-					<ListItemButton
-						className='reviewButton'
-						sx={{
-							width: '80%',
-							minWidth: '100px',
-							backgroundColor: '#3D2159',
-							borderRadius: '45px',
-							marginLeft: 'auto', // Align the button to the right
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							'&:hover': {
-								backgroundColor: '#1ED760',
-							}
-						}}
-						onClick={handleReviewButton}
-					>
-						<Typography className='reviewText' >
-							Review
+				{search ? 
+					// if on search page, display review totals
+					<Grid item xs={2} sx={{textAlign: 'right'}}>
+						<Typography 
+							fontFamily={font} 
+							color={'white'} 
+							fontWeight={300} 
+							fontSize={'120%'}
+							style={{height: '33%'}}
+						>
+							Avg. Score
 						</Typography>
-					</ListItemButton>
-				</Grid>
-
-
+						
+						{
+							//if reviewed, display score. else, display button
+							isReviewed ? 
+								true //review Score goes here
+								:
+							//button goes here 
+								<ListItemButton
+									className='reviewButton'
+									sx={{
+										width: '80%',
+										minWidth: '100px',
+										backgroundColor: '#3D2159',
+										borderRadius: '45px',
+										marginLeft: 'auto', // Align the button to the right
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										'&:hover': {
+											backgroundColor: '#1ED760',
+										}
+									}}
+									onClick={handleReviewButton}
+								>
+									<Typography className='reviewText' >
+							Review
+									</Typography>
+								</ListItemButton>
+						//end isReview logic
+						}
+					</Grid>
+					:
+					// if on home page, display time
+					<Grid item xs={2} sx={{textAlign: 'right'}}>
+						<Typography 
+							fontFamily={font} 
+							color={'white'} 
+							fontWeight={300} 
+							fontSize={'120%'}
+							style={{height: '33%'}}
+						>
+							{new Date(time).toLocaleDateString()}
+						</Typography>
+						<Typography 
+							fontFamily={font} 
+							color={'white'} 
+							fontWeight={300} 
+							fontSize={'120%'}
+							style={{height: '33%'}}
+						>
+							{new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+						</Typography>
+						<ListItemButton
+							className='reviewButton'
+							sx={{
+								width: '80%',
+								minWidth: '100px',
+								backgroundColor: '#3D2159',
+								borderRadius: '45px',
+								marginLeft: 'auto', // Align the button to the right
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								'&:hover': {
+									backgroundColor: '#1ED760',
+								}
+							}}
+							onClick={handleReviewButton}
+						>
+							<Typography className='reviewText' >
+							Review
+							</Typography>
+						</ListItemButton>
+					</Grid>
+				//end searchpage logic
+				}
 			</Grid>
 
 		</ListItem>
