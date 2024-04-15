@@ -18,9 +18,8 @@
 }
 
 .Profile-Picture img{
-  /* margin-left: 30vw; */
-  margin-top: 20px;
-  display: block;
-  margin-right:auto;
-  border-radius: 10%;
+  margin-left: 10vw;
+  border-radius: 20%;
+  width: 200px;
+  height: 200px;
 }
