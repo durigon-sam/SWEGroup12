@@ -58,23 +58,10 @@ export default function Login () {
 					'username': data.display_name, 
 					'email': data.email, 
 					'accessToken': accessToken,
-					'spotifyId': data.spotifyId
+					'spotifyId': data.id
 				}
-			// userDataService.createUser(newUser) // refers to method in userService.java (frontend)
-			// 	.then(response => {
-			// 		if (response.status >= 200 && response.status < 300) {
-			// 			console.log('user added correctly.')
-			// 		} else {
-			// 			console.log('user not added.')
-			// 		}
-			// 		//console.log(response)
-					
-			// 		// store userId in LS for Sam
-			// 		localStorage.setItem('userId', response.data.id)
-			// 	})
 		
-			// TODO: will not work until ben merges stuff
-			userDataService.getUserBySpotId(accessToken) // refers to method in userService.java (frontend)
+			userDataService.getUserBySpotId(data.id) // refers to method in userService.java (frontend)
 				.then(response => {
 					// user is found, set local storages for sammy
 					localStorage.setItem('userId', response.data.id)
