@@ -19,3 +19,5 @@ class UserDataService {
 
 	//getFriendsOfUser()
 }
+
+export default UserDataService

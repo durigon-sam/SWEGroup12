@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Avatar, Grid, ListItem, ListItemButton, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
+import ReviewDialog from './ReviewDialog'
 
 export default function SongListItem(props) {
 
@@ -165,27 +166,7 @@ export default function SongListItem(props) {
 						>
 							{new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
 						</Typography>
-						<ListItemButton
-							className='reviewButton'
-							sx={{
-								width: '80%',
-								minWidth: '100px',
-								backgroundColor: '#3D2159',
-								borderRadius: '45px',
-								marginLeft: 'auto', // Align the button to the right
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								'&:hover': {
-									backgroundColor: '#1ED760',
-								}
-							}}
-							onClick={handleReviewButton}
-						>
-							<Typography className='reviewText' >
-							Review
-							</Typography>
-						</ListItemButton>
+						<ReviewDialog item={song}/>
 					</Grid>
 				//end searchpage logic
 				}
