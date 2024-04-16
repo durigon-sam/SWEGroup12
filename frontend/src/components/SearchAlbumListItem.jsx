@@ -68,28 +68,45 @@ export default function SearchAlbumListItem(props){
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
-						fontWeight={300} 
-						fontSize={'20px'}
-						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+						fontWeight={600} 
+						fontSize={'30px'}
+						style={{ 
+							overflow: 'hidden', 
+							textOverflow: 'ellipsis', 
+							whiteSpace: 'nowrap',
+							marginBottom: '5px'
+						}}
 					>
 						{album.name}
 					</Typography>
+
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
-						fontWeight={300} 
+						fontWeight={600} 
 						fontSize={'20px'}
-						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+						style={{ 
+							overflow: 'hidden', 
+							textOverflow: 'ellipsis', 
+							whiteSpace: 'nowrap',
+							marginBottom: '5px'
+						}}
 					>
 						{album.artists.map(artist => artist.name).join(', ')}
 					</Typography>
+
 					{/* TODO align this to the bottom of the card */}
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
 						fontWeight={300}
 						fontSize={'20px'}
-						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+						style={{ 
+							minWidth: '130px',
+							wordWrap: 'break-word',
+							whiteSpace: 'normal',
+							marginBottom: '5px'
+						}}
 					>
 						{album.album_type === 'single' ? 'Single' : 'Album'}
 					</Typography>
