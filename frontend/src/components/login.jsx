@@ -3,7 +3,6 @@ import '../styles/App.css'
 import { Box, Button,Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import UserDataService from '../services/userService'
-// userId
 
 // global variables
 var redirect_uri = 'http://localhost:3000/' // once user enters valid info, redirects to homepage

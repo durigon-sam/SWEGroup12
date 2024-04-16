@@ -20,6 +20,37 @@ export default function SongListItem(props) {
 	const reviewService = new ReviewDataService()
 	const [isReviewed, setIsReviewed] = useState()
 	const [userRatingVal, setUserRatingVal] = useState()
+
+	useEffect(()=>{
+		// TODO: call API for average review using song's id
+		
+		var userReviews = userService.getReviews(localStorage.getItem('userId'))
+		if (userReviews.length > 0) {
+			console.log('user ' + localStorage.getItem('userId') + ' has reviews')
+			console.log(userReviews)
+		} else {
+			console.log('user ' + localStorage.getItem('userId') + ' has no reviews')
+		}
+		
+		reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))
+			.catch(error => {
+			// if(error.response.data.errorCode === 400){
+				// console.log('poop')
+				// console.log(error)
+			// }
+			})
+			.then(response => {
+				if (response != undefined){
+					console.log('response is not undefined')
+					console.log(response)
+				}
+				
+			})
+			
+
+	}, [])
+
+
 	
 	return(
 		<ListItem key={props.item.id}
@@ -68,7 +99,7 @@ export default function SongListItem(props) {
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
-						fontWeight={300} 
+						fontWeight={700} 
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>

@@ -7,6 +7,9 @@ import Search from './components/search'
 import Profile from './components/profile'
 
 export default function App() {
+
+	let userId = localStorage.getItem('userId')
+
 	return (
 		<div className='app'>
 			<Router>
