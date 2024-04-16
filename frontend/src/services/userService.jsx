@@ -22,12 +22,12 @@ class UserDataService {
 		return http.get('/friends/' + userID)
 	}
 
-	getUserByAccessToken(token) {
-		return http.get('/users/accessToken/' + token)
-	}
-
 	getReviews(userId) {
 		return http.get('/reviews/' + userId)
+	}
+
+	getUserBySpotId(spotId){
+		return http.get(`/users/spotifyId/${spotId}`)
 	}
 }
 

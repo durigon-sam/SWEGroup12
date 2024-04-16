@@ -52,15 +52,13 @@ export default function Login () {
 		// is the response good?
 		if ( this.status == 200 ) {
 			var data = JSON.parse(this.responseText)
-			// get user data
-			let username = data.display_name
-			let email = data.email
 			// create newUser json
-			let newUser = 
+			var newUser = 
 				{
-					'username': username, 
-					'email': email, 
-					'accessToken': accessToken
+					'username': data.display_name, 
+					'email': data.email, 
+					'accessToken': accessToken,
+					'spotifyId': data.spotifyId
 				}
 			// userDataService.createUser(newUser) // refers to method in userService.java (frontend)
 			// 	.then(response => {
@@ -76,33 +74,33 @@ export default function Login () {
 			// 	})
 		
 			// TODO: will not work until ben merges stuff
-			userDataService.getUserByAccessToken(accessToken) // refers to method in userService.java (frontend)
+			userDataService.getUserBySpotId(accessToken) // refers to method in userService.java (frontend)
 				.then(response => {
-					// if user is not added to DB yet
-					if (response.errorDescription >= 400) { // change to correct value
+					// user is found, set local storages for sammy
+					localStorage.setItem('userId', response.data.id)
+					console.log('user was found!')
+					console.log(response)
+				})
+				.catch(error => {
+					if(error.response.data.errorCode === 400){
 						// call the backend method to add newUser to database
 						userDataService.createUser(newUser) // refers to method in userService.java (frontend)
 							.then(response => {
-								if (response.status >= 200 && response.status < 300) {
-									console.log('user added correctly.')
-								} else {
-									console.log('user not added.')
-								}
+								console.log('user added correctly.')
 								//console.log(response)
 								
 								// store userId in LS for Sam
 								localStorage.setItem('userId', response.data.id)
 							})
+							.catch(error => {
+								alert(error)
+							})
+					}else{
+						console.log(error)
 					}
-					else {
-						// user is found, set local storages for sammy
-						localStorage.setItem('userId', response.data.id)
-						console.log('user was found!')
-						console.log(response)
-					}
-
-					
 				})
+
+		//spotify error
 		} else { // other error occured
 			console.log(this.responseText)
 			alert(this.responseText)
