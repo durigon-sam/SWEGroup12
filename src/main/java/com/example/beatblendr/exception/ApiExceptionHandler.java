@@ -34,6 +34,13 @@ public class ApiExceptionHandler {
 
     return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
 }
+@ExceptionHandler(value = UserNotFoundException.class)
+public ResponseEntity<ApiException> handleUserNotFoundException(){
+
+ApiException exception = new ApiException(400, "No User Exists with this access token", new Date());
+
+return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+}
 }
 
 

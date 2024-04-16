@@ -136,12 +136,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDTO findByAccessToken(String accessToken) {
 
-        if(userRepository.findByAccessToken(accessToken)==null)        
-            throw new UserNotFoundException("accessToken");
+        for(UserDTO u: findAll()){
+            if(u.getAccessToken().equals(accessToken)){
+                UserDTO userDTO = UserMapper.mapToUserDTO(userRepository.findByAccessToken(accessToken));
+                return userDTO;
 
-        UserDTO userDTO = UserMapper.mapToUserDTO(userRepository.findByAccessToken(accessToken));
-
-        return userDTO;
+            }
+        }
+        throw new UserNotFoundException("User Not Found");
     }
 
     @Override
