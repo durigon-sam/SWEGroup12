@@ -116,23 +116,13 @@ public class ReviewServiceImpl implements ReviewService{
             (review) -> ReviewMapper.mapToReviewDTO(review))
             .collect(Collectors.toList()
         );
-        return 2.0;
+        double sum = 0;
+        for(ReviewDTO r: foundReviewDTOs){
+            sum +=r.getRating();
+
+        }
+        return sum/foundReviewDTOs.size();
     }
-	// @Override
-	// public ReviewDTO getReviewByUser(String spotifyId, Long userId) {
-		
-    //     r
-	//         double sum = 0;
-    //     for(ReviewDTO r: foundReviewDTOs){
-    //         sum +=r.getRating();
-
-    //     }
-    //     System.out.println(sum);
-    //     System.out.println(foundReviewDTOs.size());
-    //     return sum/foundReviewDTOs.size();
-
-        
-    // }
 
     @Override
     public ReviewDTO getReviewByUser(String spotifyId, Long userId){
