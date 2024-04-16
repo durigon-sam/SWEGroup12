@@ -23,7 +23,7 @@ class UserDataService {
 	}
 
 	getUserByAccessToken(token) {
-		return http.get('/accessToken/' + token)
+		return http.get('/users/accessToken/' + token)
 	}
 
 	getReviews(userId) {

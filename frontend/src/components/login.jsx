@@ -62,41 +62,47 @@ export default function Login () {
 					'email': email, 
 					'accessToken': accessToken
 				}
-			userDataService.createUser(newUser) // refers to method in userService.java (frontend)
-				.then(response => {
-					if (response.status >= 200 && response.status < 300) {
-						console.log('user added correctly.')
-					} else {
-						console.log('user not added.')
-					}
-					//console.log(response)
-					
-					// store userId in LS for Sam
-					localStorage.setItem('userId', response.data.id)
-				})
-		
-			// userDataService.getUserByAccessToken(localStorage.getItem('access_token')) // refers to method in userService.java (frontend)
+			// userDataService.createUser(newUser) // refers to method in userService.java (frontend)
 			// 	.then(response => {
-			// 		// if user is not added to DB yet
-			// 		if (response.errorDescription >= 400 && response.errorDescription < 500) { // change to correct value
-			// 			// call the backend method to add newUser to database
-			// 			// userDataService.createUser(newUser) // refers to method in userService.java (frontend)
-			// 			// 	.then(response => {
-			// 			// 		if (response.status >= 200 && response.status < 300) {
-			// 			// 			console.log('user added correctly.')
-			// 			// 		} else {
-			// 			// 			console.log('user not added.')
-			// 			// 		}
-			// 			// 		//console.log(response)
-								
-			// 			// 		// store userId in LS for Sam
-			// 			// 		localStorage.setItem('userId', response.data.id)
-			// 			// 	})
+			// 		if (response.status >= 200 && response.status < 300) {
+			// 			console.log('user added correctly.')
+			// 		} else {
+			// 			console.log('user not added.')
 			// 		}
-			// 		else {
-			// 			console.log('POOOOOOOP')
-			// 		}
+			// 		//console.log(response)
+					
+			// 		// store userId in LS for Sam
+			// 		localStorage.setItem('userId', response.data.id)
 			// 	})
+		
+			// TODO: will not work until ben merges stuff
+			userDataService.getUserByAccessToken(accessToken) // refers to method in userService.java (frontend)
+				.then(response => {
+					// if user is not added to DB yet
+					if (response.errorDescription >= 400) { // change to correct value
+						// call the backend method to add newUser to database
+						userDataService.createUser(newUser) // refers to method in userService.java (frontend)
+							.then(response => {
+								if (response.status >= 200 && response.status < 300) {
+									console.log('user added correctly.')
+								} else {
+									console.log('user not added.')
+								}
+								//console.log(response)
+								
+								// store userId in LS for Sam
+								localStorage.setItem('userId', response.data.id)
+							})
+					}
+					else {
+						// user is found, set local storages for sammy
+						localStorage.setItem('userId', response.data.id)
+						console.log('user was found!')
+						console.log(response)
+					}
+
+					
+				})
 		} else { // other error occured
 			console.log(this.responseText)
 			alert(this.responseText)
