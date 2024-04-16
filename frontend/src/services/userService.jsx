@@ -2,10 +2,10 @@ import http from '../http-common'
 
 class UserDataService {
 
-	//methods here correspond to the methods in UserController.java
+	// methods here correspond to the methods in UserController.java
 
 	//createUser
-	create(data){
+	createUser(data) {
 		return http.post('/users', data)
 	}
 
@@ -17,7 +17,14 @@ class UserDataService {
 
 	//deleteuserwithid
 
-	//getFriendsOfUser()
+	//getFriends()
+	getFriends(userID) {
+		return http.get('/friends/' + userID)
+	}
+
+	getUserByAccessToken(token) {
+		return http.get('/accessToken/' + token)
+	}
 }
 
 export default UserDataService

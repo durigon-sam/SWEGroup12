@@ -28,12 +28,18 @@ export default function HomePage(){
 	useEffect(() => {
 		//TODO: uncomment this when service and REST API call are implemented
 		// use this form for all state variables and REST API calls
-		
-		// const userDataService = new userDataService();
-		// userDataService.getFriendsOfUser()
+		// const userDataService = new userDataService()
+		// userDataService.getUserByAccessToken(localStorage.getItem('access_token')) // refers to method in userService.java (frontend)
 		// 	.then(response => {
-		// 		setFriendsState(response.data)
+		// 		//console.log(response.data.id)
+		// 		// store id in LS, call getFreinds()
+		// 		localStorage.setItem('userId', response.data.id)
+		// 		userDataService.getFriends(localStorage.getItem('userId'))
+		// 			.then(response => {
+		// 				setFriendsState(response.data) // list ?
+		// 			})
 		// 	})
+
 		setFriendsState(friends)
 
 		// Get Recent Songs

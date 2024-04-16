@@ -7,6 +7,7 @@ export default function ReviewListItem(props) {
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const {name, artist, rating, review} = props.item
+	// const item = props.item
 
 	return(
 		<ListItem
@@ -20,7 +21,8 @@ export default function ReviewListItem(props) {
 			{/* picture */}
 			<ListItemAvatar>
 				<Avatar 
-					alt={name} 
+					alt={name}
+					// alt = {item.name}
 					src='/BeatBlendr_Logos/Icon_Color.png'
 					sx={{
 						height: '128px',
@@ -49,6 +51,7 @@ export default function ReviewListItem(props) {
 						}}
 					>
 						{name}
+						{/* item.name */}
 					</Typography>
 
 					<Typography
@@ -63,6 +66,7 @@ export default function ReviewListItem(props) {
 						}}
 					>
 						{artist}
+						{/* item.artist */}
 					</Typography>
 
 					<Typography
@@ -77,6 +81,7 @@ export default function ReviewListItem(props) {
 						}}
 					>
 						{review}
+						{/* item.review */}
 					</Typography>
 				</Grid>
 
@@ -98,6 +103,8 @@ export default function ReviewListItem(props) {
 						}}
 					>
 						<Rating name="read-only" value={rating} precision={0.5} readOnly />
+						{/* <Rating name="read-only" value={item.rating} precision={0.5} readOnly /> */}
+
 					</Typography>
 					{/* button to edit the review here */}
 					<Button variant="contained" sx={{float: 'right'}}>Edit</Button>
