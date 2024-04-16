@@ -30,12 +30,23 @@ public class UserServiceImpl implements UserService{
     public UserDTO createUser(UserDTO userDTO) {
         
 
-            User user = UserMapper.mapToUser(userDTO);
-            User savedUser = userRepository.save(user);
+        User user = UserMapper.mapToUser(userDTO);
+        User savedUser = userRepository.save(user);
 
         return UserMapper.mapToUserDTO(savedUser);
     }
+    @Override
+    public UserDTO findBySpotifyId(String spotifyId) {
+        
+        for(UserDTO u: findAll()){
+            if(u.getSpotifyId().equals(spotifyId)){
+                UserDTO userDTO = UserMapper.mapToUserDTO(userRepository.findBySpotifyId(spotifyId));
+                return userDTO;
 
+            }
+        }
+        throw new UserNotFoundException(spotifyId);
+    }
     @Override
     public UserDTO findByEmail(String email) {
         
@@ -82,14 +93,7 @@ public class UserServiceImpl implements UserService{
         
         return foundUser;
     }
-    @Override
-    public UserDTO findBySpotifyId(String accessToken) {
-       User user = userRepository.findByAccessToken(accessToken);
-       UserDTO foundUser = UserMapper.mapToUserDTO(user);
-        
-        return foundUser;
-    }
-
+   
 
     @Override
     public void deleteUser(Long id) {
@@ -116,6 +120,9 @@ public class UserServiceImpl implements UserService{
             .collect(Collectors.toList()
         );
         return foundUsers.get(0);
+
+
+        
     }
 
     @Override
