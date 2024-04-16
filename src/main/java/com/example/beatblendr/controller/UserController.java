@@ -43,6 +43,11 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         
     }
+    @GetMapping("spotifyId/{spotifyId}")
+    public ResponseEntity<UserDTO> getUserBySpotifyId(@PathVariable("spotifyId") String spotifyId){
+        UserDTO savedUser = userService.findBySpotifyId(spotifyId);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
 
     //Get user by Email
     @GetMapping("email/{email}")
@@ -135,4 +140,5 @@ public class UserController {
         List<Review> reviews = userService.getReviews(user);
         return ResponseEntity.ok(reviews.size());
     }
+    
 }
