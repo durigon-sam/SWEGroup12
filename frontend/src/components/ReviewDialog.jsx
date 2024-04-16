@@ -16,8 +16,32 @@ export default function ReviewDialog(props) {
 	const [ratingValue, setRatingValue] = React.useState(null)
 	const [reviewField, setReviewField] = React.useState(null)
 	const item = props.item
+	const isAlbum = props.isAlbum
 	const reviewService = new ReviewDataService()
+	let data = {
+		image: null,
+		first: null,
+		second: null,
+		third: null,
+	}
 
+	if(isAlbum){
+		// console.log(item)
+		data = {
+			image: item.images[1].url,
+			first: item.name,
+			second: item.artists.map(artist => artist.name).join(', '),
+			third: item.type
+		}
+	}else{
+		// console.log(item)
+		data = {
+			image: item.album.images[1].url,
+			first: item.name,
+			second: item.album.name,
+			third: item.artists.map(artist => artist.name).join(', '),
+		}
+	}
 	const handleClickOpen = () => {
 		setOpen(true)
 	}
@@ -38,13 +62,11 @@ export default function ReviewDialog(props) {
 				'description': reviewField,
 			}
 
-			// TODO: uncomment this when merged with max
 			reviewService.create(localStorage.getItem('userId'), newReview)
 				.then(response => {
-					console.log(response.data)
+					alert(`Review of ${item.name} was successful!`)
 				})
 				.catch(error => {
-					console.log(error)
 					alert('Review already exists for this item')
 				})
 			setRatingValue(null)
@@ -112,7 +134,7 @@ export default function ReviewDialog(props) {
 								height: '128px',
 								borderRadius: '0',
 							}}
-							src={item.album.images[1].url}
+							src={data.image}
 						/>
 						<Box
 							sx={{
@@ -134,7 +156,7 @@ export default function ReviewDialog(props) {
 									marginBottom: '5px'
 								}}
 							>
-								{item.name}
+								{data.first}
 							</Typography>
 
 							<Typography 
@@ -149,7 +171,7 @@ export default function ReviewDialog(props) {
 									marginBottom: '5px'
 								}}
 							>
-								{item.artists.map(artist => artist.name).join(', ')}
+								{data.second}
 							</Typography>
 
 							{/* TODO align this to the bottom of the card */}
@@ -163,8 +185,9 @@ export default function ReviewDialog(props) {
 									wordWrap: 'break-word',
 									whiteSpace: 'normal',
 									marginBottom: '5px'
-								}}							>
-								{item.album.name}
+								}}
+							>
+								{data.third}
 							</Typography>
 						</Box>
 					</Box>
