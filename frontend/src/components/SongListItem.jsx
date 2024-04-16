@@ -4,6 +4,7 @@ import '../styles/home.css'
 import '../styles/App.css'
 import ReviewDialog from './ReviewDialog'
 import UserDataService from '../services/userService'
+import ReviewDataService from '../services/reviewService'
 
 export default function SongListItem(props) {
 
@@ -16,6 +17,7 @@ export default function SongListItem(props) {
 	const [isReviewed, setIsReviewed] = useState(false)
 	const [userRatingVal, setUserRatingVal] = useState()
 	const userService = new UserDataService()
+	const reviewService = new ReviewDataService()
 
 	//TODO: implement review modal, no reason to be a separate page
 	const handleReviewButton = () => {
@@ -28,6 +30,19 @@ export default function SongListItem(props) {
 		
 		// var userReviews = userService.getReviews(localStorage.getItem('userId'))
 		// console.log(userReviews)
+		reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))
+			.catch(error => {
+			// if(error.response.data.errorCode === 400){
+				console.log(error)
+			// }
+			})
+			.then(response => {
+				if (response != undefined){
+					console.log(response)
+				}
+				
+			})
+			
 
 	}, [])
 	

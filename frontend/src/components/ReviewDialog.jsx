@@ -40,10 +40,10 @@ export default function ReviewDialog(props) {
 			}
 
 			// TODO: uncomment this when merged with max
-			reviewService.create(newReview)
-				.then(response => {
-					console.log(response.data)
-				})
+			// reviewService.create(newReview)
+			// 	.then(response => {
+			// 		console.log(response.data)
+			// 	})
 			console.log(newReview)
 			setRatingValue(null)
 			handleClose()

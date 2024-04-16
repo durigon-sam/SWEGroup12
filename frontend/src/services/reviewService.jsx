@@ -6,6 +6,11 @@ class ReviewDataService {
 	create(data){
 		return http.post('/reviews', data)
 	}
+
+	//getReviewByUser
+	getReviewByUser(spotId, userId){
+		return http.get(`/reviews/getReviewByUser/${spotId}/${userId}`)
+	}
 }
 
 export default ReviewDataService
