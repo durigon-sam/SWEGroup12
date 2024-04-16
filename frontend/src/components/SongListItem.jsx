@@ -18,39 +18,30 @@ export default function SongListItem(props) {
 	const [avgReview, setAverageReview] = useState(0)
 	const userService = new UserDataService()
 	const reviewService = new ReviewDataService()
-	const [isReviewed, setIsReviewed] = useState()
+	const [isReviewed, setIsReviewed] = useState(false)
 	const [userRatingVal, setUserRatingVal] = useState()
+	const [refreshTrigger, setRefreshTrigger] = useState(false)
 
 	useEffect(()=>{
 		// TODO: call API for average review using song's id
-		
-		var userReviews = userService.getReviews(localStorage.getItem('userId'))
-		if (userReviews.length > 0) {
-			console.log('user ' + localStorage.getItem('userId') + ' has reviews')
-			console.log(userReviews)
-		} else {
-			console.log('user ' + localStorage.getItem('userId') + ' has no reviews')
-		}
+	
 		
 		reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))
 			.catch(error => {
-			// if(error.response.data.errorCode === 400){
-				// console.log('poop')
-				// console.log(error)
-			// }
 			})
 			.then(response => {
 				if (response != undefined){
-					console.log('response is not undefined')
-					console.log(response)
+					// console.log(`review of ${song.name} found with rating ${response.data.rating}`)
+					setUserRatingVal(response.data.rating)
+					setIsReviewed(true)
 				}
 				
 			})
-			
+	}, [refreshTrigger])
 
-	}, [])
-
-
+	const triggerRefresh = () => {
+		setRefreshTrigger(prevState => !prevState)
+	}
 	
 	return(
 		<ListItem key={props.item.id}
@@ -153,7 +144,7 @@ export default function SongListItem(props) {
 								/> //review Score goes here
 								:
 							//button goes here 
-								<ReviewDialog item={song}/>
+								<ReviewDialog item={song} onClose={triggerRefresh()}/>
 							//end isReview logic
 						}
 					</Grid>
@@ -178,7 +169,21 @@ export default function SongListItem(props) {
 						>
 							{new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
 						</Typography>
-						<ReviewDialog item={song}/>
+						{
+							//if reviewed, display score. else, display button
+							isReviewed ? 
+								<Rating
+									readOnly
+									size='small'
+									name='Music Rating'
+									precision={0.5}
+									value={userRatingVal}
+								/> //review Score goes here
+								:
+							//button goes here 
+								<ReviewDialog item={song}/>
+							//end isReview logic
+						}
 					</Grid>
 					//end searchpage logic
 				}

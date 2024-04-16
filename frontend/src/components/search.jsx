@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
-import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
+import { Grid, List, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
 import SearchAlbumListItem from './SearchAlbumListItem'
 
@@ -27,7 +26,7 @@ export default function Search(){
 			}else{
 				// Perform search based on searchTerm and selectedFilter
 				console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
-				let url = SEARCH + '?q=' + searchTerm + '&type='
+				let url = `${SEARCH}?q=${searchTerm}&type=`
 				selectedFilter === 'songs' ? url += 'track' : url += 'album'
 				console.log(url)
 				callApi('GET', url, null, handleResponse)

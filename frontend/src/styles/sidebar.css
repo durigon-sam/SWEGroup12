@@ -3,11 +3,6 @@
     color: white;
 }
 
-.sidebarButton:hover {
-    border: 5px solid;
-    border-color: #1ed760;
-}
-
 .logo {
     margin-top: 10px;
     margin-bottom: 1vh;
