@@ -4,7 +4,6 @@ import './styles/App.css'
 import Login from './components/login'
 import HomePage from './components/home'
 import Search from './components/search'
-import Playlist from './components/playlist'
 import Profile from './components/profile'
 
 export default function App() {
@@ -17,7 +16,6 @@ export default function App() {
 					<Route path='/home' element={<HomePage/>} />
 					<Route path='/' element={<Login/>}/>
 					<Route path='/search' element={<Search/>}/>
-					<Route path='/playlist' element={<Playlist/>}/>
 					<Route path='/profile' element={<Profile/>}/>
 				</Routes>
 			</Router>

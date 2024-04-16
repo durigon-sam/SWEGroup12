@@ -12,8 +12,8 @@ export default function SideBar(props){
 	const handleListButtonClick = (arg) => {
 		if (arg === buttonLabels[0]){
 			navigate('/search')
-		} else if (arg === buttonLabels[1]) {
-			navigate('/playlist')
+		// } else if (arg === buttonLabels[1]) {
+		// 	navigate('/playlist')
 		} else if (arg === buttonLabels[2]) {
 			navigate('/profile')
 		}

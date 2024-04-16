@@ -10,11 +10,17 @@ export default function FriendListItem(props) {
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const navigate = useNavigate()
-	const {userid, username, ratings} = props.item
 
+	const {userid, username, ratings} = props.item
 	const handleAvatarClick = () => {
 		navigate(`profile/${userid}`)
 	}
+
+	// this is backend version!
+	// const item = props.item
+	// const handleAvatarClick = () => {
+	// 	navigate(`profile/${item.userid}`)
+	// }
 
 	return(
 		<ListItem
@@ -28,8 +34,8 @@ export default function FriendListItem(props) {
 			{/* profile picture */}
 			<ListItemAvatar>
 				<Avatar 
-					alt={username} 
-					// src={src}
+					alt={username}
+					//alt = {item.username} 
 					src='/BeatBlendr_Logos/Icon_Color.png'
 					sx={{
 						height: '64px',
@@ -61,6 +67,7 @@ export default function FriendListItem(props) {
 						}}
 					>
 						{username}
+						{/* {item.username} */}
 					</Typography>
 				</Grid>
 				<Grid item xs={1} 
@@ -82,6 +89,7 @@ export default function FriendListItem(props) {
 						}}
 					>
 						Ratings: {ratings}
+						{/* Ratings: {item.ratings} */}
 					</Typography>
 				</Grid>
 			</Grid>

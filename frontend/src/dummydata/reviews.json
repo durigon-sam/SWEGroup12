@@ -1,0 +1,22 @@
+{
+    "reviews": [
+        {
+            "name": "Everyday Bro",
+            "artist": "Jake Paul",
+            "rating": 3,
+            "review": "This song is amazing and I love it so much. This song is amazing and I love it so much. This song is amazing and I love it so much."
+        },
+        {
+            "name": "Call Me Maybe",
+            "artist": "Carly Rae Jepsin",
+            "rating": 4.5,
+            "review": "Absolute banger."
+        },
+        {
+            "name": "Nonstop",
+            "artist": "Drake",
+            "rating": 5,
+            "review": "I love pookie Drake."
+        }
+    ]
+}
