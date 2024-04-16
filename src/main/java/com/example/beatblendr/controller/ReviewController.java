@@ -3,8 +3,11 @@ package com.example.beatblendr.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,10 +38,9 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO){
-        ReviewDTO savedReview = reviewService.createReview(reviewDTO);
 
+        ReviewDTO savedReview = reviewService.createReview(reviewDTO);
         return new ResponseEntity<>(savedReview, HttpStatus.CREATED);
-        
     }
 
     @GetMapping("{id}")

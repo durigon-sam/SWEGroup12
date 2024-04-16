@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
+import com.example.beatblendr.exception.UserNotFoundException;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.UserService;
@@ -52,7 +53,9 @@ public class UserController {
 
     @GetMapping("accessToken/{accesstoken}")
     public ResponseEntity<UserDTO> getUserByAccessToken(@PathVariable("accesstoken") String accessToken){
+    
         UserDTO savedUser = (UserDTO) userService.findByAccessToken(accessToken);
+
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 

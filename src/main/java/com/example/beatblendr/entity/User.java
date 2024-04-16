@@ -31,14 +31,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @EnableAutoConfiguration
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "beatblendr")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String username;
 	
 
@@ -61,7 +61,7 @@ public class User {
 
 	@JsonIgnore
 	@OneToMany
-	@JoinTable(name="friends")
+	@JoinTable(name="friends", schema = "beatblendr")
 	@JoinColumn(name="person_A_id", referencedColumnName="id")
 	@JoinColumn(name="person_B_id", referencedColumnName="id")
 	private List<User> friends;

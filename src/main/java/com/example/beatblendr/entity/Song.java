@@ -33,7 +33,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @EnableAutoConfiguration
 @Entity
-@Table(name = "songs")
+@Table(name = "songs", schema = "beatblendr")
 
 public class Song {
 
