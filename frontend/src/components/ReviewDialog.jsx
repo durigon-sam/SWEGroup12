@@ -33,18 +33,20 @@ export default function ReviewDialog(props) {
 			//call createRating
 			var newReview = {
 				'spotifyId': item.id, 
-				'type': item.type,
+				'type': item.type === 'track' ? 0 : 1,
 				'rating': ratingValue,
 				'description': reviewField,
-				'user': localStorage.getItem('userId')
 			}
 
 			// TODO: uncomment this when merged with max
-			// reviewService.create(newReview)
-			// 	.then(response => {
-			// 		console.log(response.data)
-			// 	})
-			console.log(newReview)
+			reviewService.create(localStorage.getItem('userId'), newReview)
+				.then(response => {
+					console.log(response.data)
+				})
+				.catch(error => {
+					console.log(error)
+					alert('Review already exists for this item')
+				})
 			setRatingValue(null)
 			handleClose()
 		}

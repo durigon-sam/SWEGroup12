@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
@@ -8,6 +8,8 @@ import SongListItem from './SongListItem'
 import friends from '../dummydata/friends.json'
 import FriendListItem from './FriendListItem'
 import userDataService from '../services/userService'
+import reviewDataService from '../services/reviewService'
+import ReviewDataService from '../services/reviewService'
 
 const RECENTS = 'https://api.spotify.com/v1/me/player/recently-played'
 const ME = 'https://api.spotify.com/v1/me'
@@ -20,25 +22,12 @@ export default function HomePage(){
 		const storedState = localStorage.getItem('friendsState')
 		return storedState ? JSON.parse(storedState) : { friends: [] }
 	})
-
 	// Initialize state for Recent Songs
 	const [recentSongsState, setRecentSongsState] = useState([])
+	const reviewService = new ReviewDataService()
 
 	//This is run whenever the component is first loaded
 	useEffect(() => {
-		//TODO: uncomment this when service and REST API call are implemented
-		// use this form for all state variables and REST API calls
-		// const userDataService = new userDataService()
-		// userDataService.getUserByAccessToken(localStorage.getItem('access_token')) // refers to method in userService.java (frontend)
-		// 	.then(response => {
-		// 		//console.log(response.data.id)
-		// 		// store id in LS, call getFreinds()
-		// 		localStorage.setItem('userId', response.data.id)
-		// 		userDataService.getFriends(localStorage.getItem('userId'))
-		// 			.then(response => {
-		// 				setFriendsState(response.data) // list ?
-		// 			})
-		// 	})
 
 		setFriendsState(friends)
 
@@ -67,6 +56,7 @@ export default function HomePage(){
 		if ( this.status == 200 ){
 			var data = JSON.parse(this.responseText)
 			// set the returned songs to the state variable
+			
 			setRecentSongsState(data.items)
 		} else { // other error occured
 			console.log(this.responseText)
@@ -127,9 +117,11 @@ export default function HomePage(){
 							}}
 						>
 							{/* This gets replaced with the actual user data */}
-							{recentSongsState.map((item) => (
-								<SongListItem key={item.track.id} item={item.track} search={false} time={item.played_at}/>
-							))}
+							{
+								recentSongsState.map((item) => (
+									<SongListItem key={item.track.id} item={item.track} search={false} time={item.played_at}/>
+								))
+							}
 						</List>
 					</Grid>
 

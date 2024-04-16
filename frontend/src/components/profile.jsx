@@ -54,7 +54,12 @@ export default function Profile () {
 			console.log(data)
 			// get user name and image
 			setName(data.display_name)
-			setPicture(data.images[0].url)
+			if(data.images.length>0){
+				setPicture(data.images[0].url)
+			}else{
+				setPicture('/BeatBlendr_Logos/Icon_Color.png')
+			}
+			
 		} else { // other error occured
 			console.log(this.responseText)
 			alert(this.responseText)
