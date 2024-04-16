@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Grid, ListItem, ListItemButton, Typography } from '@mui/material'
+import { Avatar, Grid, ListItem, ListItemButton, Typography, Rating } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
 import ReviewDialog from './ReviewDialog'
+import UserDataService from '../services/userService'
 
 export default function SongListItem(props) {
 
@@ -10,12 +11,11 @@ export default function SongListItem(props) {
 	const song = props.item
 	const search = props.search
 	const time = props.time
+	// found from backend API calls
 	const [avgReview, setAverageReview] = useState()
 	const [isReviewed, setIsReviewed] = useState(false)
-
-	// TODO:  probably used for userscore logic, maybe for modal, unsure yet
-	const [userScore, setUserScore] = useState()
-	const [userReview, setUserReview] = useState()
+	const [userRatingVal, setUserRatingVal] = useState()
+	const userService = new UserDataService()
 
 	//TODO: implement review modal, no reason to be a separate page
 	const handleReviewButton = () => {
@@ -25,6 +25,10 @@ export default function SongListItem(props) {
 
 	useEffect(()=>{
 		// TODO: call API for average review using song's id
+		
+		// var userReviews = userService.getReviews(localStorage.getItem('userId'))
+		// console.log(userReviews)
+
 	}, [])
 	
 	return(
@@ -118,30 +122,16 @@ export default function SongListItem(props) {
 						{
 							//if reviewed, display score. else, display button
 							isReviewed ? 
-								true //review Score goes here
+								<Rating
+									readOnly
+									size='large'
+									name='Music Rating'
+									precision={0.5}
+									value={userRatingVal}
+								/> //review Score goes here
 								:
 							//button goes here 
-								<ListItemButton
-									className='reviewButton'
-									sx={{
-										width: '80%',
-										minWidth: '100px',
-										backgroundColor: '#3D2159',
-										borderRadius: '45px',
-										marginLeft: 'auto', // Align the button to the right
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										'&:hover': {
-											backgroundColor: '#1ED760',
-										}
-									}}
-									onClick={handleReviewButton}
-								>
-									<Typography className='reviewText' >
-							Review
-									</Typography>
-								</ListItemButton>
+								<ReviewDialog item={song}/>
 						//end isReview logic
 						}
 					</Grid>

@@ -62,20 +62,41 @@ export default function Login () {
 					'email': email, 
 					'accessToken': accessToken
 				}
-		
-			// call the backend method to add newUser to database
 			userDataService.createUser(newUser) // refers to method in userService.java (frontend)
 				.then(response => {
-					// if (response.errorMessage == 200) {
-					// 	console.log('user added correctly.')
-					// } else {
-					// 	console.log('user not added.')
-					// }
+					if (response.status >= 200 && response.status < 300) {
+						console.log('user added correctly.')
+					} else {
+						console.log('user not added.')
+					}
 					//console.log(response)
+					
 					// store userId in LS for Sam
 					localStorage.setItem('userId', response.data.id)
 				})
-			
+		
+			// userDataService.getUserByAccessToken(localStorage.getItem('access_token')) // refers to method in userService.java (frontend)
+			// 	.then(response => {
+			// 		// if user is not added to DB yet
+			// 		if (response.errorDescription >= 400 && response.errorDescription < 500) { // change to correct value
+			// 			// call the backend method to add newUser to database
+			// 			// userDataService.createUser(newUser) // refers to method in userService.java (frontend)
+			// 			// 	.then(response => {
+			// 			// 		if (response.status >= 200 && response.status < 300) {
+			// 			// 			console.log('user added correctly.')
+			// 			// 		} else {
+			// 			// 			console.log('user not added.')
+			// 			// 		}
+			// 			// 		//console.log(response)
+								
+			// 			// 		// store userId in LS for Sam
+			// 			// 		localStorage.setItem('userId', response.data.id)
+			// 			// 	})
+			// 		}
+			// 		else {
+			// 			console.log('POOOOOOOP')
+			// 		}
+			// 	})
 		} else { // other error occured
 			console.log(this.responseText)
 			alert(this.responseText)

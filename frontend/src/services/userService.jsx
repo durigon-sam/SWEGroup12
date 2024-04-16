@@ -25,6 +25,10 @@ class UserDataService {
 	getUserByAccessToken(token) {
 		return http.get('/accessToken/' + token)
 	}
+
+	getReviews(userId) {
+		return http.get('/reviews/' + userId)
+	}
 }
 
 export default UserDataService
