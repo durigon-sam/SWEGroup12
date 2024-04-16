@@ -92,13 +92,13 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.getAverageRating(spotifyId));
     }
 
-    // @GetMapping("/getReviewByUser/{spotifyId}/{userId}")
-    // public ResponseEntity<ReviewDTO> getReviewByUser(@PathVariable("spotifyId") String spotifyId, @PathVariable("userId") Long userId){
+    @GetMapping("/getReviewByUser/{spotifyId}/{userId}")
+    public ResponseEntity<ReviewDTO> getReviewByUser(@PathVariable("spotifyId") String spotifyId, @PathVariable("userId") Long userId){
 
-    //             ReviewDTO foundReview = reviewService.getReviewByUser(spotifyId, userId);
+                ReviewDTO foundReview = reviewService.getReviewByUser(spotifyId, userId);
 
-    //             return ResponseEntity.ok();
+                return ResponseEntity.ok(foundReview);
 
-    // }
+    }
 
 }

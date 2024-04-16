@@ -26,7 +26,14 @@ public class ApiExceptionHandler {
     ApiException exception = new ApiException(400, "Please Enter a Rating for this entity", new Date());
 
     return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
-    }  
+    } 
+    @ExceptionHandler(value = NoReviewForUserException.class)
+    public ResponseEntity<ApiException> handleNoReviewForUserException(){
+    
+    ApiException exception = new ApiException(400, "No Review Exists for this user", new Date());
+
+    return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+}
 }
 
 

@@ -11,6 +11,7 @@ import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
 import com.example.beatblendr.exception.NoRatingException;
+import com.example.beatblendr.exception.NoReviewForUserException;
 import com.example.beatblendr.exception.ReviewExistsException;
 import com.example.beatblendr.mapper.ReviewMapper;
 import com.example.beatblendr.mapper.UserMapper;
@@ -125,8 +126,16 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public ReviewDTO getReviewByUser(String spotifyId, Long userId){
-        return null;
+    public ReviewDTO getReviewByUser(String spotifyId, long userId){
+        
+
+        User user =userRepository.findById(userId).get(0);
+        for(Review r: user.getReviews()){
+            if(r.getSpotifyId().equals(spotifyId)){
+                return ReviewMapper.mapToReviewDTO(r);
+            }
+        }
+        throw new NoReviewForUserException("msg");
     }
 
 
