@@ -28,16 +28,24 @@ export default function SongListItem(props) {
 	useEffect(()=>{
 		// TODO: call API for average review using song's id
 		
-		// var userReviews = userService.getReviews(localStorage.getItem('userId'))
-		// console.log(userReviews)
+		var userReviews = userService.getReviews(localStorage.getItem('userId'))
+		if (userReviews.length > 0) {
+			console.log('user ' + localStorage.getItem('userId') + ' has reviews')
+			console.log(userReviews)
+		} else {
+			console.log('user ' + localStorage.getItem('userId') + ' has no reviews')
+		}
+		
 		reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))
 			.catch(error => {
 			// if(error.response.data.errorCode === 400){
-				console.log(error)
+				// console.log('poop')
+				// console.log(error)
 			// }
 			})
 			.then(response => {
 				if (response != undefined){
+					console.log('response is not undefined')
 					console.log(response)
 				}
 				
@@ -93,7 +101,7 @@ export default function SongListItem(props) {
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
-						fontWeight={300} 
+						fontWeight={700} 
 						fontSize={'20px'}
 						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
 					>

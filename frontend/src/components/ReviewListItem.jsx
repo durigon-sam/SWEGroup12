@@ -15,6 +15,7 @@ export default function ReviewListItem(props) {
 				background: 'linear-gradient(to left, #2D46B9, #1ED760)',
 				marginBottom: 5,
 				height: 'fit-content',
+				minHeight: '175px',
 				borderRadius: '10px',
 			}}
 		>

@@ -6,14 +6,21 @@ import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, Lis
 import { styled } from '@mui/material/styles'
 import ReviewListItem from './ReviewListItem'
 import reviews from '../dummydata/reviews.json'
+import UserDataService from '../services/userService'
 
 const ME = 'https://api.spotify.com/v1/me'
 const font = './LibreFranklin-VariableFont_wght.ttf'
 
 export default function Profile () {
 
+	const userDataService = new UserDataService()
+
 	const [name, setName] = useState(null)
 	const [picture, setPicture] = useState(null)
+
+	// the user's reviews should be entered into here
+	// call setReviewResults inside of the backend API call .then part
+	//const [reviewResults, setReviewResults] = useState([])
 
 	const [reviewsState, setReviewsState] = useState(() => {
 		const storedState = localStorage.getItem('reviewsState')
@@ -22,12 +29,20 @@ export default function Profile () {
 
 	// this is run whenever the component is first loaded
 	useEffect(() => {
-		setReviewsState(reviews)
+		// call the backend method to get all user's reviews using the user's beatblendr id
+		// userDataService.getReviews(localStorage.getItem('userId')) // refers to method in userService.java (frontend)
+		// 	.then(response => {
+		// 		//store the list of reviews
+		// 		console.log('Response: ' + response)
+		// 		setReviewResults(response) // may need response dot something
+		// 	})
+
+		setReviewsState(reviews) // this was here before
 		// call api to get profile info
 		callApi('GET', ME, null, handleMeResponse)
 	}, [])
 
-	//this runs whenever the friendsState is modified
+	// this runs whenever the reviewsState is modified
 	useEffect(() => {
 		localStorage.setItem('reviewsState', JSON.stringify(reviewsState))
 	}, [reviewsState])

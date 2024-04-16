@@ -18,12 +18,12 @@ class UserDataService {
 	//deleteuserwithid
 
 	//getFriends()
-	getFriends(userID) {
-		return http.get('/friends/' + userID)
+	getFriends(userId) {
+		return http.get(`/friends/${userId}`)
 	}
 
 	getReviews(userId) {
-		return http.get('/reviews/' + userId)
+		return http.get(`/reviews/${userId}`)
 	}
 
 	getUserBySpotId(spotId){
