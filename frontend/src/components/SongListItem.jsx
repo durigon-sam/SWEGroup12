@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Avatar, Grid, ListItem, ListItemButton, Typography, Rating } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
@@ -12,39 +12,14 @@ export default function SongListItem(props) {
 	const song = props.item
 	const search = props.search
 	const time = props.time
+	// const isReviewed = props.isReviewed
+	// const userRatingVal = props.rating
 	// found from backend API calls
-	const [avgReview, setAverageReview] = useState()
-	const [isReviewed, setIsReviewed] = useState(false)
-	const [userRatingVal, setUserRatingVal] = useState()
+	const [avgReview, setAverageReview] = useState(0)
 	const userService = new UserDataService()
 	const reviewService = new ReviewDataService()
-
-	//TODO: implement review modal, no reason to be a separate page
-	const handleReviewButton = () => {
-		// navigate(`/review/${song.id}`)
-
-	}
-
-	useEffect(()=>{
-		// TODO: call API for average review using song's id
-		
-		// var userReviews = userService.getReviews(localStorage.getItem('userId'))
-		// console.log(userReviews)
-		reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))
-			.catch(error => {
-			// if(error.response.data.errorCode === 400){
-				console.log(error)
-			// }
-			})
-			.then(response => {
-				if (response != undefined){
-					console.log(response)
-				}
-				
-			})
-			
-
-	}, [])
+	const [isReviewed, setIsReviewed] = useState()
+	const [userRatingVal, setUserRatingVal] = useState()
 	
 	return(
 		<ListItem key={props.item.id}
@@ -79,17 +54,17 @@ export default function SongListItem(props) {
 				{/* TODO: WHEN YOU HAVE MORE TIME BC THIS IS ANNOYING: create scrolling effect for horizontal overflow like in tiktok tutorial */}
 				<Grid item xs={8} sx={{paddingLeft: '10px', overflow: 'hidden', minWidth: '100px'}}>
 					{/* <div 
-						style={{
-							height: 'fit-content',
-							width: '60%',
-							display: 'flex',
-							alignItems: 'center',
-						}}
-					>
-						<marquee direction='left'>
-							<Typography fontFamily={font} color={'white'} fontWeight={300}>{song_name}</Typography>
-						</marquee>
-					</div> */}
+				style={{
+					height: 'fit-content',
+					width: '60%',
+					display: 'flex',
+					alignItems: 'center',
+				}}
+			>
+				<marquee direction='left'>
+					<Typography fontFamily={font} color={'white'} fontWeight={300}>{song_name}</Typography>
+				</marquee>
+			</div> */}
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
@@ -118,11 +93,12 @@ export default function SongListItem(props) {
 					>
 						{song.album.name}
 					</Typography>
+
 				</Grid>
 
 				{/* user info */}
 				{search ? 
-					// if on search page, display review totals
+				// if on search page, display review totals
 					<Grid item xs={2} sx={{textAlign: 'right'}}>
 						<Typography 
 							fontFamily={font} 
@@ -131,9 +107,9 @@ export default function SongListItem(props) {
 							fontSize={'120%'}
 							style={{height: '33%'}}
 						>
-							Avg. Score
+					Avg. Score
 						</Typography>
-						
+				
 						{
 							//if reviewed, display score. else, display button
 							isReviewed ? 
@@ -147,11 +123,11 @@ export default function SongListItem(props) {
 								:
 							//button goes here 
 								<ReviewDialog item={song}/>
-						//end isReview logic
+							//end isReview logic
 						}
 					</Grid>
 					:
-					// if on home page, display time
+				// if on home page, display time
 					<Grid item xs={2} sx={{textAlign: 'right'}}>
 						<Typography 
 							fontFamily={font} 
@@ -173,10 +149,11 @@ export default function SongListItem(props) {
 						</Typography>
 						<ReviewDialog item={song}/>
 					</Grid>
-				//end searchpage logic
+					//end searchpage logic
 				}
 			</Grid>
 
 		</ListItem>
+
 	)
 }
