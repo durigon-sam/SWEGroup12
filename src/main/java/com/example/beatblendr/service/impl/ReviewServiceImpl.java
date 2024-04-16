@@ -84,8 +84,8 @@ public class ReviewServiceImpl implements ReviewService{
         Review review = reviewRepository.findByReviewId(id);
 
         review.setSpotifyId(updatedReviewDTO.getSpotifyId());
-        review.setReviewId(updatedReviewDTO.getId());
-        review.setRating(updatedReviewDTO.getId());
+        review.setReviewId(updatedReviewDTO.getReviewId());
+        review.setRating(updatedReviewDTO.getRating());
         review.setType(updatedReviewDTO.getType());
         review.setDescription(updatedReviewDTO.getDescription());
       

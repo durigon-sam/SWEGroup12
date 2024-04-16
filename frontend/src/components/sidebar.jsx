@@ -15,7 +15,7 @@ export default function SideBar(props){
 		// } else if (arg === buttonLabels[1]) {
 		// 	navigate('/playlist')
 		} else if (arg === buttonLabels[2]) {
-			navigate('/profile')
+			navigate('/profile') // need to add extension including id 
 		}
 	}
 

@@ -23,7 +23,7 @@ class UserDataService {
 	}
 
 	getReviews(userId) {
-		return http.get(`/reviews/${userId}`)
+		return http.get(`/users/reviews/${userId}`)
 	}
 
 	getUserBySpotId(spotId){

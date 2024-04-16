@@ -24,34 +24,37 @@ export default function SongListItem(props) {
 	useEffect(()=>{
 		// TODO: call API for average review using song's id
 		
-		var userReviews = userService.getReviews(localStorage.getItem('userId'))
-		if (userReviews.length > 0) {
-			console.log('user ' + localStorage.getItem('userId') + ' has reviews')
-			console.log(userReviews)
-		} else {
-			console.log('user ' + localStorage.getItem('userId') + ' has no reviews')
-		}
-		
-		reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))
-			.catch(error => {
-			// if(error.response.data.errorCode === 400){
-				// console.log('poop')
-				// console.log(error)
-			// }
-			})
-			.then(response => {
-				if (response != undefined){
-					console.log('response is not undefined')
-					console.log(response)
-				}
+		// userService.getReviews(parseInt(localStorage.getItem('userId'), 10))
+		// 	.then(response => {
+		// 		// if (response.length > 0) {
+		// 		// 	console.log('user ' + localStorage.getItem('userId') + ' has reviews')
+		// 		// 	console.log(response)
+		// 		// } else {
+		// 		// 	console.log('user ' + localStorage.getItem('userId') + ' has no reviews')
+		// 		// }
+		// 		console.log('response: ' + response)
+		// 	})
+		// 	.catch(error=>{
+		// 	})
+
+		// reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))
+		// 	.catch(error => {
+		// 	// if(error.response.data.errorCode === 400){
+		// 		// console.log('poop')
+		// 		// console.log(error)
+		// 	// }
+		// 	})
+		// 	.then(response => {
+		// 		if (response != undefined){
+		// 			console.log('response is not undefined')
+		// 			console.log(response)
+		// 		}
 				
-			})
+		// 	})
 			
 
 	}, [])
 
-
-	
 	return(
 		<ListItem key={props.item.id}
 			sx={{
@@ -99,28 +102,45 @@ export default function SongListItem(props) {
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
-						fontWeight={700} 
-						fontSize={'20px'}
-						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+						fontWeight={600} 
+						fontSize={'30px'}
+						style={{ 
+							overflow: 'hidden', 
+							textOverflow: 'ellipsis', 
+							whiteSpace: 'nowrap',
+							marginBottom: '5px'
+						}}
 					>
 						{song.name}
 					</Typography>
+
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
-						fontWeight={300} 
+						fontWeight={600} 
 						fontSize={'20px'}
-						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+						style={{ 
+							overflow: 'hidden', 
+							textOverflow: 'ellipsis', 
+							whiteSpace: 'nowrap',
+							marginBottom: '5px'
+						}}
 					>
 						{song.artists.map(artist => artist.name).join(', ')}
 					</Typography>
+
 					{/* TODO align this to the bottom of the card */}
 					<Typography 
 						fontFamily={font} 
 						color={'white'} 
 						fontWeight={300}
 						fontSize={'20px'}
-						style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', height: '33%' }}
+						style={{ 
+							minWidth: '130px',
+							wordWrap: 'break-word',
+							whiteSpace: 'normal',
+							marginBottom: '5px'
+						}}
 					>
 						{song.album.name}
 					</Typography>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Grid, ListItem, ListItemAvatar, Rating, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
@@ -6,8 +6,57 @@ import '../styles/App.css'
 export default function ReviewListItem(props) {
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
-	const {name, artist, rating, review} = props.item
-	// const item = props.item
+	const item = props.item
+
+	const spotifyId = item.spotifyId // id of the song/album the rating is for
+
+	// info to display on each reviewListItem
+	const [albumName, setAlbumName] = useState(null)
+	const [trackName, setTrackName] = useState(null)
+	const [picture, setPicture] = useState(null)
+	const [artists, setArtists] = useState(null)
+	
+	const TRACK = `https://api.spotify.com/v1/tracks/${spotifyId}`
+	const ALBUM = `https://api.spotify.com/v1/albums/${spotifyId}`
+
+	// spotify call to get song info as soon as page loads (name, album, artist)
+	useEffect(() => {
+		
+		// if track = 0, it is a song so use get track spotify call
+		if(item.type == 0) {
+			callApi('GET', TRACK, null, handleResponse)
+		} else {
+			// if track = 1, it is an album so use get album spotify call
+			callApi('GET', ALBUM, null, handleResponse)
+		}
+		
+	}, [])
+
+	function handleResponse() {
+		// is the response good?
+		if ( this.status == 200 ) {
+			var data = JSON.parse(this.responseText)
+			//console.log(data)
+			// assign values
+			setAlbumName(data.album.name)
+			setTrackName(data.name)
+			setPicture(data.album.images[0].url)
+			setArtists(data.artists.map(artist => artist.name).join(', '))
+		} else { // other error occured
+			console.log(this.responseText)
+			alert(this.responseText)
+		}
+	}
+	
+	// calling API skeleton method
+	function callApi(method, url, body, callback) {
+		let xhr = new XMLHttpRequest()
+		xhr.open(method, url, true)
+		xhr.setRequestHeader('Content-Type', 'application/json')
+		xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+		xhr.send(body)
+		xhr.onload = callback
+	}
 
 	return(
 		<ListItem
@@ -22,9 +71,7 @@ export default function ReviewListItem(props) {
 			{/* picture */}
 			<ListItemAvatar>
 				<Avatar 
-					alt={name}
-					// alt = {item.name}
-					src='/BeatBlendr_Logos/Icon_Color.png'
+					src={picture}
 					sx={{
 						height: '128px',
 						width: '128px',
@@ -51,8 +98,7 @@ export default function ReviewListItem(props) {
 							whiteSpace: 'nowrap',
 						}}
 					>
-						{name}
-						{/* item.name */}
+						{trackName}
 					</Typography>
 
 					<Typography
@@ -66,8 +112,7 @@ export default function ReviewListItem(props) {
 							whiteSpace: 'nowrap',
 						}}
 					>
-						{artist}
-						{/* item.artist */}
+						{artists}
 					</Typography>
 
 					<Typography
@@ -81,8 +126,21 @@ export default function ReviewListItem(props) {
 							whiteSpace: 'normal'
 						}}
 					>
-						{review}
-						{/* item.review */}
+						{albumName}
+					</Typography>
+
+					<Typography
+						fontFamily={font}
+						color={'white'}
+						fontWeight={300}
+						fontSize={'20px'}
+						style={{
+							minWidth: '130px',
+							wordWrap: 'break-word',
+							whiteSpace: 'normal'
+						}}
+					>
+						{item.description}
 					</Typography>
 				</Grid>
 
@@ -103,8 +161,7 @@ export default function ReviewListItem(props) {
 							whiteSpace: 'normal'
 						}}
 					>
-						<Rating name="read-only" value={rating} precision={0.5} readOnly />
-						{/* <Rating name="read-only" value={item.rating} precision={0.5} readOnly /> */}
+						<Rating name="read-only" value={item.rating} precision={0.5} readOnly />
 
 					</Typography>
 					{/* button to edit the review here */}

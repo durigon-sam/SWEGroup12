@@ -22,30 +22,27 @@ export default function Profile () {
 	// call setReviewResults inside of the backend API call .then part
 	//const [reviewResults, setReviewResults] = useState([])
 
-	const [reviewsState, setReviewsState] = useState(() => {
-		const storedState = localStorage.getItem('reviewsState')
-		return storedState ? JSON.parse(storedState) : { reviews: [] }
-	})
+	const [reviewsState, setReviewsState] = useState([])
 
 	// this is run whenever the component is first loaded
 	useEffect(() => {
 		// call the backend method to get all user's reviews using the user's beatblendr id
-		// userDataService.getReviews(localStorage.getItem('userId')) // refers to method in userService.java (frontend)
-		// 	.then(response => {
-		// 		//store the list of reviews
-		// 		console.log('Response: ' + response)
-		// 		setReviewResults(response) // may need response dot something
-		// 	})
+		userDataService.getReviews(localStorage.getItem('userId')) // refers to method in userService.java (frontend)
+			.then(response => {
+				// store the list of reviews
+				if(response != undefined){
 
-		setReviewsState(reviews) // this was here before
+					console.log(response.data)
+					setReviewsState(response.data)
+				}
+			})
+			.catch(error => {
+			
+			})
+
 		// call api to get profile info
 		callApi('GET', ME, null, handleMeResponse)
 	}, [])
-
-	// this runs whenever the reviewsState is modified
-	useEffect(() => {
-		localStorage.setItem('reviewsState', JSON.stringify(reviewsState))
-	}, [reviewsState])
 
 	function handleMeResponse() {
 		// is the response good?
@@ -117,7 +114,7 @@ export default function Profile () {
 							}}
 						>
 							{/* This gets replaced with the actual review data */}
-							{reviewsState.reviews.map((item) => (
+							{reviewsState.map((item) => (
 								<ReviewListItem key={item.name} item={item}/>
 							))}
 						</List>

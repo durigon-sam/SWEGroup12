@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 public class ReviewDTO {
 
-    private Long id;
+    private Long reviewId;
     private String spotifyId;
     private Long type;
     private Long rating;
