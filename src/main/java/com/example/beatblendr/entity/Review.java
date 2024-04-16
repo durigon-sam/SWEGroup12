@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @EnableAutoConfiguration
 @Entity
-@Table(name = "reviews", uniqueConstraints = {
+@Table(name = "reviews", schema = "beatblendr", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"spotifyId","id"})
 })
 public class Review {
@@ -30,7 +30,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    @Column(name = "spotify_id",nullable = false)
+    @Column(name = "spotify_id",nullable = false, unique = true)
 	private String spotifyId;
 
     @Column(name = "type", nullable = false)

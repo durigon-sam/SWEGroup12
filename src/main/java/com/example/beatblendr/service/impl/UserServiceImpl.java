@@ -12,6 +12,7 @@ import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
+import com.example.beatblendr.exception.UserNotFoundException;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.UserService;
@@ -134,6 +135,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO findByAccessToken(String accessToken) {
+
+        if(userRepository.findByAccessToken(accessToken)==null)        
+            throw new UserNotFoundException("accessToken");
 
         UserDTO userDTO = UserMapper.mapToUserDTO(userRepository.findByAccessToken(accessToken));
 

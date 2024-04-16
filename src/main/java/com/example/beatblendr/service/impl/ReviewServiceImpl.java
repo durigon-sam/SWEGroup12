@@ -3,11 +3,15 @@ package com.example.beatblendr.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.PropertyValueException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
+import com.example.beatblendr.exception.NoRatingException;
+import com.example.beatblendr.exception.ReviewExistsException;
 import com.example.beatblendr.mapper.ReviewMapper;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.ReviewRepository;
@@ -25,17 +29,29 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public ReviewDTO createReview(ReviewDTO reviewDTO) {
         
-
-        Review review = ReviewMapper.mapToReview(reviewDTO);
-        Review savedReview = reviewRepository.save(review);
         User user = userRepository.findByUsername(reviewDTO.getUser().getUsername()).get(0);
         List<Review> updatedReviews = user.getReviews();
+
+        if(reviewDTO.getRating()==null){
+            throw new NoRatingException("Please enter a rating:");
+        }
+
+        for(Review r: updatedReviews){
+            if(r.getSpotifyId() .equals(reviewDTO.getSpotifyId())){
+                throw new ReviewExistsException("You have previously reviewed this entity.");
+            }
+        }
+        
+        Review review = ReviewMapper.mapToReview(reviewDTO);
+        
+        Review savedReview = reviewRepository.save(review);        
         updatedReviews.add(savedReview);
         user.setReviews(updatedReviews);
         userRepository.save(user);
         
         return ReviewMapper.mapToReviewDTO(savedReview);
-
+       
+        
     }
 
     @Override
@@ -52,9 +68,7 @@ public class ReviewServiceImpl implements ReviewService{
     public ReviewDTO findByReviewId(long id) {
         Review review = reviewRepository.findByReviewId(id);
         ReviewDTO foundReview = ReviewMapper.mapToReviewDTO(review);
-         
         return foundReview;
-    
     }
 
     @Override
