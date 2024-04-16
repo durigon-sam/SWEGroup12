@@ -14,6 +14,6 @@ public interface ReviewService {
     void deleteReview(Long id);
     List<ReviewDTO> findBySpotifyId(String spotifyId);
     double getAverageRating(String spotifyId);
-    ReviewDTO getReviewByUser(String spotifyId, Long userId);
+    ReviewDTO getReviewByUser(String spotifyId, long userId);
     
 }

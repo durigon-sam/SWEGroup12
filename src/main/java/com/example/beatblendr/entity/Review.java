@@ -1,6 +1,9 @@
 package com.example.beatblendr.entity;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +45,7 @@ public class Review {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id")
     private User user;
