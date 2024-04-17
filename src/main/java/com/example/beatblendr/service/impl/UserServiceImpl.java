@@ -12,6 +12,7 @@ import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
+import com.example.beatblendr.exception.DuplicateFriendException;
 import com.example.beatblendr.exception.UserNotFoundException;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
@@ -107,6 +108,12 @@ public class UserServiceImpl implements UserService{
         
        User foundUser = UserMapper.mapToUser(user);
        User addedFriend = UserMapper.mapToUser(friend);
+
+       for(User u: foundUser.getFriends()){
+            if(u.getId()==addedFriend.getId()){
+                throw new DuplicateFriendException("null"); 
+            }
+       }
        foundUser.getFriends().add(addedFriend);
        userRepository.save(foundUser);
 
