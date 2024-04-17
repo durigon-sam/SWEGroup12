@@ -6,6 +6,7 @@ import { Grid, List, TextField, InputAdornment, MenuItem, Button } from '@mui/ma
 import SearchIcon from '@mui/icons-material/Search'
 import SongListItem from './SongListItem'
 import SearchAlbumListItem from './SearchAlbumListItem'
+import UserDataService from '../services/userService'
 
 const SEARCH = 'https://api.spotify.com/v1/search'
 
@@ -16,13 +17,26 @@ export default function Search(){
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedFilter, setSelectedFilter] = useState('songs')
 	const [searchResults, setSearchResults] = useState([])
+	const userService = new UserDataService()
+
+	function isEmailFormat(searchTerm) {
+		var regexPattern = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+		return regexPattern.test(searchTerm)
+	}
   
 	const handleSearch = () => {
 		if(searchTerm === ''){
 			alert('Please input a search term')
 		}else{
 			if(selectedFilter === 'users'){
-				console.log('searching for users')
+				console.log(`searching for users ${searchTerm}`)
+				if(isEmailFormat(searchTerm)){
+					// search for email
+				}else{
+					//search for username
+				}
+
+
 			}else{
 				// Perform search based on searchTerm and selectedFilter
 				console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
