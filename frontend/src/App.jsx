@@ -8,8 +8,6 @@ import Profile from './components/profile'
 
 export default function App() {
 
-	let userId = localStorage.getItem('userId')
-
 	return (
 		<div className='app'>
 			<Router>
@@ -19,7 +17,7 @@ export default function App() {
 					<Route path='/home' element={<HomePage/>} />
 					<Route path='/' element={<Login/>}/>
 					<Route path='/search' element={<Search/>}/>
-					<Route path='/profile' element={<Profile/>}/>
+					<Route path="/profile/:id" element={<Profile />}/>
 				</Routes>
 			</Router>
 		</div>

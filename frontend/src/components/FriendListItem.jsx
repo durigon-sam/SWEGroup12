@@ -14,7 +14,8 @@ export default function FriendListItem(props) {
 
 	// this is backend version!
 	const handleAvatarClick = () => {
-		navigate(`profile/${item.id}`)
+		navigate(`/profile/${item.id}`)
+
 	}
 
 	return(
@@ -60,7 +61,7 @@ export default function FriendListItem(props) {
 							whiteSpace: 'nowrap',
 						}}
 					>
-						{item.username}
+						{item.username}, {item.id}
 					</Typography>
 					<Typography
 						fontFamily={font}
