@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import { Avatar, Rating, TextField, Typography } from '@mui/material'
+import { Alert, Avatar, Rating, Snackbar, TextField, Typography } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 import ReviewDataService from '../services/reviewService'
 
@@ -15,6 +15,9 @@ export default function ReviewDialog(props) {
 	const [open, setOpen] = React.useState(false)
 	const [ratingValue, setRatingValue] = React.useState(null)
 	const [reviewField, setReviewField] = React.useState(null)
+	const [toastMsg, setToastMsg] = React.useState('Initial State')
+	const [toastOpen, setToastOpen] = React.useState(false)
+	const [toastSever, setToastSever] = React.useState('error')
 	const item = props.item
 	const isAlbum = props.isAlbum
 	const reviewService = new ReviewDataService()
@@ -52,7 +55,13 @@ export default function ReviewDialog(props) {
 
 	const handleSave = () => {
 		if(ratingValue === null){
-			alert('Please add a star rating.')
+			setToastMsg('Please enter a star rating.')
+			setToastSever('error')
+			handleToastOpen()
+		}else if(reviewField === null){
+			setToastMsg('Please enter a review description')
+			setToastSever('error')
+			handleToastOpen()
 		}else{
 			//call createRating
 			var newReview = {
@@ -64,11 +73,15 @@ export default function ReviewDialog(props) {
 
 			reviewService.create(localStorage.getItem('userId'), newReview)
 				.then(response => {
-					alert(`Review of ${item.name} was successful!`)
+					setToastMsg(`Review of ${item.name} was successful!`)
+					setToastSever('success')
+					handleToastOpen()
 					console.log(response)
 				})
 				.catch(error => {
-					alert('Review already exists for this item')
+					setToastMsg('Review already exists for this item')
+					setToastSever('error')
+					handleToastOpen()
 				})
 			setRatingValue(null)
 			handleClose()
@@ -83,8 +96,32 @@ export default function ReviewDialog(props) {
 		setReviewField(e.target.value)
 	}
 
+	const handleToastOpen = () => {
+		setToastOpen(true)
+	}
+
+	const handleToastClose = (event, reason) => {
+		if (reason === 'clickaway')
+			return
+
+		setToastOpen(false)
+	}
+
 	return (
 		<React.Fragment>
+			<Snackbar
+				open={toastOpen}
+				autoHideDuration={5000}
+				onClose={handleToastClose}
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+			>
+				<Alert
+					open={toastOpen}
+					severity={toastSever}
+					variant='filled'
+					sx={{width: '100%'}}
+				>{toastMsg}</Alert>
+			</Snackbar>
 			<Button 
 				variant="outlined" 
 				className='reviewButton'

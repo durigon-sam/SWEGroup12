@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/App.css'
-import { Box, Button,Typography } from '@mui/material'
+import { Box, Button,Snackbar,Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import UserDataService from '../services/userService'
 
@@ -23,6 +23,19 @@ export default function Login () {
 
 	const [successState, setSuccessState] = useState(false)
 	const [accessToken, setAccessToken] = useState()
+	const [open, setOpen] = React.useState(false)
+
+	const handleToastClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return
+		}
+		setOpen(false)
+	}
+
+	const handleToastOpen = () => {
+		setOpen(true)
+	}
+
 
 	useEffect(() => {
 		if (window.location.search.length > 0 && !window.location.href.endsWith('?error=access_denied')) {
@@ -43,7 +56,7 @@ export default function Login () {
 			callApi('GET', ME, null, handleMeResponse)
 			navigate('/home')
 		} else {
-			alert('Login Unsuccessful, try again')
+			handleToastOpen('Login Unsuccessful, try again')
 		}
 	}
 
@@ -105,6 +118,12 @@ export default function Login () {
 
 	return (
 		<div className='' style={{backgroundColor: '#001321', width: '100vw', height: '100vh'}}>
+			<Snackbar
+				open={open}
+				autoHideDuration={5000}
+				onClose={handleToastClose}
+				message="This Snackbar will be dismissed in 5 seconds."
+			/>
 			<Box className=''>
 				<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
 					<img src={src} width={600} height={260} />
