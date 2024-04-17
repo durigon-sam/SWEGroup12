@@ -64,3 +64,5 @@ sketch
 # ignore properties files
 
 # End of https://www.toptal.com/developers/gitignore/api/java,react,visualstudiocode
+target/classes/application.properties
+src/main/resources/application.properties
