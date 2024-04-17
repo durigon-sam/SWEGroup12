@@ -61,7 +61,7 @@ export default function FriendListItem(props) {
 							whiteSpace: 'nowrap',
 						}}
 					>
-						{item.username}, {item.id}
+						{item.username}
 					</Typography>
 					<Typography
 						fontFamily={font}
@@ -74,7 +74,7 @@ export default function FriendListItem(props) {
 							whiteSpace: 'normal',
 						}}
 					>
-						Ratings: {Array.isArray(item.reviews) ? item.reviews.length : 0}
+						{/* Ratings: {Array.isArray(item.reviews) ? item.reviews.length : 0} */}
 					</Typography>
 				</Grid>
 			</Grid>

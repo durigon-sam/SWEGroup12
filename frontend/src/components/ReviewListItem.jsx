@@ -73,6 +73,7 @@ export default function ReviewListItem(props) {
 				background: 'linear-gradient(to left, #2D46B9, #1ED760)',
 				marginBottom: 5,
 				height: 'fit-content',
+				maxWidth: '800px',
 				minHeight: '175px',
 				borderRadius: '10px',
 				minWidth: '800px',
@@ -193,6 +194,7 @@ export default function ReviewListItem(props) {
 						fontSize={'20px'}
 						style={{
 							minWidth: '130px',
+							maxWidth: '750px',
 							overflowWrap: 'break-word',
 							whiteSpace: 'normal',
 							marginTop: '5px'
