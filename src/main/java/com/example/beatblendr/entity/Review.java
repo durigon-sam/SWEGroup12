@@ -43,7 +43,6 @@ public class Review {
     @Column(name = "rating", nullable = false)
     private Double rating;
 
-    @JsonIgnore
     @Column(name = "description", length = 1000)
     private String description;
 

@@ -49,8 +49,16 @@ ApiException exception = new ApiException(400, "Please keep description under 10
 
 return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
 }
+@ExceptionHandler(value = DuplicateFriendException.class)
+public ResponseEntity<ApiException> handleDuplicateFriendException(){
 
+ApiException exception = new ApiException(400, "This person is already your friend. ", new Date());
+
+return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
 }
+}
+
+
 
 
 

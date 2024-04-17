@@ -25,7 +25,7 @@ export default function Login () {
 	const [accessToken, setAccessToken] = useState()
 
 	useEffect(() => {
-		if (window.location.search.length > 0) {
+		if (window.location.search.length > 0 && !window.location.href.endsWith('?error=access_denied')) {
 			success = true
 			setSuccessState(true)
 			// grab access token

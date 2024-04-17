@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function FriendListItem(props) {
 
-	// TODO: fix styling on these cards
+	// TODO: fix friends styling on these cards
 
 	const navigate = useNavigate()
 	const font = './LibreFranklin-VariableFont_wght.ttf'
@@ -15,6 +15,7 @@ export default function FriendListItem(props) {
 	// this is backend version!
 	const handleAvatarClick = () => {
 		navigate(`/profile/${item.id}`)
+
 	}
 
 	return(
@@ -42,12 +43,13 @@ export default function FriendListItem(props) {
 				/>
 			</ListItemAvatar>
 			{/* maybe put the grid here? */}
-			<Grid container columns={3} sx={{marginRight: '50px'}}>
-				<Grid item xs={2}
-					sx={{
-						paddingLeft: '10px'
-					}}
-				>
+			<Grid container columns={3} sx={{marginLeft: '20px'}}>
+				<Grid item xs={3} sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'flex-start', // Horizontally align the content to the right
+					justifyContent: 'center', // Vertically center the content
+				}}>
 					<Typography
 						fontFamily={font}
 						color={'white'}
@@ -61,26 +63,18 @@ export default function FriendListItem(props) {
 					>
 						{item.username}, {item.id}
 					</Typography>
-				</Grid>
-				<Grid item xs={1} 
-					sx={{
-						// marginRight: '50px',
-						alignItems: 'right',
-					}}
-				>
 					<Typography
 						fontFamily={font}
 						color={'white'}
 						fontWeight={300}
 						fontSize={'20px'}
 						style={{
-							minWidth: '130px',
 							textAlign: 'right',
 							wordWrap: 'break-word',
-							whiteSpace: 'normal'
+							whiteSpace: 'normal',
 						}}
 					>
-						Ratings: {item.ratings}
+						Ratings: {Array.isArray(item.reviews) ? item.reviews.length : 0}
 					</Typography>
 				</Grid>
 			</Grid>

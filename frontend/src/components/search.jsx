@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import SongListItem from './SongListItem'
 import SearchAlbumListItem from './SearchAlbumListItem'
 import UserDataService from '../services/userService'
-import FriendListItem from './FriendListItem'
+import SearchFriendItem from './SearchFriendItem'
 
 const SEARCH = 'https://api.spotify.com/v1/search'
 
@@ -18,7 +18,7 @@ export default function Search(){
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedFilter, setSelectedFilter] = useState('songs')
 	const [searchResults, setSearchResults] = useState([])
-	const [friendResults, setFriendResults] = useState([])
+	const [friendResults, setFriendResults] = useState(null)
 	const userService = new UserDataService()
 
 	function isEmailFormat(searchTerm) {
@@ -27,6 +27,8 @@ export default function Search(){
 	}
   
 	const handleSearch = () => {
+		setFriendResults(null)
+		setSearchResults([])
 		if(searchTerm === ''){
 			alert('Please input a search term')
 		}else{
@@ -43,8 +45,9 @@ export default function Search(){
 						})
 				}else{
 					// search for username
-					userService.getUserByEmail(searchTerm)
+					userService.getUserByUsername(searchTerm)
 						.then(response => {
+							console.log(response)
 							setFriendResults(response.data)
 						})
 						.catch(error => {
@@ -156,7 +159,6 @@ export default function Search(){
 								'&:hover .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'transparent',
 								},
-								// TODO: FIGURE OUT WHY THE BLUE OUTLINE WON'T GO AWAY
 								'&:focus .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'white',
 								},
@@ -173,7 +175,6 @@ export default function Search(){
 							value={selectedFilter}
 							onChange={(e) => setSelectedFilter(e.target.value)}
 							
-							// TODO: figure out how to style this bc i can't find something i like
 							sx={{
 								color: 'white',
 								bgcolor: 'white',
@@ -184,7 +185,6 @@ export default function Search(){
 								'&:hover .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'transparent',
 								},
-								// TODO: FIGURE OUT WHY THE BLUE OUTLINE WON'T GO AWAY
 								'&:focus .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'white',
 								},
@@ -222,10 +222,9 @@ export default function Search(){
 				>
 					{
 						Object.keys(searchResults)[0] === undefined ? 
-							// user Search logic
-							friendResults.map((item) => (
-								<FriendListItem key={item.userId} item={item}/>
-							))
+						// user Search logic
+							friendResults === null ? true :
+								<SearchFriendItem item={friendResults}/>
 							:
 							Object.keys(searchResults)[0] === 'tracks' ?
 								searchResults.tracks.items.map((item) => (
