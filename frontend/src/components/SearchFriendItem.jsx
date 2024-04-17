@@ -23,7 +23,7 @@ export default function SearchFriendItem(props) {
 				alert(`Successfully added ${item.username} as a friend`)
 			})
 			.catch(error=> {
-				if (error.response.data.errorCode === 409){
+				if (error.response.status === 409){
 					alert('User is already your friend')
 				}else{
 					alert(`Add friend failed, ${item.username} not added`)
