@@ -5,7 +5,6 @@ import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import ReviewListItem from './ReviewListItem'
-import reviews from '../dummydata/reviews.json'
 import UserDataService from '../services/userService'
 
 const ME = 'https://api.spotify.com/v1/me'
@@ -17,11 +16,6 @@ export default function Profile () {
 
 	const [name, setName] = useState(null)
 	const [picture, setPicture] = useState(null)
-
-	// the user's reviews should be entered into here
-	// call setReviewResults inside of the backend API call .then part
-	//const [reviewResults, setReviewResults] = useState([])
-
 	const [reviewsState, setReviewsState] = useState([])
 
 	// this is run whenever the component is first loaded
@@ -31,7 +25,7 @@ export default function Profile () {
 			.then(response => {
 				// store the list of reviews
 				if(response != undefined){
-
+					// set reviews state
 					console.log(response.data)
 					setReviewsState(response.data)
 				}
