@@ -22,6 +22,7 @@ import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
+import com.example.beatblendr.exception.OversizedDescriptionException;
 import com.example.beatblendr.mapper.ReviewMapper;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.service.ReviewService;
@@ -43,9 +44,12 @@ public class ReviewController {
     @PostMapping("{id}")
     public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO, @PathVariable("id") Long userId){
 
-
+        if(reviewDTO.getDescription().length()>1000){
+            throw new OversizedDescriptionException("Test");
+        }
         reviewDTO.setUser(UserMapper.mapToUser(userService.findById(userId)));
         ReviewDTO savedReview = reviewService.createReview(reviewDTO);
+    
 
 
         return new ResponseEntity<>(savedReview, HttpStatus.CREATED);

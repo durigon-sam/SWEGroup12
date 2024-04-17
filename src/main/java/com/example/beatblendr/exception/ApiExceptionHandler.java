@@ -41,6 +41,15 @@ ApiException exception = new ApiException(400, "No User Exists with this Spotify
 
 return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
 }
+
+@ExceptionHandler(value = OversizedDescriptionException.class)
+public ResponseEntity<ApiException> handleOversizedDescriptionException(){
+
+ApiException exception = new ApiException(400, "Please keep description under 1000 characters. ", new Date());
+
+return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+}
+
 }
 
 
