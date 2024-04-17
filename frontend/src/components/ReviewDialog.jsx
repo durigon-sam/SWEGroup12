@@ -220,6 +220,9 @@ export default function ReviewDialog(props) {
 							variant='filled'
 							margin='normal'
 							multiline
+							inputProps={{
+								maxLength: 1000
+							}}
 							sx={{
 								backgroundColor: 'white',
 								color: 'white',
