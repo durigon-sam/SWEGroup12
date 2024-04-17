@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table; // for Spring Boot 3
 import jakarta.persistence.UniqueConstraint;
@@ -42,7 +43,8 @@ public class Review {
     @Column(name = "rating", nullable = false)
     private Long rating;
 
-    @Column(name = "description")
+    @JsonIgnore
+    @Column(name = "description", length = 1000)
     private String description;
 
     @JsonIgnore

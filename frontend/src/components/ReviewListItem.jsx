@@ -78,7 +78,7 @@ export default function ReviewListItem(props) {
 				minWidth: '800px',
 			}}
 		>
-			<Grid container direction='column'>
+			<Grid container direction='column' sx={{maxwidth: '800px', height: 'fit-content'}}>
 				<Grid item xs={1} sx={{maxHeight: '130px'}}>
 					<Grid container columns={12} >
 						<Grid item xs={2}
@@ -193,7 +193,7 @@ export default function ReviewListItem(props) {
 						fontSize={'20px'}
 						style={{
 							minWidth: '130px',
-							wordWrap: 'break-word',
+							overflowWrap: 'break-word',
 							whiteSpace: 'normal',
 							marginTop: '5px'
 						}}

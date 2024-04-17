@@ -14,14 +14,6 @@ class UserDataService {
 		return http.post(`/users/friends/add/${userId}/${username}`)
 	}
 
-	//getuserbyid
-
-	//getallusers
-
-	//updateuserwithid
-
-	//deleteuserwithid
-
 	//getFriends()
 	getFriends(userId) {
 		return http.get(`/users/friends/${userId}`)
@@ -33,6 +25,16 @@ class UserDataService {
 
 	getUserBySpotId(spotId){
 		return http.get(`/users/spotifyId/${spotId}`)
+	}
+
+	//findUserByUsername
+	getUserByUsername(username){
+		return http.get(`/users/username/${username}`)
+	}
+
+	//findUserByUsername
+	getUserByEmail(email){
+		return http.get(`/users/email/${email}`)
 	}
 }
 
