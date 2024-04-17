@@ -6,6 +6,7 @@ import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, Lis
 import { styled } from '@mui/material/styles'
 import ReviewListItem from './ReviewListItem'
 import UserDataService from '../services/userService'
+import { useParams } from 'react-router-dom'
 
 const ME = 'https://api.spotify.com/v1/me'
 const font = './LibreFranklin-VariableFont_wght.ttf'
@@ -18,10 +19,14 @@ export default function Profile () {
 	const [picture, setPicture] = useState(null)
 	const [reviewsState, setReviewsState] = useState([])
 
+	// get bb user id from url
+	let {id} = useParams()
+	//console.log('id is: ' + id)
+
 	// this is run whenever the component is first loaded
 	useEffect(() => {
 		// call the backend method to get all user's reviews using the user's beatblendr id
-		userDataService.getReviews(localStorage.getItem('userId')) // refers to method in userService.java (frontend)
+		userDataService.getReviews(id) // refers to method in userService.java (frontend)
 			.then(response => {
 				// store the list of reviews
 				if(response != undefined){
@@ -34,8 +39,20 @@ export default function Profile () {
 			
 			})
 
-		// call api to get profile info
-		callApi('GET', ME, null, handleMeResponse)
+		// if ids match, use spotify API
+		if (id === localStorage.getItem('userId')) {
+			// call api to get profile info
+			callApi('GET', ME, null, handleMeResponse)
+		}
+		// if they dont match, need to use backend call to get friend's info to display
+		else {
+			userDataService.getUserById(id)
+				.then(response => {
+					//console.log('username: ' + response.data.username)
+					setName(response.data.username)
+					setPicture('/BeatBlendr_Logos/Icon_Color.png')
+				})
+		}
 	}, [])
 
 	function handleMeResponse() {

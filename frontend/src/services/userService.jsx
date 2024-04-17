@@ -27,6 +27,11 @@ class UserDataService {
 		return http.get(`/users/spotifyId/${spotId}`)
 	}
 
+	//findUserById
+	getUserById(id) {
+		return http.get(`/users/${id}`)
+	}
+
 	//findUserByUsername
 	getUserByUsername(username){
 		return http.get(`/users/username/${username}`)

@@ -17,7 +17,6 @@ export default function HomePage(){
 	// initialize states for Recent Songs and Friends
 	const [friendsState, setFriendsState] = useState([])
 	const [recentSongsState, setRecentSongsState] = useState([])
-	const [noFriends, setNoFriends] = useState()
 	
 	// this is run whenever the component is first loaded
 	useEffect(() => {
@@ -39,7 +38,6 @@ export default function HomePage(){
 					setFriendsState(response.data)
 				}else if (response.data.length == 0) {
 					console.log('YOU HAVE NO FRIENDS HAHAHAHA')
-					setNoFriends(true)
 				}
 			})
 			.catch(error => {

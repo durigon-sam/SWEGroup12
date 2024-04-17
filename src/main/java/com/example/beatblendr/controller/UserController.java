@@ -55,7 +55,7 @@ public class UserController {
         UserDTO savedUser = (UserDTO) userService.findByEmail(email);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
-    //Get user by Email
+    //Get user by Username
     @GetMapping("username/{username}")
     public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username){
         UserDTO savedUser = (UserDTO) userService.findByUsername(username);

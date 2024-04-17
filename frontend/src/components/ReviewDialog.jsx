@@ -65,6 +65,7 @@ export default function ReviewDialog(props) {
 			reviewService.create(localStorage.getItem('userId'), newReview)
 				.then(response => {
 					alert(`Review of ${item.name} was successful!`)
+					console.log(response)
 				})
 				.catch(error => {
 					alert('Review already exists for this item')
