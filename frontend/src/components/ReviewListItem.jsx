@@ -12,9 +12,10 @@ export default function ReviewListItem(props) {
 
 	// info to display on each reviewListItem
 	const [albumName, setAlbumName] = useState(null)
-	const [trackName, setTrackName] = useState(null)
+	const [name, setName] = useState(null)
 	const [picture, setPicture] = useState(null)
 	const [artists, setArtists] = useState(null)
+	const [type, setType] = useState(null)
 	
 	const TRACK = `https://api.spotify.com/v1/tracks/${spotifyId}`
 	const ALBUM = `https://api.spotify.com/v1/albums/${spotifyId}`
@@ -37,11 +38,19 @@ export default function ReviewListItem(props) {
 		if ( this.status == 200 ) {
 			var data = JSON.parse(this.responseText)
 			//console.log(data)
-			// assign values
-			setAlbumName(data.album.name)
-			setTrackName(data.name)
-			setPicture(data.album.images[0].url)
-			setArtists(data.artists.map(artist => artist.name).join(', '))
+			if(item.type == 0) {
+				// assign track values
+				setName(data.name)
+				setAlbumName(data.album.name)
+				setPicture(data.album.images[0].url)
+				setArtists(data.artists.map(artist => artist.name).join(', '))
+			} else {
+				// assign album values
+				setName(data.name)
+				setPicture(data.images[0].url)
+				setArtists(data.artists.map(artist => artist.name).join(', '))
+				setType(data.type.charAt(0).toUpperCase() + data.type.slice(1))
+			}
 		} else { // other error occured
 			console.log(this.responseText)
 			alert(this.responseText)
@@ -104,9 +113,10 @@ export default function ReviewListItem(props) {
 									overflow: 'hidden',
 									textOverflow: 'ellipsis',
 									whiteSpace: 'nowrap',
+									marginBottom: '5px',
 								}}
 							>
-								{trackName}
+								{name}
 							</Typography>
 
 							<Typography
@@ -118,6 +128,7 @@ export default function ReviewListItem(props) {
 									overflow: 'hidden',
 									textOverflow: 'ellipsis',
 									whiteSpace: 'nowrap',
+									marginBottom: '5px',
 								}}
 							>
 								{artists}
@@ -131,10 +142,25 @@ export default function ReviewListItem(props) {
 								style={{
 									minWidth: '130px',
 									wordWrap: 'break-word',
-									whiteSpace: 'normal'
+									whiteSpace: 'normal',
+									marginBottom: '5px',
 								}}
 							>
 								{albumName}
+							</Typography>
+							<Typography
+								fontFamily={font}
+								color={'white'}
+								fontWeight={300}
+								fontSize={'20px'}
+								style={{
+									minWidth: '130px',
+									wordWrap: 'break-word',
+									whiteSpace: 'normal',
+									marginBottom: '5px',
+								}}
+							>
+								{type}
 							</Typography>
 						</Grid>
 
@@ -168,7 +194,8 @@ export default function ReviewListItem(props) {
 						style={{
 							minWidth: '130px',
 							wordWrap: 'break-word',
-							whiteSpace: 'normal'
+							whiteSpace: 'normal',
+							marginTop: '5px'
 						}}
 					>
 						{item.description}
