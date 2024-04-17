@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Button, Grid, ListItem, ListItemAvatar, Rating, Typography } from '@mui/material'
+import { Avatar, Button, Grid, ListItem, ListItemAvatar, Rating, Typography, Box } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
 
@@ -66,22 +66,121 @@ export default function ReviewListItem(props) {
 				height: 'fit-content',
 				minHeight: '175px',
 				borderRadius: '10px',
+				minWidth: '800px',
 			}}
 		>
+			<Grid container direction='column'>
+				<Grid item xs={1} sx={{maxHeight: '130px'}}>
+					<Grid container columns={12} >
+						<Grid item xs={2}
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+								minWidth: '128px'
+							}}
+						>
+							<ListItemAvatar>
+								<Avatar 
+									src={picture}
+									sx={{
+										height: '128px',
+										width: '128px',
+										bgcolor: 'white',
+										borderRadius: '0px'
+									}}
+								/>
+							</ListItemAvatar>
+						</Grid>
+
+						<Grid item xs={8} sx={{paddingLeft: '10px', overflow: 'hidden', minWidth: '100px', width: '50%'}}>
+							<Typography
+								fontFamily={font}
+								color={'white'}
+								fontWeight={600}
+								fontSize={'30px'}
+								style={{
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									whiteSpace: 'nowrap',
+								}}
+							>
+								{trackName}
+							</Typography>
+
+							<Typography
+								fontFamily={font}
+								color={'white'}
+								fontWeight={600}
+								fontSize={'20px'}
+								style={{
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									whiteSpace: 'nowrap',
+								}}
+							>
+								{artists}
+							</Typography>
+
+							<Typography
+								fontFamily={font}
+								color={'white'}
+								fontWeight={300}
+								fontSize={'20px'}
+								style={{
+									minWidth: '130px',
+									wordWrap: 'break-word',
+									whiteSpace: 'normal'
+								}}
+							>
+								{albumName}
+							</Typography>
+						</Grid>
+
+						<Grid item xs={2} sx={{display: 'flex', flexDirection: 'column', textalign: 'center', alignItems: 'center', justifyContent: 'center'}}>
+							<Typography
+								fontFamily={font}
+								color={'white'}
+								fontWeight={300}
+								fontSize={'20px'}
+								style={{
+									minWidth: '130px',
+									textAlign: 'right',
+									wordWrap: 'break-word',
+									whiteSpace: 'normal'
+								}}
+							>
+								<Rating name="read-only" value={item.rating} precision={0.5} readOnly />
+
+							</Typography>
+							{/* button to edit the review here */}
+							<Button variant="contained" sx={{float: 'right'}}>Edit</Button>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid item xs={1}>
+					<Typography
+						fontFamily={font}
+						color={'white'}
+						fontWeight={300}
+						fontSize={'20px'}
+						style={{
+							minWidth: '130px',
+							wordWrap: 'break-word',
+							whiteSpace: 'normal'
+						}}
+					>
+						{item.description}
+					</Typography>
+				</Grid>
+			</Grid>
+
+
 			{/* picture */}
-			<ListItemAvatar>
-				<Avatar 
-					src={picture}
-					sx={{
-						height: '128px',
-						width: '128px',
-						bgcolor: 'white',
-						borderRadius: '0px'
-					}}
-				/>
-			</ListItemAvatar>
+			
 			{/* maybe put the grid here? */}
-			<Grid container columns={5} sx={{marginRight: '50px'}}>
+			{/* <Grid container columns={5} sx={{marginRight: '50px'}}>
 				<Grid item xs={4}
 					sx={{
 						paddingLeft: '10px',
@@ -164,11 +263,11 @@ export default function ReviewListItem(props) {
 						<Rating name="read-only" value={item.rating} precision={0.5} readOnly />
 
 					</Typography>
-					{/* button to edit the review here */}
+					{/* button to edit the review here
 					<Button variant="contained" sx={{float: 'right'}}>Edit</Button>
 
 				</Grid>
-			</Grid>
+			</Grid> */}
 
 		</ListItem>
 	)

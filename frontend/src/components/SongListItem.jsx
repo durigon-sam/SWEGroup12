@@ -20,7 +20,6 @@ export default function SongListItem(props) {
 	const reviewService = new ReviewDataService()
 	const [isReviewed, setIsReviewed] = useState(false)
 	const [userRatingVal, setUserRatingVal] = useState()
-	const [refreshTrigger, setRefreshTrigger] = useState(false)
 
 	useEffect(()=>{
 		// TODO: call API for average review using song's id
@@ -37,11 +36,7 @@ export default function SongListItem(props) {
 				}
 				
 			})
-	}, [refreshTrigger])
-
-	const triggerRefresh = () => {
-		setRefreshTrigger(prevState => !prevState)
-	}
+	}, [])
 	
 	return(
 		<ListItem key={props.item.id}
@@ -161,7 +156,7 @@ export default function SongListItem(props) {
 								/> //review Score goes here
 								:
 							//button goes here 
-								<ReviewDialog item={song} onClose={triggerRefresh()}/>
+								<ReviewDialog item={song}/>
 							//end isReview logic
 						}
 					</Grid>
