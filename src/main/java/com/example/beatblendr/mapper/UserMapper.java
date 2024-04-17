@@ -8,6 +8,7 @@ public class UserMapper {
     public static UserDTO mapToUserDTO(User user){
         return new UserDTO(
             user.getId(),
+            user.getSpotifyId(),
             user.getUsername(),
             user.getEmail(),
             user.getAccessToken(),
@@ -21,6 +22,7 @@ public class UserMapper {
 public static User mapToUser(UserDTO userDTO){
         return new User(
             userDTO.getId(),
+            userDTO.getSpotifyId(),
             userDTO.getUsername(),
             userDTO.getEmail(),
             userDTO.getAccessToken(),

@@ -1,56 +1,48 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
-import friends from '../dummydata/friends.json'
 import FriendListItem from './FriendListItem'
-import userDataService from '../services/userService'
+import UserDataService from '../services/userService'
 
 const RECENTS = 'https://api.spotify.com/v1/me/player/recently-played'
-const ME = 'https://api.spotify.com/v1/me'
 
 export default function HomePage(){
 
-	//this establishes friendsState as a state variable and hooks it up with localStorage
-	//TODO: get rid of this local storage thing here, just use state and useEffect
-	const [friendsState, setFriendsState] = useState(() => {
-		const storedState = localStorage.getItem('friendsState')
-		return storedState ? JSON.parse(storedState) : { friends: [] }
-	})
+	const userDataService = new UserDataService()
 
-	// Initialize state for Recent Songs
+	// initialize states for Recent Songs and Friends
+	const [friendsState, setFriendsState] = useState([])
 	const [recentSongsState, setRecentSongsState] = useState([])
-
-	//This is run whenever the component is first loaded
+	
+	// this is run whenever the component is first loaded
 	useEffect(() => {
-		//TODO: uncomment this when service and REST API call are implemented
-		// use this form for all state variables and REST API calls
-		// const userDataService = new userDataService()
-		// userDataService.getUserByAccessToken(localStorage.getItem('access_token')) // refers to method in userService.java (frontend)
-		// 	.then(response => {
-		// 		//console.log(response.data.id)
-		// 		// store id in LS, call getFreinds()
-		// 		localStorage.setItem('userId', response.data.id)
-		// 		userDataService.getFriends(localStorage.getItem('userId'))
-		// 			.then(response => {
-		// 				setFriendsState(response.data) // list ?
-		// 			})
-		// 	})
+		
 
-		setFriendsState(friends)
-
-		// Get Recent Songs
+		// get Recent Songs to display on the left side of home page
 		callApi('GET', RECENTS, null, handleResponse)
-		// callApi('GET', ME, null, handleMeResponse)
 	}, [])
 
-	//this runs whenever the friendsState is modified
 	useEffect(() => {
-		localStorage.setItem('friendsState', JSON.stringify(friendsState))
-	}, [friendsState])
+		// call the backend method to get all user's friends using the user's beatblendr id
+		userDataService.getFriends(localStorage.getItem('userId')) // refers to method in userService.java (frontend)
+			.then(response => {
+				// store the list of friends
+				if (response != undefined) {
+					// set friends state
+					// console.log(response)
+					setFriendsState(response.data)
+				}else if (response.data.length == 0) {
+					console.log('YOU HAVE NO FRIENDS HAHAHAHA')
+				}
+			})
+			.catch(error => {
+			
+			})
+	}, [recentSongsState])
 
 	// calling API skeleton method
 	function callApi(method, url, body, callback){
@@ -127,9 +119,11 @@ export default function HomePage(){
 							}}
 						>
 							{/* This gets replaced with the actual user data */}
-							{recentSongsState.map((item) => (
-								<SongListItem key={item.track.id} item={item.track} search={false} time={item.played_at}/>
-							))}
+							{
+								recentSongsState.map((item) => (
+									<SongListItem key={item.track.id} item={item.track} search={false} time={item.played_at}/>
+								))
+							}
 						</List>
 					</Grid>
 
@@ -160,9 +154,13 @@ export default function HomePage(){
 								'& ul': { padding: 0 },
 							}}
 						>
-							{friendsState.friends.map((item) => (
+							
+							{friendsState.map((item) => (
 								<FriendListItem key={item.userid} item={item}/>
 							))}
+
+							
+							
 						</List>
 					</Grid>
 				</Grid>

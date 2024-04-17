@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 public class UserDTO {
 
     private Long id;
+    private String spotifyId;
     private String username;
     private String email;
     private String accessToken;

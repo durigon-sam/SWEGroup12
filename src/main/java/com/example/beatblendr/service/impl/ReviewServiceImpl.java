@@ -11,6 +11,7 @@ import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
 import com.example.beatblendr.exception.NoRatingException;
+import com.example.beatblendr.exception.NoReviewForUserException;
 import com.example.beatblendr.exception.ReviewExistsException;
 import com.example.beatblendr.mapper.ReviewMapper;
 import com.example.beatblendr.mapper.UserMapper;
@@ -83,8 +84,8 @@ public class ReviewServiceImpl implements ReviewService{
         Review review = reviewRepository.findByReviewId(id);
 
         review.setSpotifyId(updatedReviewDTO.getSpotifyId());
-        review.setReviewId(updatedReviewDTO.getId());
-        review.setRating(updatedReviewDTO.getId());
+        review.setReviewId(updatedReviewDTO.getReviewId());
+        review.setRating(updatedReviewDTO.getRating());
         review.setType(updatedReviewDTO.getType());
         review.setDescription(updatedReviewDTO.getDescription());
       
@@ -102,6 +103,7 @@ public class ReviewServiceImpl implements ReviewService{
             (review) -> ReviewMapper.mapToReviewDTO(review))
             .collect(Collectors.toList()
         );
+        
        
         return foundReviewDTOs;
 
@@ -121,11 +123,20 @@ public class ReviewServiceImpl implements ReviewService{
             sum +=r.getRating();
 
         }
-        System.out.println(sum);
-        System.out.println(foundReviewDTOs.size());
         return sum/foundReviewDTOs.size();
+    }
 
+    @Override
+    public ReviewDTO getReviewByUser(String spotifyId, long userId){
         
+
+        User user =userRepository.findById(userId).get(0);
+        for(Review r: user.getReviews()){
+            if(r.getSpotifyId().equals(spotifyId)){
+                return ReviewMapper.mapToReviewDTO(r);
+            }
+        }
+        throw new NoReviewForUserException("msg");
     }
 
 

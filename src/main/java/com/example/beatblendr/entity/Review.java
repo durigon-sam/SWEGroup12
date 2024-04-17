@@ -1,12 +1,16 @@
 package com.example.beatblendr.entity;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table; // for Spring Boot 3
 import jakarta.persistence.UniqueConstraint;
@@ -30,18 +34,19 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    @Column(name = "spotify_id",nullable = false, unique = true)
+    @Column(name = "spotify_id",nullable = false)
 	private String spotifyId;
 
     @Column(name = "type", nullable = false)
     private Long type;
 
     @Column(name = "rating", nullable = false)
-    private Long rating;
+    private Double rating;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1000)
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id")
     private User user;

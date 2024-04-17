@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
-import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
+import { Grid, List, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
 import SearchAlbumListItem from './SearchAlbumListItem'
+import UserDataService from '../services/userService'
+import SearchFriendItem from './SearchFriendItem'
 
 const SEARCH = 'https://api.spotify.com/v1/search'
 
@@ -17,23 +18,55 @@ export default function Search(){
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedFilter, setSelectedFilter] = useState('songs')
 	const [searchResults, setSearchResults] = useState([])
+	const [friendResults, setFriendResults] = useState(null)
+	const userService = new UserDataService()
+
+	function isEmailFormat(searchTerm) {
+		var regexPattern = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+		return regexPattern.test(searchTerm)
+	}
   
 	const handleSearch = () => {
+		setFriendResults(null)
+		setSearchResults([])
 		if(searchTerm === ''){
 			alert('Please input a search term')
 		}else{
 			if(selectedFilter === 'users'){
-				console.log('searching for users')
+				console.log(`searching for users ${searchTerm}`)
+				if(isEmailFormat(searchTerm)){
+					// search for email
+					userService.getUserByEmail(searchTerm)
+						.then(response => {
+							setFriendResults(response.data)
+						})
+						.catch(error => {
+							alert(`No User Found with email ${searchTerm}`)
+						})
+				}else{
+					// search for username
+					userService.getUserByUsername(searchTerm)
+						.then(response => {
+							console.log(response)
+							setFriendResults(response.data)
+						})
+						.catch(error => {
+							alert(`No User Found with username ${searchTerm}`)
+						})
+				}
+
 			}else{
 				// Perform search based on searchTerm and selectedFilter
 				console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
-				let url = SEARCH + '?q=' + searchTerm + '&type='
+				let url = `${SEARCH}?q=${searchTerm}&type=`
 				selectedFilter === 'songs' ? url += 'track' : url += 'album'
 				console.log(url)
 				callApi('GET', url, null, handleResponse)
 			}
 		}
 	}
+
+	// TODO: write a hook called handleAddFriend with backend API call here (hook above)
 
 	// useEffect(() => {
 	// 	console.log(Object.keys(searchResults)[0])
@@ -126,7 +159,6 @@ export default function Search(){
 								'&:hover .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'transparent',
 								},
-								// TODO: FIGURE OUT WHY THE BLUE OUTLINE WON'T GO AWAY
 								'&:focus .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'white',
 								},
@@ -143,7 +175,6 @@ export default function Search(){
 							value={selectedFilter}
 							onChange={(e) => setSelectedFilter(e.target.value)}
 							
-							// TODO: figure out how to style this bc i can't find something i like
 							sx={{
 								color: 'white',
 								bgcolor: 'white',
@@ -154,7 +185,6 @@ export default function Search(){
 								'&:hover .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'transparent',
 								},
-								// TODO: FIGURE OUT WHY THE BLUE OUTLINE WON'T GO AWAY
 								'&:focus .MuiOutlinedInput-notchedOutline': {
 									borderColor: 'white',
 								},
@@ -192,8 +222,9 @@ export default function Search(){
 				>
 					{
 						Object.keys(searchResults)[0] === undefined ? 
-							// user Search logic
-							true
+						// user Search logic
+							friendResults === null ? true :
+								<SearchFriendItem item={friendResults}/>
 							:
 							Object.keys(searchResults)[0] === 'tracks' ?
 								searchResults.tracks.items.map((item) => (

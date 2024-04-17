@@ -5,32 +5,55 @@ import '../styles/App.css'
 import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import ReviewListItem from './ReviewListItem'
-import reviews from '../dummydata/reviews.json'
+import UserDataService from '../services/userService'
+import { useParams } from 'react-router-dom'
 
 const ME = 'https://api.spotify.com/v1/me'
 const font = './LibreFranklin-VariableFont_wght.ttf'
 
 export default function Profile () {
 
+	const userDataService = new UserDataService()
+
 	const [name, setName] = useState(null)
 	const [picture, setPicture] = useState(null)
+	const [reviewsState, setReviewsState] = useState([])
 
-	const [reviewsState, setReviewsState] = useState(() => {
-		const storedState = localStorage.getItem('reviewsState')
-		return storedState ? JSON.parse(storedState) : { reviews: [] }
-	})
+	// get bb user id from url
+	let {id} = useParams()
+	//console.log('id is: ' + id)
 
 	// this is run whenever the component is first loaded
 	useEffect(() => {
-		setReviewsState(reviews)
-		// call api to get profile info
-		callApi('GET', ME, null, handleMeResponse)
-	}, [])
+		// call the backend method to get all user's reviews using the user's beatblendr id
+		userDataService.getReviews(id) // refers to method in userService.java (frontend)
+			.then(response => {
+				// store the list of reviews
+				if(response != undefined){
+					// set reviews state
+					console.log(response.data)
+					setReviewsState(response.data)
+				}
+			})
+			.catch(error => {
+			
+			})
 
-	//this runs whenever the friendsState is modified
-	useEffect(() => {
-		localStorage.setItem('reviewsState', JSON.stringify(reviewsState))
-	}, [reviewsState])
+		// if ids match, use spotify API
+		if (id === localStorage.getItem('userId')) {
+			// call api to get profile info
+			callApi('GET', ME, null, handleMeResponse)
+		}
+		// if they dont match, need to use backend call to get friend's info to display
+		else {
+			userDataService.getUserById(id)
+				.then(response => {
+					//console.log('username: ' + response.data.username)
+					setName(response.data.username)
+					setPicture('/BeatBlendr_Logos/Icon_Color.png')
+				})
+		}
+	}, [])
 
 	function handleMeResponse() {
 		// is the response good?
@@ -39,7 +62,12 @@ export default function Profile () {
 			console.log(data)
 			// get user name and image
 			setName(data.display_name)
-			setPicture(data.images[0].url)
+			if(data.images.length>0){
+				setPicture(data.images[0].url)
+			}else{
+				setPicture('/BeatBlendr_Logos/Icon_Color.png')
+			}
+			
 		} else { // other error occured
 			console.log(this.responseText)
 			alert(this.responseText)
@@ -97,7 +125,7 @@ export default function Profile () {
 							}}
 						>
 							{/* This gets replaced with the actual review data */}
-							{reviewsState.reviews.map((item) => (
+							{reviewsState.map((item) => (
 								<ReviewListItem key={item.name} item={item}/>
 							))}
 						</List>

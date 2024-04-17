@@ -9,21 +9,41 @@ class UserDataService {
 		return http.post('/users', data)
 	}
 
-	//getuserbyid
-
-	//getallusers
-
-	//updateuserwithid
-
-	//deleteuserwithid
-
-	//getFriends()
-	getFriends(userID) {
-		return http.get('/friends/' + userID)
+	//addFriend
+	addFriend(userId, username) {
+		return http.post(`/users/friends/add/${userId}/${username}`)
 	}
 
-	getUserByAccessToken(token) {
-		return http.get('/accessToken/' + token)
+	//getFriends()
+	getFriends(userId) {
+		return http.get(`/users/friends/${userId}`)
+	}
+
+	getReviews(userId) {
+		return http.get(`/users/reviews/${userId}`)
+	}
+
+	getUserBySpotId(spotId){
+		return http.get(`/users/spotifyId/${spotId}`)
+	}
+
+	//findUserById
+	getUserById(id) {
+		return http.get(`/users/${id}`)
+	}
+
+	//findUserByUsername
+	getUserByUsername(username){
+		return http.get(`/users/username/${username}`)
+	}
+
+	//findUserByUsername
+	getUserByEmail(email){
+		return http.get(`/users/email/${email}`)
+	}
+	
+	getNumOfReviews(userId){
+		return http.get(`/users/reviews#/${userId}`)
 	}
 }
 

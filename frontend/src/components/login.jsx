@@ -3,7 +3,6 @@ import '../styles/App.css'
 import { Box, Button,Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import UserDataService from '../services/userService'
-// userId
 
 // global variables
 var redirect_uri = 'http://localhost:3000/' // once user enters valid info, redirects to homepage
@@ -26,7 +25,7 @@ export default function Login () {
 	const [accessToken, setAccessToken] = useState()
 
 	useEffect(() => {
-		if (window.location.search.length > 0) {
+		if (window.location.search.length > 0 && !window.location.href.endsWith('?error=access_denied')) {
 			success = true
 			setSuccessState(true)
 			// grab access token
@@ -52,30 +51,42 @@ export default function Login () {
 		// is the response good?
 		if ( this.status == 200 ) {
 			var data = JSON.parse(this.responseText)
-			// get user data
-			let username = data.display_name
-			let email = data.email
 			// create newUser json
-			let newUser = 
+			var newUser = 
 				{
-					'username': username, 
-					'email': email, 
-					'accessToken': accessToken
+					'username': data.display_name, 
+					'email': data.email, 
+					'accessToken': accessToken,
+					'spotifyId': data.id
 				}
 		
-			// call the backend method to add newUser to database
-			userDataService.createUser(newUser) // refers to method in userService.java (frontend)
+			userDataService.getUserBySpotId(data.id) // refers to method in userService.java (frontend)
 				.then(response => {
-					// if (response.errorMessage == 200) {
-					// 	console.log('user added correctly.')
-					// } else {
-					// 	console.log('user not added.')
-					// }
-					//console.log(response)
-					// store userId in LS for Sam
+					// user is found, set local storages for sammy
 					localStorage.setItem('userId', response.data.id)
+					console.log('user was found!')
+					console.log(response)
 				})
-			
+				.catch(error => {
+					if(error.response.data.errorCode === 400){
+						// call the backend method to add newUser to database
+						userDataService.createUser(newUser) // refers to method in userService.java (frontend)
+							.then(response => {
+								console.log('user added correctly.')
+								//console.log(response)
+								
+								// store userId in LS for Sam
+								localStorage.setItem('userId', response.data.id)
+							})
+							.catch(error => {
+								alert(error)
+							})
+					}else{
+						console.log(error)
+					}
+				})
+
+		//spotify error
 		} else { // other error occured
 			console.log(this.responseText)
 			alert(this.responseText)
