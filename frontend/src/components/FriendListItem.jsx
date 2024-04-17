@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Grid, ListItem, ListItemAvatar, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
@@ -8,19 +8,14 @@ export default function FriendListItem(props) {
 
 	// TODO: fix styling on these cards
 
-	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const navigate = useNavigate()
-
-	const {userid, username, ratings} = props.item
-	const handleAvatarClick = () => {
-		navigate(`profile/${userid}`)
-	}
+	const font = './LibreFranklin-VariableFont_wght.ttf'
+	const item = props.item
 
 	// this is backend version!
-	// const item = props.item
-	// const handleAvatarClick = () => {
-	// 	navigate(`profile/${item.userid}`)
-	// }
+	const handleAvatarClick = () => {
+		navigate(`profile/${item.userid}`)
+	}
 
 	return(
 		<ListItem
@@ -34,8 +29,6 @@ export default function FriendListItem(props) {
 			{/* profile picture */}
 			<ListItemAvatar>
 				<Avatar 
-					alt={username}
-					//alt = {item.username} 
 					src='/BeatBlendr_Logos/Icon_Color.png'
 					sx={{
 						height: '64px',
@@ -66,8 +59,7 @@ export default function FriendListItem(props) {
 							whiteSpace: 'nowrap',
 						}}
 					>
-						{username}
-						{/* {item.username} */}
+						{item.username}
 					</Typography>
 				</Grid>
 				<Grid item xs={1} 
@@ -88,8 +80,7 @@ export default function FriendListItem(props) {
 							whiteSpace: 'normal'
 						}}
 					>
-						Ratings: {ratings}
-						{/* Ratings: {item.ratings} */}
+						Ratings: {item.ratings}
 					</Typography>
 				</Grid>
 			</Grid>

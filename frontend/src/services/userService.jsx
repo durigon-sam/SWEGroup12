@@ -9,9 +9,14 @@ class UserDataService {
 		return http.post('/users', data)
 	}
 
+	//addFriend
+	addFriend(userId, username) {
+		return http.post(`/users/friends/add/${userId}/${username}`)
+	}
+
 	//getFriends()
 	getFriends(userId) {
-		return http.get(`/friends/${userId}`)
+		return http.get(`/users/friends/${userId}`)
 	}
 
 	getReviews(userId) {

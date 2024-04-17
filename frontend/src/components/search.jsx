@@ -63,6 +63,8 @@ export default function Search(){
 		}
 	}
 
+	// TODO: write a hook called handleAddFriend with backend API call here (hook above)
+
 	// useEffect(() => {
 	// 	console.log(Object.keys(searchResults)[0])
 	// }, [])
