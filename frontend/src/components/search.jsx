@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import SongListItem from './SongListItem'
 import SearchAlbumListItem from './SearchAlbumListItem'
 import UserDataService from '../services/userService'
+import FriendListItem from './FriendListItem'
 
 const SEARCH = 'https://api.spotify.com/v1/search'
 
@@ -17,6 +18,7 @@ export default function Search(){
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedFilter, setSelectedFilter] = useState('songs')
 	const [searchResults, setSearchResults] = useState([])
+	const [friendResults, setFriendResults] = useState([])
 	const userService = new UserDataService()
 
 	function isEmailFormat(searchTerm) {
@@ -32,10 +34,23 @@ export default function Search(){
 				console.log(`searching for users ${searchTerm}`)
 				if(isEmailFormat(searchTerm)){
 					// search for email
+					userService.getUserByEmail(searchTerm)
+						.then(response => {
+							setFriendResults(response.data)
+						})
+						.catch(error => {
+							alert(`No User Found with email ${searchTerm}`)
+						})
 				}else{
-					//search for username
+					// search for username
+					userService.getUserByEmail(searchTerm)
+						.then(response => {
+							setFriendResults(response.data)
+						})
+						.catch(error => {
+							alert(`No User Found with username ${searchTerm}`)
+						})
 				}
-
 
 			}else{
 				// Perform search based on searchTerm and selectedFilter
@@ -206,7 +221,9 @@ export default function Search(){
 					{
 						Object.keys(searchResults)[0] === undefined ? 
 							// user Search logic
-							true
+							friendResults.map((item) => (
+								<FriendListItem key={item.userId} item={item}/>
+							))
 							:
 							Object.keys(searchResults)[0] === 'tracks' ?
 								searchResults.tracks.items.map((item) => (
