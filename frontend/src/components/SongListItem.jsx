@@ -68,7 +68,6 @@ export default function SongListItem(props) {
 				</Grid>
 
 				{/* song info */}
-				{/* TODO: WHEN YOU HAVE MORE TIME BC THIS IS ANNOYING: create scrolling effect for horizontal overflow like in tiktok tutorial */}
 				<Grid item xs={8} sx={{paddingLeft: '10px', overflow: 'hidden', minWidth: '100px'}}>
 					{/* <div 
 				style={{

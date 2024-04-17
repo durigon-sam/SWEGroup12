@@ -36,6 +36,10 @@ class UserDataService {
 	getUserByEmail(email){
 		return http.get(`/users/email/${email}`)
 	}
+	
+	getNumOfReviews(userId){
+		return http.get(`/users/reviews#/${userId}`)
+	}
 }
 
 export default UserDataService
