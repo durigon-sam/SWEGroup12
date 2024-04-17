@@ -17,6 +17,7 @@ export default function SideBar(props){
 			navigate('/search')
 		} else if (arg === buttonLabels[2]) {
 			navigate(`/profile/${localStorage.getItem('userId')}`)
+			window.location.reload()
 		}
 	}
 
@@ -26,17 +27,14 @@ export default function SideBar(props){
 		navigate('/')
 	}
 
-	const handleHomeClick = () => {
-		navigate('/home')
-	}
-
 	useEffect(() => {
 		if (window.location.href.includes('/home'))
 			setCurrentPage(0)
 		else if (window.location.href.includes('/search'))
 			setCurrentPage(1)
-		else
+		else if (window.location.href.includes(`/profile/${localStorage.getItem('userId')}`))
 			setCurrentPage(2)
+		else setCurrentPage(3)
 	}, [])
 
 	return(

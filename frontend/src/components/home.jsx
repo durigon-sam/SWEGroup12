@@ -20,28 +20,25 @@ export default function HomePage(){
 	
 	// this is run whenever the component is first loaded
 	useEffect(() => {
-		
-
 		// get Recent Songs to display on the left side of home page
 		callApi('GET', RECENTS, null, handleResponse)
 	}, [])
 
 	useEffect(() => {
-		// call the backend method to get all user's friends using the user's beatblendr id
-		userDataService.getFriends(localStorage.getItem('userId')) // refers to method in userService.java (frontend)
-			.then(response => {
-				// store the list of friends
-				if (response != undefined) {
-					// set friends state
-					// console.log(response)
-					setFriendsState(response.data)
-				}else if (response.data.length == 0) {
-					console.log('YOU HAVE NO FRIENDS HAHAHAHA')
-				}
-			})
-			.catch(error => {
-			
-			})
+		if (recentSongsState) { // Check if recentSongsState is truthy
+			// call the backend method to get all user's friends using the user's beatblendr id
+			userDataService.getFriends(localStorage.getItem('userId'))
+				.then(response => {
+					if (response != undefined) {
+						setFriendsState(response.data)
+					} else if (response.data.length == 0) {
+						console.log('YOU HAVE NO FRIENDS HAHAHAHA')
+					}
+				})
+				.catch(error => {
+					// Handle error
+				})
+		}
 	}, [recentSongsState])
 
 	// calling API skeleton method

@@ -73,19 +73,17 @@ export default function ReviewListItem(props) {
 				background: 'linear-gradient(to left, #2D46B9, #1ED760)',
 				marginBottom: 5,
 				height: 'fit-content',
-				maxWidth: '800px',
 				minHeight: '175px',
 				borderRadius: '10px',
-				minWidth: '800px',
+				minWidth: '780px'
 			}}
 		>
-			<Grid container direction='column' sx={{maxwidth: '800px', height: 'fit-content'}}>
-				<Grid item xs={1} sx={{maxHeight: '130px'}}>
-					<Grid container columns={12} >
+			<Grid container direction='column' sx={{ height: 'fit-content'}}>
+				<Grid item xs={1} sx={{maxHeight: '130px', maxwidth: '780px'}}>
+					<Grid container columns={10} sx={{maxwidth: '780px'}} >
 						<Grid item xs={2}
 							sx={{
 								display: 'flex',
-								flexDirection: 'row',
 								justifyContent: 'center',
 								alignItems: 'center',
 								minWidth: '128px'
@@ -104,7 +102,7 @@ export default function ReviewListItem(props) {
 							</ListItemAvatar>
 						</Grid>
 
-						<Grid item xs={8} sx={{paddingLeft: '10px', overflow: 'hidden', minWidth: '100px', width: '50%'}}>
+						<Grid item xs={6} style={{display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: '100px', maxWidth: '450px'}}>
 							<Typography
 								fontFamily={font}
 								color={'white'}
@@ -115,6 +113,7 @@ export default function ReviewListItem(props) {
 									textOverflow: 'ellipsis',
 									whiteSpace: 'nowrap',
 									marginBottom: '5px',
+									maxwidth: '450px'
 								}}
 							>
 								{name}
@@ -130,6 +129,7 @@ export default function ReviewListItem(props) {
 									textOverflow: 'ellipsis',
 									whiteSpace: 'nowrap',
 									marginBottom: '5px',
+									maxwidth: '450px'
 								}}
 							>
 								{artists}
@@ -145,6 +145,7 @@ export default function ReviewListItem(props) {
 									wordWrap: 'break-word',
 									whiteSpace: 'normal',
 									marginBottom: '5px',
+									maxwidth: '450px'
 								}}
 							>
 								{albumName}
@@ -159,6 +160,7 @@ export default function ReviewListItem(props) {
 									wordWrap: 'break-word',
 									whiteSpace: 'normal',
 									marginBottom: '5px',
+									maxwidth: '450px'
 								}}
 							>
 								{type}
@@ -186,7 +188,7 @@ export default function ReviewListItem(props) {
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid item xs={1}>
+				<Grid item xs={1} sx={{maxwidth: '780px'}}>
 					<Typography
 						fontFamily={font}
 						color={'white'}
