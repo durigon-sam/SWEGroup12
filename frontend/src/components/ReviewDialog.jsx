@@ -79,7 +79,7 @@ export default function ReviewDialog(props) {
 					// console.log(response)
 				})
 				.catch(error => {
-					setToastMsg('Review already exists for this item')
+					setToastMsg('Review already exists for this item. Refresh to see updated review')
 					setToastSever('error')
 					handleToastOpen()
 				})
@@ -253,7 +253,7 @@ export default function ReviewDialog(props) {
 
 						<TextField
 							fullWidth
-							label={'Write a review (Optional)'}
+							label={'Write a review'}
 							variant='filled'
 							margin='normal'
 							multiline
