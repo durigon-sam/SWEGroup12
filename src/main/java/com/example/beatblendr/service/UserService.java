@@ -1,8 +1,6 @@
 package com.example.beatblendr.service;
 
 import java.util.List;
-
-import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;

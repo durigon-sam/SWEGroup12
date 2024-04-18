@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
@@ -38,7 +38,6 @@ export default function Search(){
 			handleToastOpen()
 		}else{
 			if(selectedFilter === 'users'){
-				console.log(`searching for users ${searchTerm}`)
 				if(isEmailFormat(searchTerm)){
 					// search for email
 					userService.getUserByEmail(searchTerm)
@@ -49,6 +48,7 @@ export default function Search(){
 							setToastMsg(`No User Found with email ${searchTerm}`)
 							setToastSever('error')
 							handleToastOpen()
+							// console.log(error)
 						})
 				}else{
 					// search for username
@@ -61,15 +61,14 @@ export default function Search(){
 							setToastMsg(`No User Found with username ${searchTerm}`)
 							setToastSever('error')
 							handleToastOpen()
+							// console.log(error)
 						})
 				}
 
 			}else{
 				// Perform search based on searchTerm and selectedFilter
-				console.log(`Searching for ${searchTerm} in ${selectedFilter}`)
 				let url = `${SEARCH}?q=${searchTerm}&type=`
 				selectedFilter === 'songs' ? url += 'track' : url += 'album'
-				console.log(url)
 				callApi('GET', url, null, handleResponse)
 			}
 		}
@@ -91,9 +90,8 @@ export default function Search(){
 			var data = JSON.parse(this.responseText)
 			// set the returned songs to the state variable
 			setSearchResults(data)
-			console.log(data)
 		} else { // other error occured
-			console.log(this.responseText)
+			// console.log(this.responseText)
 			alert(this.responseText)
 		}
 	}

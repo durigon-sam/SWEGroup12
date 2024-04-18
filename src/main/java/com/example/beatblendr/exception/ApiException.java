@@ -1,10 +1,6 @@
 package com.example.beatblendr.exception;
 
-
 import java.util.Date;
-
-import org.apache.hc.core5.http.HttpStatus;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -77,8 +77,8 @@ export default function Login () {
 				.then(response => {
 					// user is found, set local storages for sammy
 					localStorage.setItem('userId', response.data.id)
-					console.log('user was found!')
-					console.log(response)
+					// console.log('user was found!')
+					// console.log(response)
 				})
 				.catch(error => {
 					if(error.response.data.errorCode === 400){
@@ -95,13 +95,13 @@ export default function Login () {
 								alert(error)
 							})
 					}else{
-						console.log(error)
+						// console.log(error)
 					}
 				})
 
 		//spotify error
 		} else { // other error occured
-			console.log(this.responseText)
+			// console.log(this.responseText)
 			alert(this.responseText)
 		}
 	}
@@ -212,7 +212,7 @@ export default function Login () {
 	function handleAuthorizationResponse(){
 		if ( this.status == 200 ) { // success
 			var data = JSON.parse(this.responseText)
-			console.log('Success!')
+			// console.log('Success!')
 			// check if we got an access token. if we did, save it
 			if ( data.access_token != undefined ) {
 			// console.log('Grabbing token! ' + data.access_token)

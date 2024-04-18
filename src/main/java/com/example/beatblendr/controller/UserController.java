@@ -1,8 +1,6 @@
 package com.example.beatblendr.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
-import com.example.beatblendr.exception.UserNotFoundException;
-import com.example.beatblendr.mapper.UserMapper;
-import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

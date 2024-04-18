@@ -3,14 +3,10 @@ package com.example.beatblendr.dto;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
-import java.util.Set;
-
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.Song;
 import com.example.beatblendr.entity.User;
-
 import lombok.AllArgsConstructor;
 
 @Getter

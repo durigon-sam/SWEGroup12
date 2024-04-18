@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
-import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, Button } from '@mui/material'
+import { Grid, List, Typography, Box, Paper } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import ReviewListItem from './ReviewListItem'
 import UserDataService from '../services/userService'
@@ -31,13 +31,13 @@ export default function Profile () {
 				// store the list of reviews
 				if(response != undefined){
 					// set reviews state
-					console.log(response.data)
+					// console.log(response.data)
 
 					setReviewsState(response.data.reverse())
 				}
 			})
 			.catch(error => {
-			
+				// console.log(error)
 			})
 
 		// if ids match, use spotify API
@@ -60,7 +60,7 @@ export default function Profile () {
 		// is the response good?
 		if ( this.status == 200 ) {
 			var data = JSON.parse(this.responseText)
-			console.log(data)
+			// console.log(data)
 			// get user name and image
 			setName(data.display_name)
 			if(data.images.length>0){
@@ -70,7 +70,7 @@ export default function Profile () {
 			}
 			
 		} else { // other error occured
-			console.log(this.responseText)
+			// console.log(this.responseText)
 			alert(this.responseText)
 		}
 	}

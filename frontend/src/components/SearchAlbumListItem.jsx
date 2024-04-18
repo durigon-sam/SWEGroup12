@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Box, Grid, ListItem, ListItemButton, ListItemText, Typography, Rating } from '@mui/material'
+import { Avatar, Grid, ListItem, Typography, Rating } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
-import { useNavigate } from 'react-router-dom'
 import ReviewDialog from './ReviewDialog'
 import ReviewDataService from '../services/reviewService'
 
@@ -11,14 +10,14 @@ export default function SearchAlbumListItem(props){
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const album = props.item
 	const [isReviewed, setIsReviewed] = useState(false)
-	const [avgReview, setAverageReview] = useState()
+	// const [avgReview, setAverageReview] = useState()
 	const [userRatingVal, setUserRatingVal] = useState(2)
 	const reviewService = new ReviewDataService()
 
 	useEffect(() => {
 		reviewService.getReviewByUser(album.id, localStorage.getItem('userId'))
 			.catch(error => {
-
+				// console.log(error)
 			})
 			.then(response => {
 				if (response != undefined){

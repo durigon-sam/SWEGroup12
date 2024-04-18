@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
-import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, Button } from '@mui/material'
+import { Grid, List, Typography, Box, Paper} from '@mui/material'
 import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
 import FriendListItem from './FriendListItem'
@@ -32,11 +32,12 @@ export default function HomePage(){
 					if (response != undefined) {
 						setFriendsState(response.data)
 					} else if (response.data.length == 0) {
-						console.log('YOU HAVE NO FRIENDS HAHAHAHA')
+						// console.log('YOU HAVE NO FRIENDS HAHAHAHA')
 					}
 				})
 				.catch(error => {
 					// Handle error
+					// console.log(error)
 				})
 		}
 	}, [recentSongsState])
@@ -58,7 +59,7 @@ export default function HomePage(){
 			// set the returned songs to the state variable
 			setRecentSongsState(data.items)
 		} else { // other error occured
-			console.log(this.responseText)
+			// console.log(this.responseText)
 			alert(this.responseText)
 		}
 	}

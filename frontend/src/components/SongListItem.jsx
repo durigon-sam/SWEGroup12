@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Avatar, Grid, ListItem, ListItemButton, Typography, Rating } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Avatar, Grid, ListItem, Typography, Rating } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
 import ReviewDialog from './ReviewDialog'
-import UserDataService from '../services/userService'
 import ReviewDataService from '../services/reviewService'
 
 export default function SongListItem(props) {
@@ -15,14 +14,13 @@ export default function SongListItem(props) {
 	// const isReviewed = props.isReviewed
 	// const userRatingVal = props.rating
 	// found from backend API calls
-	const [avgReview, setAverageReview] = useState(0)
-	const userService = new UserDataService()
+	// const [avgReview, setAverageReview] = useState(0)
 	const reviewService = new ReviewDataService()
 	const [isReviewed, setIsReviewed] = useState(false)
 	const [userRatingVal, setUserRatingVal] = useState()
 
 	useEffect(()=>{
-		// TODO: call API for average review using song's id
+		// call API for average review using song's id
     
     
 		reviewService.getReviewByUser(song.id, localStorage.getItem('userId'))

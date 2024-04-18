@@ -3,12 +3,8 @@ package com.example.beatblendr.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
@@ -17,7 +13,6 @@ import com.example.beatblendr.exception.UserNotFoundException;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.UserService;
-
 import lombok.AllArgsConstructor;
 
 @Service

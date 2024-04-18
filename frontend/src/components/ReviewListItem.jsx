@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Button, Grid, ListItem, ListItemAvatar, Rating, Typography, Box } from '@mui/material'
+import { Avatar, Grid, ListItem, ListItemAvatar, Rating, Typography } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
 
@@ -52,7 +52,7 @@ export default function ReviewListItem(props) {
 				setType(data.type.charAt(0).toUpperCase() + data.type.slice(1))
 			}
 		} else { // other error occured
-			console.log(this.responseText)
+			// console.log(this.responseText)
 			alert(this.responseText)
 		}
 	}

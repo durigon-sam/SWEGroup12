@@ -2,19 +2,14 @@ package com.example.beatblendr.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.hibernate.PropertyValueException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import com.example.beatblendr.dto.ReviewDTO;
-import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
 import com.example.beatblendr.exception.NoRatingException;
 import com.example.beatblendr.exception.NoReviewForUserException;
 import com.example.beatblendr.exception.ReviewExistsException;
 import com.example.beatblendr.mapper.ReviewMapper;
-import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.ReviewRepository;
 import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.ReviewService;

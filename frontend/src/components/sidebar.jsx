@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Drawer, List, ListItemText, ListItemButton, Typography, Alert, Box } from '@mui/material'
+import { Drawer, List, ListItemText, ListItemButton, Typography, Box } from '@mui/material'
 import '../styles/sidebar.css'
 import { useNavigate } from 'react-router-dom'
 
-export default function SideBar(props){
+export default function SideBar(){
 
 	const src = '/BeatBlendr_Logos/VertAlt_Color_White.png'
 	const buttonLabels = ['Go Home', 'Find Music', 'My Profile']
