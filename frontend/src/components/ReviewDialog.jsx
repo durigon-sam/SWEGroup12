@@ -76,7 +76,7 @@ export default function ReviewDialog(props) {
 					setToastMsg(`Review of ${item.name} was successful!`)
 					setToastSever('success')
 					handleToastOpen()
-					console.log(response)
+					// console.log(response)
 				})
 				.catch(error => {
 					setToastMsg('Review already exists for this item')

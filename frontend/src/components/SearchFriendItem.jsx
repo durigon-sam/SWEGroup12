@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Grid, ListItem, ListItemAvatar, Typography, Button } from '@mui/material'
+import { Avatar, Grid, ListItem, ListItemAvatar, Typography, Button, Snackbar, Alert } from '@mui/material'
 import '../styles/home.css'
 import '../styles/App.css'
 import { useNavigate } from 'react-router-dom'
@@ -10,25 +10,45 @@ export default function SearchFriendItem(props) {
 	const navigate = useNavigate()
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 	const item = props.item
+	const [toastMsg, setToastMsg] = React.useState('Initial State')
+	const [toastOpen, setToastOpen] = React.useState(false)
+	const [toastSever, setToastSever] = React.useState('error')
 	const userService = new UserDataService()
 
 	// this is backend version!
 	const handleAvatarClick = () => {
-		navigate(`profile/${item.id}`)
+		navigate(`/profile/${item.id}`)
 	}
 
 	const handleAddFriend = () => {
 		userService.addFriend(localStorage.getItem('userId'), item.username)
 			.then(response => {
-				alert(`Successfully added ${item.username} as a friend`)
+				setToastMsg(`Successfully added ${item.username} as a friend`)
+				setToastSever('success')
+				handleToastOpen()
 			})
 			.catch(error=> {
 				if (error.response.status === 409){
-					alert('User is already your friend')
+					setToastMsg('User is already your friend')
+					setToastSever('error')
+					handleToastOpen()
 				}else{
-					alert(`Add friend failed, ${item.username} not added`)
+					setToastMsg(`Add friend failed, ${item.username} not added`)
+					setToastSever('error')
+					handleToastOpen()
 				}
 			})
+	}
+
+	const handleToastOpen = () => {
+		setToastOpen(true)
+	}
+
+	const handleToastClose = (event, reason) => {
+		if (reason === 'clickaway')
+			return
+
+		setToastOpen(false)
 	}
 
 	return(
@@ -40,7 +60,19 @@ export default function SearchFriendItem(props) {
 				borderRadius: '10px',
 			}}
 		>
-
+			<Snackbar
+				open={toastOpen}
+				autoHideDuration={5000}
+				onClose={handleToastClose}
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+			>
+				<Alert
+					open={toastOpen}
+					severity={toastSever}
+					variant='filled'
+					sx={{width: '100%'}}
+				>{toastMsg}</Alert>
+			</Snackbar>
 			<Grid container columns={8}
 				sx={{
                     

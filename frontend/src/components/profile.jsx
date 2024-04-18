@@ -32,7 +32,8 @@ export default function Profile () {
 				if(response != undefined){
 					// set reviews state
 					console.log(response.data)
-					setReviewsState(response.data)
+
+					setReviewsState(response.data.reverse())
 				}
 			})
 			.catch(error => {

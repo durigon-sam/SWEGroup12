@@ -70,7 +70,7 @@ export default function ReviewListItem(props) {
 	return(
 		<ListItem
 			sx={{
-				background: 'linear-gradient(to left, #2D46B9, #1ED760)',
+				background: item.type === 1 ? 'linear-gradient(to right, #2D46B9, #3D2159)' : 'linear-gradient(to left, #2D46B9, #1ED760)',
 				marginBottom: 5,
 				height: 'fit-content',
 				minHeight: '175px',
@@ -184,7 +184,7 @@ export default function ReviewListItem(props) {
 
 							</Typography>
 							{/* button to edit the review here */}
-							<Button variant="contained" sx={{float: 'right'}}>Edit</Button>
+							{/* <Button variant="contained" sx={{float: 'right'}}>Edit</Button> */}
 						</Grid>
 					</Grid>
 				</Grid>

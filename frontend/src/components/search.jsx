@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
-import { Grid, List, TextField, InputAdornment, MenuItem, Button } from '@mui/material'
+import { Grid, List, TextField, InputAdornment, MenuItem, Button, Snackbar, Alert } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import SongListItem from './SongListItem'
 import SearchAlbumListItem from './SearchAlbumListItem'
@@ -19,6 +19,9 @@ export default function Search(){
 	const [selectedFilter, setSelectedFilter] = useState('songs')
 	const [searchResults, setSearchResults] = useState([])
 	const [friendResults, setFriendResults] = useState(null)
+	const [toastMsg, setToastMsg] = React.useState('Initial State')
+	const [toastOpen, setToastOpen] = React.useState(false)
+	const [toastSever, setToastSever] = React.useState('error')
 	const userService = new UserDataService()
 
 	function isEmailFormat(searchTerm) {
@@ -30,7 +33,9 @@ export default function Search(){
 		setFriendResults(null)
 		setSearchResults([])
 		if(searchTerm === ''){
-			alert('Please input a search term')
+			setToastMsg('Please input a search term')
+			setToastSever('error')
+			handleToastOpen()
 		}else{
 			if(selectedFilter === 'users'){
 				console.log(`searching for users ${searchTerm}`)
@@ -41,17 +46,21 @@ export default function Search(){
 							setFriendResults(response.data)
 						})
 						.catch(error => {
-							alert(`No User Found with email ${searchTerm}`)
+							setToastMsg(`No User Found with email ${searchTerm}`)
+							setToastSever('error')
+							handleToastOpen()
 						})
 				}else{
 					// search for username
 					userService.getUserByUsername(searchTerm)
 						.then(response => {
-							console.log(response)
+							// console.log(response)
 							setFriendResults(response.data)
 						})
 						.catch(error => {
-							alert(`No User Found with username ${searchTerm}`)
+							setToastMsg(`No User Found with username ${searchTerm}`)
+							setToastSever('error')
+							handleToastOpen()
 						})
 				}
 
@@ -65,25 +74,6 @@ export default function Search(){
 			}
 		}
 	}
-
-	// TODO: write a hook called handleAddFriend with backend API call here (hook above)
-
-	// useEffect(() => {
-	// 	console.log(Object.keys(searchResults)[0])
-	// }, [])
-
-	// useEffect(() => {
-	// 	console.log(Object.keys(searchResults)[0])
-	// }, [searchResults])
-
-	//triggers every time searchTerm is modified
-	// useEffect(() => {
-	// 	console.log(searchTerm)
-	// }, [searchTerm])
-
-	// useEffect(() => {
-	// 	console.log(selectedFilter)
-	// }, [selectedFilter])
 
 	// calling API skeleton method
 	function callApi(method, url, body, callback){
@@ -108,9 +98,33 @@ export default function Search(){
 		}
 	}
 
+	const handleToastOpen = () => {
+		setToastOpen(true)
+	}
+
+	const handleToastClose = (event, reason) => {
+		if (reason === 'clickaway')
+			return
+
+		setToastOpen(false)
+	}
+
 	return(
 		<div className='App'>
 			<SideBar className='sidebar'/>
+			<Snackbar
+				open={toastOpen}
+				autoHideDuration={5000}
+				onClose={handleToastClose}
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+			>
+				<Alert
+					open={toastOpen}
+					severity={toastSever}
+					variant='filled'
+					sx={{width: '100%'}}
+				>{toastMsg}</Alert>
+			</Snackbar>
 			<div className='App-header' 
 				style={{
 					flexDirection: 'column',
