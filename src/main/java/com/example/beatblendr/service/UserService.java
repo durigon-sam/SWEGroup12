@@ -15,11 +15,11 @@ public interface UserService {
     UserDTO updateUser(long id, UserDTO userDTO);
     UserDTO findById(long id);
     void deleteUser(Long id);
-    // void insertOrUpdateUserDetails(se.michaelthelin.spotify.model_objects.specification.User user, String accessToken,
-    //         String refreshToken);
     void addFriend(UserDTO user, UserDTO friend);
     UserDTO findByUsername(String username);
     List<User> getFriends(UserDTO user);
     List<Review> getReviews(UserDTO user);
+    UserDTO findByAccessToken(String accessToken);
+    void deleteFriend(UserDTO user, UserDTO friend);
     
 }

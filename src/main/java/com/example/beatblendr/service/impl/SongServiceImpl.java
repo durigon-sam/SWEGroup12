@@ -6,9 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.SongDTO;
-import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.Song;
 import com.example.beatblendr.mapper.SongMapper;
 import com.example.beatblendr.repository.SongRepository;
@@ -30,7 +28,6 @@ public class SongServiceImpl implements SongService{
         Song savedSong = songRepository.save(song);
         return SongMapper.mapToSongDTO(savedSong);
     }
-
 
     @Override
     public SongDTO findBySongId(long id) {

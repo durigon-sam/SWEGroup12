@@ -1,34 +1,41 @@
-import React from 'react'
-import { Drawer, List, ListItemText, ListItemButton, Typography, Alert } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Drawer, List, ListItemText, ListItemButton, Typography, Alert, Box } from '@mui/material'
 import '../styles/sidebar.css'
 import { useNavigate } from 'react-router-dom'
 
-export default function SideBar(){
+export default function SideBar(props){
 
 	const src = '/BeatBlendr_Logos/VertAlt_Color_White.png'
-	const buttonLabels = ['Find Music', 'Create Playlist', 'My Profile']
+	const buttonLabels = ['Go Home', 'Find Music', 'My Profile']
 	const navigate = useNavigate()
+	const [currentPage, setCurrentPage] = useState()
 
 	const handleListButtonClick = (arg) => {
 		if (arg === buttonLabels[0]){
+			navigate('/home')
+		} else if (arg === buttonLabels[1]) {
 			navigate('/search')
-		}else if (arg === buttonLabels[1]){
-			navigate('/playlist')
-		}else if (arg === buttonLabels[2]){
-			navigate('/profile')
+		} else if (arg === buttonLabels[2]) {
+			navigate(`/profile/${localStorage.getItem('userId')}`)
+			window.location.reload()
 		}
 	}
 
 	const handleLogoutClick = () => {
-		// if the userId does not match mine go to login page 
-		if (localStorage.getItem('client_id') != '31c97b67a40b4057a56c59c6390b92d4') {
-			navigate('/login')
-		}
-		// if they do match, stay on the same page
-		else {
-			return (alert('You are already logged in!'))
-		}
+		// user needs to logout so wipe credentials and go back to login page
+		localStorage.clear()
+		navigate('/')
 	}
+
+	useEffect(() => {
+		if (window.location.href.includes('/home'))
+			setCurrentPage(0)
+		else if (window.location.href.includes('/search'))
+			setCurrentPage(1)
+		else if (window.location.href.includes(`/profile/${localStorage.getItem('userId')}`))
+			setCurrentPage(2)
+		else setCurrentPage(3)
+	}, [])
 
 	return(
 		<Drawer 
@@ -41,22 +48,23 @@ export default function SideBar(){
 				}
 			}}
 		>
-			{/* TODO: convert this to grid for better styling */}
 			<img className='logo' src={src}/>
 			<List style={{ justifyContent: 'center' }}>
-				{buttonLabels.map((text) => (
+				{buttonLabels.map((text, index) => (
 					<ListItemButton 
 						className='sidebarButton'
 						key={text} 
 						sx={{
 							height: '130px',
 							width: '90%',
-							backgroundColor: '#3d2159',
+							backgroundColor: index === currentPage ? '#3d2159' : '#2D46B9',
 							borderRadius: '45px',
 							marginLeft: '5%',
 							marginBottom: '20px',
 							'&:hover': {
-								backgroundColor: '#3d2159'
+								backgroundColor: index === currentPage ? '#3d2159' : '#2D46B9',
+								border: '5px solid',
+								borderColor: index === currentPage ? '#3d2159' : '#1ed760',
 							}
 						}}
 						onClick={() => handleListButtonClick(text)}
@@ -70,28 +78,32 @@ export default function SideBar(){
 					</ListItemButton>
 				))}
 			</List>
-			<ListItemButton className='logoutButton'
+
+			<Box
 				sx={{
 					position: 'absolute',
-					bottom: '0',
-					height: '50px',
+					bottom: 0,
 					width: '90%',
-					backgroundColor: '#2d46b9',
-					borderRadius: '45px',
-					marginLeft: '5%',
-					marginBottom: '30px',
-					justifyContent: 'center',
-					'&:hover':{
-						backgroundColor: '#2d46b9',
-					}
+					marginLeft: '5%'
 				}}
-				onClick={handleLogoutClick}
-			//end ListItemButton
 			>
-				<Typography className='logoutText' variant='h4'>
-				Login
-				</Typography>
-			</ListItemButton>
+				<ListItemButton className='logoutButton'
+					sx={{
+						height: '50px',
+						backgroundColor: '#2d46b9',
+						borderRadius: '45px',
+						marginBottom: '20px',
+						justifyContent: 'center',
+						'&:hover':{
+							backgroundColor: '#2d46b9',
+						}
+					}}
+					onClick={handleLogoutClick}
+					//end ListItemButton
+				>
+					<Typography className='logoutText' variant='h4'>Logout</Typography>
+				</ListItemButton>
+			</Box>
 		</Drawer>
 	)
 }

@@ -31,33 +31,28 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @EnableAutoConfiguration
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "beatblendr")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "username")
-	private String username;
-	
-	@Column(name = "spotify_account_id", unique = true)
+	@Column(name = "spotifyId", nullable = false, unique = true)
 	private String spotifyId;
 
-	@Column(name = "spotify_secret_id", unique = true)
-	private String spotifySecretId;
+	@Column(name = "username", unique = true)
+	private String username;
+	
 
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "ACCESS_TOKEN")
+	@Column(name = "access_token", nullable = false)
 	private String accessToken;
 
-	@Column(name = "REFRESH_TOKEN")
+	@Column(name = "refresh_token")
 	private String refreshToken;
-
-	@Column(name = "REF_ID")
-	private String refId;
 
 	@JsonIgnore
 	@OneToMany(mappedBy ="user")
@@ -67,10 +62,9 @@ public class User {
 	@OneToMany(mappedBy ="user")
 	private List<Song> songs; 
 
-
 	@JsonIgnore
 	@OneToMany
-	@JoinTable(name="friends")
+	@JoinTable(name="friends", schema = "beatblendr")
 	@JoinColumn(name="person_A_id", referencedColumnName="id")
 	@JoinColumn(name="person_B_id", referencedColumnName="id")
 	private List<User> friends;

@@ -9,5 +9,6 @@ public class BeatblendrApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BeatblendrApplication.class, args);
 	}
+	
 
 }

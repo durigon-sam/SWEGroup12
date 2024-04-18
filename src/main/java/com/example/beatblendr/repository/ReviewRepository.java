@@ -12,6 +12,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Review findByReviewId(long id);
     List<Review> findBySpotifyId(String spotifyId);
     
+    
 
         
 }

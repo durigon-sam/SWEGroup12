@@ -3,9 +3,13 @@ package com.example.beatblendr.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,25 +22,37 @@ import com.example.beatblendr.dto.ReviewDTO;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
+import com.example.beatblendr.exception.OversizedDescriptionException;
 import com.example.beatblendr.mapper.ReviewMapper;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.service.ReviewService;
+import com.example.beatblendr.service.UserService;
+
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @RestController
 @RequestMapping("/api/reviews")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO){
+    @PostMapping("{id}")
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO, @PathVariable("id") Long userId){
+
+        if(reviewDTO.getDescription().length()>1000){
+            throw new OversizedDescriptionException("Test");
+        }
+        reviewDTO.setUser(UserMapper.mapToUser(userService.findById(userId)));
         ReviewDTO savedReview = reviewService.createReview(reviewDTO);
+    
+
 
         return new ResponseEntity<>(savedReview, HttpStatus.CREATED);
-        
     }
 
     @GetMapping("{id}")
@@ -65,24 +81,28 @@ public class ReviewController {
         return ResponseEntity.ok("Review Deleted Succesfully");
     }
 
-    //Delete user by ID
+    //Delete Review by ID
     @GetMapping("/spotifyId/{spotifyId}")
-    public ResponseEntity<List<ReviewDTO>> getReviewsByAlbumId(@PathVariable("spotifyId") String albumId){
+    public ResponseEntity<List<ReviewDTO>> getReviewsBySpotifyId(@PathVariable("spotifyId") String spotifyId){
         
-        List<ReviewDTO> foundReviews = reviewService.findBySpotifyId(albumId);
+        List<ReviewDTO> foundReviews = reviewService.findBySpotifyId(spotifyId);
         return ResponseEntity.ok(foundReviews);
     }
 
+    @GetMapping("/averageRating/{spotifyId}")
+    public ResponseEntity<Double> getAverageRating(@PathVariable("spotifyId") String spotifyId){
+        
 
-    //add more controller methods for the user.
-    //Some of these can just go in the UserRepository because of how awesome JPA is
-    
-    //Get user by ID
+        return ResponseEntity.ok(reviewService.getAverageRating(spotifyId));
+    }
 
-    //Get all users
+    @GetMapping("/getReviewByUser/{spotifyId}/{userId}")
+    public ResponseEntity<ReviewDTO> getReviewByUser(@PathVariable("spotifyId") String spotifyId, @PathVariable("userId") Long userId){
 
-    //Edit user by ID
+                ReviewDTO foundReview = reviewService.getReviewByUser(spotifyId, userId);
 
-    //Delete user by ID
-    
+                return ResponseEntity.ok(foundReview);
+
+    }
+
 }

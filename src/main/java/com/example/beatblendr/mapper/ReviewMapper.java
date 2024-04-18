@@ -18,7 +18,7 @@ public class ReviewMapper {
 
     public static Review mapToReview(ReviewDTO reviewDTO){
         return new Review(
-            reviewDTO.getId(),
+            reviewDTO.getReviewId(),
             reviewDTO.getSpotifyId(),
             reviewDTO.getType(),
             reviewDTO.getRating(),

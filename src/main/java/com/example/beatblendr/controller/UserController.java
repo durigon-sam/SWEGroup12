@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.beatblendr.dto.UserDTO;
 import com.example.beatblendr.entity.Review;
 import com.example.beatblendr.entity.User;
+import com.example.beatblendr.exception.UserNotFoundException;
 import com.example.beatblendr.mapper.UserMapper;
 import com.example.beatblendr.repository.UserRepository;
 import com.example.beatblendr.service.UserService;
@@ -27,6 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -40,6 +43,11 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         
     }
+    @GetMapping("spotifyId/{spotifyId}")
+    public ResponseEntity<UserDTO> getUserBySpotifyId(@PathVariable("spotifyId") String spotifyId){
+        UserDTO savedUser = userService.findBySpotifyId(spotifyId);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
 
     //Get user by Email
     @GetMapping("email/{email}")
@@ -47,6 +55,21 @@ public class UserController {
         UserDTO savedUser = (UserDTO) userService.findByEmail(email);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
+    //Get user by Username
+    @GetMapping("username/{username}")
+    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username){
+        UserDTO savedUser = (UserDTO) userService.findByUsername(username);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @GetMapping("accessToken/{accesstoken}")
+    public ResponseEntity<UserDTO> getUserByAccessToken(@PathVariable("accesstoken") String accessToken){
+    
+        UserDTO savedUser = (UserDTO) userService.findByAccessToken(accessToken);
+
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") long id){
         UserDTO savedUser = userService.findById(id);
@@ -84,6 +107,17 @@ public class UserController {
         return ResponseEntity.ok("response");
     }
 
+    @PutMapping("friends/delete/{id}/{idFriend}")
+    public ResponseEntity<String> deleteFriend(@PathVariable("id") Long id, @PathVariable("idFriend") Long idFriend){
+
+        UserDTO user = userService.findById(id);
+        UserDTO friend = userService.findById(idFriend);
+
+        userService.deleteFriend(user, friend);
+        
+        return ResponseEntity.ok("response");
+    }
+
     
     @GetMapping("friends/{id}")
     public ResponseEntity<List<User>> getFriends(@PathVariable("id") Long id){
@@ -95,24 +129,22 @@ public class UserController {
         return ResponseEntity.ok(friends);
 
 }
-@GetMapping("reviews/{id}")
-public ResponseEntity<List<Review>> getReviews(@PathVariable("id") Long id){
+    @GetMapping("reviews/{id}")
+    public ResponseEntity<List<Review>> getReviews(@PathVariable("id") Long id){
 
-    UserDTO user = userService.findById(id);
+        UserDTO user = userService.findById(id);
 
-    List<Review> reviews = userService.getReviews(user);
-    return ResponseEntity.ok(reviews);
+        List<Review> reviews = userService.getReviews(user);
+        return ResponseEntity.ok(reviews);
 
-}
+    }
+    @GetMapping("reviews#/{id}")
+    public ResponseEntity<Integer> getNumberOfReview(@PathVariable("id") Long id){
 
-@GetMapping("reviews#/{id}")
-public ResponseEntity<Integer> getNumberOfReview(@PathVariable("id") Long id){
+        UserDTO user = userService.findById(id);
 
-    UserDTO user = userService.findById(id);
-
-    List<Review> reviews = userService.getReviews(user);
-    return ResponseEntity.ok(reviews.size());
-
-}
-
+        List<Review> reviews = userService.getReviews(user);
+        return ResponseEntity.ok(reviews.size());
+    }
+    
 }

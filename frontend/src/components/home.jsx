@@ -1,15 +1,67 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import SideBar from './sidebar'
 import '../styles/home.css'
 import '../styles/App.css'
-import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import { Grid, List, Typography, Item, Box, Paper, ListItem, ListItemButton, ListItemText, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import SongListItem from './SongListItem'
-import recentData from '../dummydata/recents.json'
-import friends from '../dummydata/friends.json'
 import FriendListItem from './FriendListItem'
+import UserDataService from '../services/userService'
+
+const RECENTS = 'https://api.spotify.com/v1/me/player/recently-played'
 
 export default function HomePage(){
+
+	const userDataService = new UserDataService()
+
+	// initialize states for Recent Songs and Friends
+	const [friendsState, setFriendsState] = useState([])
+	const [recentSongsState, setRecentSongsState] = useState([])
+	
+	// this is run whenever the component is first loaded
+	useEffect(() => {
+		// get Recent Songs to display on the left side of home page
+		callApi('GET', RECENTS, null, handleResponse)
+	}, [])
+
+	useEffect(() => {
+		if (recentSongsState) { // Check if recentSongsState is truthy
+			// call the backend method to get all user's friends using the user's beatblendr id
+			userDataService.getFriends(localStorage.getItem('userId'))
+				.then(response => {
+					if (response != undefined) {
+						setFriendsState(response.data)
+					} else if (response.data.length == 0) {
+						console.log('YOU HAVE NO FRIENDS HAHAHAHA')
+					}
+				})
+				.catch(error => {
+					// Handle error
+				})
+		}
+	}, [recentSongsState])
+
+	// calling API skeleton method
+	function callApi(method, url, body, callback){
+		let xhr = new XMLHttpRequest()
+		xhr.open(method, url, true)
+		xhr.setRequestHeader('Content-Type', 'application/json')
+		xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+		xhr.send(body)
+		xhr.onload = callback
+	}
+
+	function handleResponse() {
+		// is the response good?
+		if ( this.status == 200 ){
+			var data = JSON.parse(this.responseText)
+			// set the returned songs to the state variable
+			setRecentSongsState(data.items)
+		} else { // other error occured
+			console.log(this.responseText)
+			alert(this.responseText)
+		}
+	}
 
 	const font = './LibreFranklin-VariableFont_wght.ttf'
 
@@ -38,11 +90,23 @@ export default function HomePage(){
 			<SideBar className='sidebar'/>
 			<Box className='App-header' sx={{}}>
 				<Grid container spacing={2} columns={16} sx={{margin: '20px 30px 20px 30px'}}>
-					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
+					<Grid item xs={10} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px', width: '50vw'}}}>
 						<RecentItem>
-							<Typography variant='h3' fontFamily={font} fontWeight={600}>My Recent Listening</Typography>
-							<Typography color='white'>Current clientId: {localStorage.getItem('client_id')}</Typography>
+							<Typography
+								variant="h2"
+								fontFamily={font}
+								fontWeight={600}
+								sx={{
+									textOverflow: 'ellipsis',
+									overflow: 'hidden',
+									whiteSpace: 'nowrap',
+								}}
+							>
+								My Recent Listening
+							</Typography>
 						</RecentItem>
+
+						{/* RECENT LISTENING LIST */}
 						<List
 							sx={{
 								position: 'relative',
@@ -52,17 +116,32 @@ export default function HomePage(){
 							}}
 						>
 							{/* This gets replaced with the actual user data */}
-							{recentData.recents.map((item) => (
-								<SongListItem key={item.id} item={item}/>
-							))}
+							{
+								recentSongsState.map((item) => (
+									<SongListItem key={item.track.id} item={item.track} search={false} time={item.played_at}/>
+								))
+							}
 						</List>
-
 					</Grid>
+
 					<Grid item xs={1} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}/>
 					<Grid item xs={5} sx={{'&.MuiGrid-item':{padding: '0px 0px 0px 0px'}}}>
 						<FriendItem>
-							<Typography variant='h3' fontFamily={font} fontWeight={700}>My Friends</Typography>
+							<Typography
+								variant="h2"
+								fontFamily={font}
+								fontWeight={700}
+								sx={{
+									textOverflow: 'ellipsis',
+									overflow: 'hidden',
+									whiteSpace: 'nowrap',
+								}}
+							>
+								My Friends
+							</Typography>
 						</FriendItem>
+
+						{/* FRIENDS LIST */}
 						<List
 							sx={{
 								width: '100%',
@@ -72,9 +151,13 @@ export default function HomePage(){
 								'& ul': { padding: 0 },
 							}}
 						>
-							{friends.friends.map((item) => (
+							
+							{friendsState.map((item) => (
 								<FriendListItem key={item.userid} item={item}/>
 							))}
+
+							
+							
 						</List>
 					</Grid>
 				</Grid>
