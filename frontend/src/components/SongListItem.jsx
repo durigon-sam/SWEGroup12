@@ -132,8 +132,8 @@ export default function SongListItem(props) {
 				{/* user info */}
 				{search ? 
 				// if on search page, display review totals
-					<Grid item xs={2} sx={{textAlign: 'right'}}>
-						<Typography 
+					<Grid item xs={2} sx={{textAlign: 'right', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+						{/* <Typography 
 							fontFamily={font} 
 							color={'white'} 
 							fontWeight={300} 
@@ -141,7 +141,7 @@ export default function SongListItem(props) {
 							style={{height: '33%'}}
 						>
 					Avg. Score
-						</Typography>
+						</Typography> */}
 				
 						{
 							//if reviewed, display score. else, display button

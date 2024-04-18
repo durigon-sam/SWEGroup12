@@ -112,8 +112,8 @@ export default function SearchAlbumListItem(props){
 					</Typography>
 				</Grid>
 
-				<Grid item xs={3} sx={{textAlign: 'right', flexShrink: 0 }}>
-					<Typography 
+				<Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+					{/* <Typography 
 						fontFamily={font} 
 						color={'white'} 
 						fontWeight={300} 
@@ -121,7 +121,7 @@ export default function SearchAlbumListItem(props){
 						style={{height: '33%'}}
 					>
 							Avg. Score
-					</Typography>
+					</Typography> */}
 						
 					{
 						//if reviewed, display score. else, display button
